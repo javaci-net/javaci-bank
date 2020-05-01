@@ -16,7 +16,6 @@
 
 	<properties>
 		<swagger.springfox.version>2.9.2</swagger.springfox.version>
-		<full-artifact-name>target/${project.artifactId}-${project.version}.jar</full-artifact-name>
 	</properties>
 
 	<dependencies>
@@ -108,8 +107,11 @@
 				<configuration>
 					<appName>javaci-bank</appName>
 					<jdkVersion>1.8</jdkVersion>
+					<includes>
+						<include>javaci-bank-api/target/javaci-bank-api-0.0.1-SNAPSHOT.jar</include>
+					</includes>
 					<processTypes>
-						<web>java $JAVA_OPTS -jar ${full-artifact-name} -Dserver.port=$PORT $JAR_OPTS</web>
+						<web>java $JAVA_OPTS -jar javaci-bank-api-0.0.1-SNAPSHOT.jar -Dserver.port=$PORT $JAR_OPTS</web>
 					</processTypes>
 				</configuration>
 			</plugin>
