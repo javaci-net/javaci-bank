@@ -99,7 +99,10 @@
 				</configuration>
 			</plugin>
 
-			<!-- https://devcenter.heroku.com/articles/deploying-java-applications-with-the-heroku-maven-plugin -->
+			<!-- 
+			https://devcenter.heroku.com/articles/deploying-java-applications-with-the-heroku-maven-plugin 
+			https://stackoverflow.com/questions/39197334/automated-heroku-deploy-from-subfolder
+			-->
 			<plugin>
 				<groupId>com.heroku.sdk</groupId>
 				<artifactId>heroku-maven-plugin</artifactId>
