@@ -95,7 +95,7 @@
 					</execution>
 				</executions>
 				<configuration>
-					<mainClass>net.javaci.ws.springboot.sample1.SpringbootApp1</mainClass>
+					<mainClass>net.javaci.bank.JavaciBankApiApp</mainClass>
 				</configuration>
 			</plugin>
 
