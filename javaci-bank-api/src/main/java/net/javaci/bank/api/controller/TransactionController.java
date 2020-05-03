@@ -1,5 +1,6 @@
 package net.javaci.bank.api.controller;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -36,24 +37,28 @@ public class TransactionController {
     
     @PostMapping("/deposit")
     @ResponseBody
-    public TransactionLogDto deposit() {
+    public TransactionLogDto deposit(Long accountId, BigDecimal amount) {
         // TODO Implement
         return null;
     }
     
     @PostMapping("/withdraw")
     @ResponseBody
-    public TransactionLogDto withdraw() {
+    public TransactionLogDto withdraw(Long accountId, BigDecimal amount) {
         // TODO Implement
         return null;
     }
     
     @PostMapping("/transfer")
     @ResponseBody
-    public TransactionLogDto transfer() {
+    public TransactionLogDto transfer(Long accountId, String toAccountNumber, BigDecimal amount) {
         // TODO Implement
         return null;
     }
+    
+    /* --------------------------------------------- */
+    /* HELPER METHOD(S) */
+    /* --------------------------------------------- */
     
     private TransactionLogDto convertToDto(TransactionLog transactionLog) {
         return modelMapper.map(transactionLog, TransactionLogDto.class);

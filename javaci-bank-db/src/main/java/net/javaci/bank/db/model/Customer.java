@@ -30,8 +30,16 @@ public class Customer {
     private String lastName;
 
     private String address;
+    
+    private String email;
+    
+    private String phoneNumber;
+    
+    private String identityNo;
 
     private LocalDate birthDate;
+    
+    private String password;
 
     @OneToMany(
             mappedBy = "customer",

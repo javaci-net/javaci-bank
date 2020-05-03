@@ -41,9 +41,12 @@ public class CustomerInfoController {
         return convertToEntity( customerDao.save(modelMapper.map(newCustomerDto, Customer.class)) );
     }
 
+    /* --------------------------------------------- */
+    /* HELPER METHOD(S) */
+    /* --------------------------------------------- */
+    
     private CustomerDto convertToEntity(Customer customer) {
         return modelMapper.map(customer, CustomerDto.class);
     }
-
-
+    
 }

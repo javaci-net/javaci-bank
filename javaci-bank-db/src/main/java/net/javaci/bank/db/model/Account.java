@@ -42,6 +42,8 @@ public class Account {
     @Column(name = "account_type", nullable = false)
     private AccountType accountType;
 
+    /** The <a href="https://en.wikipedia.org/wiki/ISO_8601">ISO 8601</a> currency code of the account. */
+    @NotNull
     @Convert(converter = CurrencyConverter.class)
     @Column(name = "currency_code", nullable = false)
     private Currency currency;
@@ -50,6 +52,7 @@ public class Account {
     @JoinColumn(name = "customer_fk", nullable = false)
     private Customer customer;
 
+    @NotNull
     @Column(name = "balance", nullable = false)
     private BigDecimal balance;
 

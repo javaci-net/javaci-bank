@@ -42,13 +42,48 @@ public class AccountInfoController {
                 .map(this::convertToDto)
                 .collect(Collectors.toList());
     }
+    
+    @GetMapping("/get")
+    @ResponseBody
+    public AccountDto get(Long accountId) {
+        // TODO Implement
+        return null;
+    }
 
     @PostMapping("/add")
     @ResponseBody
     public AccountDto add(@RequestBody AccountDto newAccountDto) {
         return convertToDto( accountDao.save(convertToEntity(newAccountDto)) );
     }
+    
+    /**
+     * Changes a given bank account's status to suspended.
+     * 
+     * @param accountId the account id
+     */
+    @PostMapping("/suspend")
+    @ResponseBody
+    public AccountDto suspend(@RequestBody Long accountId) {
+        // TODO Implement
+        return null;
+    }
 
+    /**
+     * Changes a given bank account's status to closed.
+     * 
+     * @param accountId the account id
+     */
+    @PostMapping("/close")
+    @ResponseBody
+    public AccountDto close(@RequestBody Long accountId) {
+        // TODO Implement
+        return null;
+    }
+   
+    /* --------------------------------------------- */
+    /* HELPER METHOD(S) */
+    /* --------------------------------------------- */
+    
     private AccountDto convertToDto(Account account) {
         return modelMapper.map(account, AccountDto.class);
     }
