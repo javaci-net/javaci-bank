@@ -12,7 +12,7 @@ public class CurrencyConverter implements AttributeConverter<Currency, String> {
 
     @Override
     public String convertToDatabaseColumn(Currency currency) {
-    	if (currency == null) {
+        if (currency == null) {
             throw new IllegalArgumentException("Use valid currency");
         }
         return currency.getCurrencyCode();
@@ -20,8 +20,8 @@ public class CurrencyConverter implements AttributeConverter<Currency, String> {
 
     @Override
     public Currency convertToEntityAttribute(String currencyCode) {
-    	if (StringUtils.isEmpty(currencyCode)) {
-    		return null;
+        if (StringUtils.isEmpty(currencyCode)) {
+            return null;
         }
         return Currency.getInstance(currencyCode);
     }

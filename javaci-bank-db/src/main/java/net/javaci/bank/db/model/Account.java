@@ -25,33 +25,33 @@ import net.javaci.bank.db.converter.CurrencyConverter;
 @Getter @Setter
 public class Account {
 
-	@Id
+    @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "account_id", nullable = false)
+    @Column(name = "account_id", nullable = false)
     private Long id;
-	
-	@NotNull
-	@Column(name = "account_name", nullable = false)
-	private String accountName;
-	
-	@Column(name = "description", nullable = true)
-	private String description;
-	
-	@NotNull
-	@Enumerated(EnumType.STRING)
-	@Column(name = "account_type", nullable = false)
-	private AccountType accountType;
-	
-	@Convert(converter = CurrencyConverter.class)
-	@Column(name = "currency_code", nullable = false)
-	private Currency currency;
-	
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "customer_fk", nullable = false)
-	private Customer customer;
-	
-	@Column(name = "balance", nullable = false)
-	private BigDecimal balance;
-	
-	
+
+    @NotNull
+    @Column(name = "account_name", nullable = false)
+    private String accountName;
+
+    @Column(name = "description", nullable = true)
+    private String description;
+
+    @NotNull
+    @Enumerated(EnumType.STRING)
+    @Column(name = "account_type", nullable = false)
+    private AccountType accountType;
+
+    @Convert(converter = CurrencyConverter.class)
+    @Column(name = "currency_code", nullable = false)
+    private Currency currency;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "customer_fk", nullable = false)
+    private Customer customer;
+
+    @Column(name = "balance", nullable = false)
+    private BigDecimal balance;
+
+
 }

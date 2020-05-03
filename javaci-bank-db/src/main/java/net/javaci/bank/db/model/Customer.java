@@ -19,24 +19,24 @@ import lombok.Setter;
 @Getter @Setter
 public class Customer {
 
-	@Id
+    @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-	
-	private String name;
-	
-	private String middleName;
-	
-	private String lastName;
-	
-	private String address;
 
-	private LocalDate birthDate;
-	
-	@OneToMany(
-			mappedBy = "customer",
-			cascade = PERSIST,
-			orphanRemoval = true)
-	private List<Account> accounts = new ArrayList<>();
-	
+    private String name;
+
+    private String middleName;
+
+    private String lastName;
+
+    private String address;
+
+    private LocalDate birthDate;
+
+    @OneToMany(
+            mappedBy = "customer",
+            cascade = PERSIST,
+            orphanRemoval = true)
+    private List<Account> accounts = new ArrayList<>();
+
 }
