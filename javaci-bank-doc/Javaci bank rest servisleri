@@ -1,0 +1,14 @@
+Notlar
+	Listelemek ekranlarında tablo alanlarına göre filtreler olsun
+	
+	List Transection ekranında Sender / reciver  Customer number linki customer detayına gitsin
+	
+	Customer onaylandığında o customer için bir adety Account oluşturulsun
+	
+Servisler: 
+
+	Bekleyen task sayısı Responce{number, taskName}
+	
+	
+
+
