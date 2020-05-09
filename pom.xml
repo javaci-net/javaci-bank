@@ -64,6 +64,31 @@
 	    </dependency>
 
 	</dependencies>
+	
+	<build>
+		<plugins>
+
+			<!-- 
+			https://devcenter.heroku.com/articles/deploying-java-applications-with-the-heroku-maven-plugin 
+			https://stackoverflow.com/questions/39197334/automated-heroku-deploy-from-subfolder
+			-->
+			<plugin>
+				<groupId>com.heroku.sdk</groupId>
+				<artifactId>heroku-maven-plugin</artifactId>
+				<version>2.0.16</version>
+				<configuration>
+					<appName>javaci-bank</appName>
+					<jdkVersion>1.8</jdkVersion>
+					<includes>
+						<include>javaci-bank-api/target/javaci-bank-api-0.0.1-SNAPSHOT.jar</include>
+					</includes>
+					<processTypes>
+						<web>java $JAVA_OPTS -jar javaci-bank-api-0.0.1-SNAPSHOT.jar -Dserver.port=$PORT $JAR_OPTS</web>
+					</processTypes>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
 
 	<modules>
 		<module>javaci-bank-db</module>
