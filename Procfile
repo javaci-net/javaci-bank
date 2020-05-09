@@ -1,1 +1,1 @@
-web: java -jar javaci-bank-api\target\javaci-bank-api-0.0.1-SNAPSHOT.jar -Dserver.port=$PORT $JAR_OPTS $JAVA_OPTS 
+web: java -jar javaci-bank-api/target/javaci-bank-api-0.0.1-SNAPSHOT.jar -Dserver.port=$PORT $JAR_OPTS $JAVA_OPTS 
