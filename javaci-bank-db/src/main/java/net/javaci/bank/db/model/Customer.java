@@ -17,30 +17,16 @@ import lombok.Setter;
 
 @Entity
 @Getter @Setter
-public class Customer {
+public class Customer extends UserEntityBase {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    private String name;
-
-    private String middleName;
-
-    private String lastName;
-
     private String address;
     
-    private String email;
-    
-    private String phoneNumber;
-    
-    private String identityNo;
-
     private LocalDate birthDate;
     
-    private String password;
-
     @OneToMany(
             mappedBy = "customer",
             cascade = PERSIST,

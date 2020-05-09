@@ -35,10 +35,22 @@ public class CustomerInfoController {
                 .collect(Collectors.toList());
     }
 
-    @PostMapping("/add")
+    @PostMapping("/add-update")
     @ResponseBody
     public CustomerDto add(@RequestBody CustomerDto newCustomerDto) {
         return convertToEntity( customerDao.save(modelMapper.map(newCustomerDto, Customer.class)) );
+    }
+    
+    @PostMapping("/change-password")
+    @ResponseBody
+    public boolean changePassword(String currentPassword, String newPassword, String newPasswordRetype)  {
+        return false;
+    }
+    
+    @PostMapping("/login")
+    @ResponseBody
+    public CustomerDto login(String userName, String password)  {
+        return null;
     }
 
     /* --------------------------------------------- */
