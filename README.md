@@ -3,7 +3,14 @@
 Javaci Banking System
 
 Git: <https://github.com/javaci-net/javaci-bank>
+
 Project: <https://github.com/orgs/javaci-net/projects/2>
+
+You can access live site from following urls :
+
+[Local Url](http://localhost:8080/api.html# "Local")  
+[Domain Url](http://www.javacibank.com/api.html# "Javacibank.com")  
+[Heroku Url](https://javaci-bank.herokuapp.com/api.html# "Herokuapp")  
 
 ## Database
 
@@ -16,11 +23,11 @@ Access /h2-console/ for admin console
 
 ## API
 
-You can access Swagger documentation from folowing urls :
+You can access Swagger documentation from following urls :
 
-[Local Url](http://localhost:8080/swagger-ui.html# "Local")  
-[Domain Url](http://www.javacibank.com/swagger-ui.html# "Javacibank.com")  
-[Heroku Url](https://javaci-bank.herokuapp.com/swagger-ui.html# "Herokuapp")  
+[Local Url](http://localhost:8080/api.html# "Local")  
+[Domain Url](http://www.javacibank.com/api.html# "Javacibank.com")  
+[Heroku Url](https://javaci-bank.herokuapp.com/api.html# "Herokuapp")  
 
 
 ------------------------------------------------------------
