@@ -8,8 +8,15 @@ Project: <https://github.com/orgs/javaci-net/projects/2>
 ## Database
 
 Uses H2 db by default
+Access /h2-console/ for admin console
+
+[Local Url](http://localhost:8080/h2-console/ "Local")  
+[Domain Url](http://www.javacibank.com/h2-console/ "Javacibank.com")  
+[Heroku Url](https://javaci-bank.herokuapp.com/h2-console/ "Herokuapp")  
 
 ## API
+
+You can access Swagger documentation from folowing urls :
 
 [Local Url](http://localhost:8080/swagger-ui.html# "Local")  
 [Domain Url](http://www.javacibank.com/swagger-ui.html# "Javacibank.com")  
@@ -60,7 +67,8 @@ Code contains unit test that can be executed using maven test goal.
 ### Heroku Configuration
 
 *   [Deploy](https://devcenter.heroku.com/articles/deploying-java-applications-with-the-heroku-maven-plugin "Heroku Deploy")  
-*   [Subfolder Config Option](https://devcenter.heroku.com/articles/deploying-java-applications-with-the-heroku-maven-plugin "Heroku Subfolder Config Option")  
+*   [Subfolder Config Option](https://devcenter.heroku.com/articles/deploying-java-applications-with-the-heroku-maven-plugin "Heroku Subfolder Config Option")  : Not a good option, use Proc file instead
+
 
 ------------------------------------------------------------
 
