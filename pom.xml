@@ -79,12 +79,27 @@
 				<configuration>
 					<appName>javaci-bank</appName>
 					<jdkVersion>1.8</jdkVersion>
+
+					<includeTarget>false</includeTarget>
 					<includes>
 						<include>javaci-bank-api/target/javaci-bank-api-0.0.1-SNAPSHOT.jar</include>
 					</includes>
+					
 					<processTypes>
 						<web>java $JAVA_OPTS -jar javaci-bank-api-0.0.1-SNAPSHOT.jar -Dserver.port=$PORT $JAR_OPTS</web>
 					</processTypes>
+					
+					<!-- 
+					<configVars>
+					  <PROJECT_PATH>javaci-bank-api</PROJECT_PATH>
+					  <JAVA_OPTS>-Xss512k -XX:+UseCompressedOops</JAVA_OPTS>
+					</configVars>
+					
+					<buildpacks>
+						<buildpack>https://github.com/timanovsky/subdir-heroku-buildpack.git</buildpack>
+						<buildpack>heroku/java</buildpack>
+					</buildpacks>
+					 -->
 				</configuration>
 			</plugin>
 		</plugins>
