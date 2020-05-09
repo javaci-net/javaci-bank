@@ -1,0 +1,17 @@
+Notlar
+	Listelemek ekranlarında tablo alanlarına göre filtreler olsun
+	
+	List Transection ekranında Sender / reciver  Customer number linki customer detayına gitsin
+	
+	Customer onaylandığında o customer için bir adety Account oluşturulsun
+
+	Employee yeni employee kaydettiginde ona bir password generate edilsin ve ilk girisinde password değiştirmeye zorların. 
+	Bu password değiştirmeye zorlama işi login sonrası kontrol edilip change password sayfasına gitmesi içinzorlanabilir kullanızı (Customer için de aynı)
+	
+Servisler: 
+
+	Bekleyen task sayısı Responce{number, taskName}
+	
+	
+
+
