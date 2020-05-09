@@ -20,25 +20,45 @@ import net.javaci.bank.db.model.Customer;
 @RequestMapping("/api/customer-info")
 public class CustomerInfoController {
 
-	@Autowired
-	private CustomerDao customerDao;
-	
-	@Autowired
-	private ModelMapper modelMapper;
-	
-	@GetMapping("/list")
-	@ResponseBody
-	public List<CustomerDto> listAll() {
-		return customerDao.findAll()
-				.stream()
-				.map( customer -> modelMapper.map(customer, CustomerDto.class) )
-				.collect(Collectors.toList());
-	}
-	
-	@PostMapping("/add")
-	@ResponseBody
-	public Customer add(@RequestBody CustomerDto newCustomerDto) {
-		return customerDao.save(modelMapper.map(newCustomerDto, Customer.class));
-	}
-	
+    @Autowired
+    private CustomerDao customerDao;
+
+    @Autowired
+    private ModelMapper modelMapper;
+
+    @GetMapping("/list")
+    @ResponseBody
+    public List<CustomerDto> listAll() {
+        return customerDao.findAll()
+                .stream()
+                .map( this::convertToEntity )
+                .collect(Collectors.toList());
+    }
+
+    @PostMapping("/add-update")
+    @ResponseBody
+    public CustomerDto add(@RequestBody CustomerDto newCustomerDto) {
+        return convertToEntity( customerDao.save(modelMapper.map(newCustomerDto, Customer.class)) );
+    }
+    
+    @PostMapping("/change-password")
+    @ResponseBody
+    public boolean changePassword(String currentPassword, String newPassword, String newPasswordRetype)  {
+        return false;
+    }
+    
+    @PostMapping("/login")
+    @ResponseBody
+    public CustomerDto login(String userName, String password)  {
+        return null;
+    }
+
+    /* --------------------------------------------- */
+    /* HELPER METHOD(S) */
+    /* --------------------------------------------- */
+    
+    private CustomerDto convertToEntity(Customer customer) {
+        return modelMapper.map(customer, CustomerDto.class);
+    }
+    
 }

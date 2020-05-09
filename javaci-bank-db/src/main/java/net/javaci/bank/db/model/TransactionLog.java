@@ -1,6 +1,7 @@
 package net.javaci.bank.db.model;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.Currency;
 
 import javax.persistence.Column;
@@ -21,40 +22,42 @@ import lombok.Getter;
 import lombok.Setter;
 import net.javaci.bank.db.converter.CurrencyConverter;
 
+/**
+ * The Transactions resource represents the known transactions on the account.
+ * Each individual Transaction resource represents an individual transaction on
+ * the account either posted or pending.
+ */
 @Entity
 @Getter @Setter
-public class Account {
+public class TransactionLog {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "account_id", nullable = false)
     private Long id;
-
+    
+    /** The id of the account that the transaction belongs to. */
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "account_fk", nullable = false)
+    private Account account;
+    
+    /** The signed amount of the transaction */
     @NotNull
-    @Column(name = "account_name", nullable = false)
-    private String accountName;
-
-    @Column(name = "description", nullable = true)
-    private String description;
-
-    @NotNull
-    @Enumerated(EnumType.STRING)
-    @Column(name = "account_type", nullable = false)
-    private AccountType accountType;
-
+    @Column(name = "amount", nullable = false)
+    private BigDecimal amount;
+    
     /** The <a href="https://en.wikipedia.org/wiki/ISO_8601">ISO 8601</a> currency code of the account. */
-    @NotNull
     @Convert(converter = CurrencyConverter.class)
     @Column(name = "currency_code", nullable = false)
-    private Currency currency;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "customer_fk", nullable = false)
-    private Customer customer;
-
+    private Currency currency; 
+    
+    private LocalDate date;
+    
+    /** The unstructured transaction description as it appears on the bank statement. */
+    private String description;
+    
     @NotNull
-    @Column(name = "balance", nullable = false)
-    private BigDecimal balance;
-
-
+    @Enumerated(EnumType.STRING)
+    @Column(name = "transaction_log_type", nullable = false)
+    private TransactionLogType transactionLogType;
 }
