@@ -7,7 +7,7 @@ Project: <https://github.com/orgs/javaci-net/projects/2>
 
 ## Database
 
-Uses H2 db by default
+Uses embdedded H2 db by default (jdbc:h2:mem:testdb)
 Access /h2-console/ for admin console
 
 [Local Url](http://localhost:8080/h2-console/ "Local")  
