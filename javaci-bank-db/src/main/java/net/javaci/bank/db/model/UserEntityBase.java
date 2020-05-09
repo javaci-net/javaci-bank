@@ -1,10 +1,8 @@
 package net.javaci.bank.db.model;
 
-import javax.persistence.Column;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
+import java.time.LocalDate;
 
-import com.sun.istack.NotNull;
+import javax.persistence.Column;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -12,23 +10,22 @@ import lombok.Setter;
 @Getter @Setter
 public abstract class UserEntityBase {
 
+    private String citizenNumber;
+    
     private String name;
 
+    @Column(nullable = true)
     private String middleName;
 
     private String lastName;
     
-    private String identityNo;
+    private LocalDate birthDate;
     
     private String email;
     
-    private String password;
-    
-    @Column(name = "description", nullable = true)
+    @Column(nullable = true)
     private String phoneNumber;
     
-    @NotNull
-    @Enumerated(EnumType.STRING)
-    @Column(name = "status", nullable = false)
-    private StatusType status;
+    private String password;
+    
 }
