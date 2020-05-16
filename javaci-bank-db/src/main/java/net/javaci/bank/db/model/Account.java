@@ -16,6 +16,7 @@ import javax.persistence.ManyToOne;
 import lombok.Getter;
 import lombok.Setter;
 import net.javaci.bank.db.model.enumaration.AccountCurrrency;
+import net.javaci.bank.db.model.enumaration.AccountStatusType;
 
 @Entity
 @Getter @Setter
@@ -28,6 +29,9 @@ public class Account {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "customer_fk", nullable = false)
     private Customer customer;
+    
+    @Column(nullable = false)
+    private String accountNumber;
 
     @Column(nullable = false)
     private String accountName;
@@ -41,5 +45,9 @@ public class Account {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private AccountCurrrency currency;
+    
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private AccountStatusType status;
 
 }

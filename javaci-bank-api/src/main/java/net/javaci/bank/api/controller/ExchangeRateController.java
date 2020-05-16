@@ -5,6 +5,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/foreign-exchange")
-public class ForeignExchangeController {
+public class ExchangeRateController {
 
 }

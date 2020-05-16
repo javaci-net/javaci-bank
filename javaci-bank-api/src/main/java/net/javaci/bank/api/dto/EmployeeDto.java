@@ -10,6 +10,6 @@ import lombok.Setter;
 public class EmployeeDto extends UserBaseDto {
 	
 	@NotEmpty
-    @ApiModelProperty(position = 9, required = true,  value = "statu", example = "ACTIVE", allowableValues="ACTIVE, INACTIVE")
-    private String statu;
+    @ApiModelProperty(position = 101, required = true,  value = "status", example = "INACTIVE", allowableValues="ACTIVE, INACTIVE")
+    private String status;
 }

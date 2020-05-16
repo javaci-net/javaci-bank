@@ -16,6 +16,14 @@ public class ModelMapperConfig {
     public ModelMapper modelMapper() {
         final ModelMapper modelMapper = new ModelMapper();
         modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
+        /*
+        modelMapper.addMappings(new PropertyMap<Account, AccountAddRequestDto>() {
+            @Override
+            protected void configure() {
+                map().setCustomer(source.getCustomer().getId());
+            }
+        });
+        */
         modelMapper.addMappings(new PropertyMap<Account, AccountDto>() {
             @Override
             protected void configure() {

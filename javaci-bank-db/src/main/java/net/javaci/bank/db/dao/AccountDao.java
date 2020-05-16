@@ -10,5 +10,7 @@ import net.javaci.bank.db.model.Account;
 @Transactional
 @Repository
 public interface AccountDao extends JpaRepository<Account, Long> {
+	
+	int countByCustomerId(Long customerId);
 
 }
