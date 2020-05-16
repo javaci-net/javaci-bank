@@ -31,24 +31,24 @@
 			<artifactId>modelmapper</artifactId>
 			<version>2.3.7</version>
 		</dependency>
-		
+
 		<dependency>
-		    <groupId>com.github.chhsiao90</groupId>
-		    <artifactId>modelmapper-module-java8-datatypes</artifactId>
-		    <version>1.2.0</version>
+			<groupId>com.github.chhsiao90</groupId>
+			<artifactId>modelmapper-module-java8-datatypes</artifactId>
+			<version>1.2.0</version>
 		</dependency>
-		
+
 		<dependency>
-		    <groupId>com.github.chhsiao90</groupId>
-		    <artifactId>modelmapper-module-jsr310</artifactId>
-		    <version>1.2.0</version>
+			<groupId>com.github.chhsiao90</groupId>
+			<artifactId>modelmapper-module-jsr310</artifactId>
+			<version>1.2.0</version>
 		</dependency>
 
 		<!-- https://www.baeldung.com/java-money-and-currency -->
 		<dependency>
-		    <groupId>org.javamoney</groupId>
-		    <artifactId>moneta</artifactId>
-		    <version>1.1</version>
+			<groupId>org.javamoney</groupId>
+			<artifactId>moneta</artifactId>
+			<version>1.1</version>
 		</dependency>
 
 		<dependency>
@@ -87,8 +87,13 @@
 			<version>${swagger.springfox.version}</version>
 		</dependency>
 
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-validation</artifactId>
+		</dependency>
+
 	</dependencies>
-	
+
 	<build>
 		<plugins>
 			<plugin>
@@ -106,10 +111,8 @@
 				</configuration>
 			</plugin>
 
-			<!-- 
-			https://devcenter.heroku.com/articles/deploying-java-applications-with-the-heroku-maven-plugin 
-			https://stackoverflow.com/questions/39197334/automated-heroku-deploy-from-subfolder
-			-->
+			<!-- https://devcenter.heroku.com/articles/deploying-java-applications-with-the-heroku-maven-plugin 
+				https://stackoverflow.com/questions/39197334/automated-heroku-deploy-from-subfolder -->
 			<plugin>
 				<groupId>com.heroku.sdk</groupId>
 				<artifactId>heroku-maven-plugin</artifactId>
@@ -121,7 +124,8 @@
 						<include>javaci-bank-api/target/javaci-bank-api-0.0.1-SNAPSHOT.jar</include>
 					</includes>
 					<processTypes>
-						<web>java $JAVA_OPTS -jar javaci-bank-api-0.0.1-SNAPSHOT.jar -Dserver.port=$PORT $JAR_OPTS</web>
+						<web>java $JAVA_OPTS -jar javaci-bank-api-0.0.1-SNAPSHOT.jar
+							-Dserver.port=$PORT $JAR_OPTS</web>
 					</processTypes>
 				</configuration>
 			</plugin>
