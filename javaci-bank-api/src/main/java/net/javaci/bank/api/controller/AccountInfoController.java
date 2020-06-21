@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -23,6 +24,7 @@ import net.javaci.bank.db.model.Account;
 import net.javaci.bank.db.model.Customer;
 import net.javaci.bank.util.AccountNumberGenerator;
 
+@Slf4j
 @RestController
 @RequestMapping("/api/account-info")
 public class AccountInfoController {
@@ -48,6 +50,7 @@ public class AccountInfoController {
 	@PostMapping("/add")
 	@ResponseBody
 	public Long add(@RequestBody AccountAddRequestDto newAccountDto) {
+		log.debug("Adding customer: " + newAccountDto);
 		final Optional<Customer> customerOptional = customerDao.findById(newAccountDto.getCustomer());
 		if (!customerOptional.isPresent()) {
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Customer does not exists with ID: " + newAccountDto.getCustomer());

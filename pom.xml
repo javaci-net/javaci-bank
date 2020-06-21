@@ -109,6 +109,6 @@
 		<module>javaci-bank-db</module>
 		<module>javaci-bank-api</module>
 		<module>javaci-bank-util</module>
-	</modules>
+    </modules>
 	
 </project>

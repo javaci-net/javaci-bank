@@ -3,8 +3,7 @@ package net.javaci.bank.api.dto;
 import javax.validation.constraints.NotEmpty;
 
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 @Getter @Setter
 public class CustomerDto extends UserBaseDto {

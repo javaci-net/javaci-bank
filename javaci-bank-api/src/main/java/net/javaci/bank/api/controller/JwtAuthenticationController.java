@@ -2,6 +2,7 @@ package net.javaci.bank.api.controller;
 
 import java.util.Objects;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,6 +24,7 @@ import net.javaci.bank.api.model.JwtRequest;
 import net.javaci.bank.api.model.JwtResponse;
 import net.javaci.bank.api.security.JwtTokenUtil;
 
+@Slf4j
 @RestController
 @CrossOrigin
 public class JwtAuthenticationController {
@@ -54,13 +56,16 @@ public class JwtAuthenticationController {
 	private void authenticate(String username, String password) throws Exception {
 		Objects.requireNonNull(username);
 		Objects.requireNonNull(password);
-
+		log.debug("Authenticating user:" + username);
 		try {
 			authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
 		} catch (DisabledException e) {
+			log.info("User disabled:" + username);
 			throw new ResponseStatusException(HttpStatus.UNAUTHORIZED,"USER_DISABLED");
 		} catch (BadCredentialsException e) {
+			log.info("User gave bad credentials:" + username);
 			throw new ResponseStatusException(HttpStatus.UNAUTHORIZED,"INVALID_CREDENTIALS");
 		}
+		log.info("User authenticated:" + username);
 	}
 }

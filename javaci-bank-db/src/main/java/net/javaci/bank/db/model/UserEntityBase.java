@@ -2,26 +2,22 @@ package net.javaci.bank.db.model;
 
 import java.time.LocalDate;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
+import javax.persistence.*;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 @Entity
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
-@Getter @Setter
+@Getter @Setter @ToString
 public abstract class UserEntityBase {
 	
 	@Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @Column(unique = true)
     private String citizenNumber;
     
     private String name;
@@ -37,7 +33,8 @@ public abstract class UserEntityBase {
     
     @Column(nullable = true)
     private String phoneNumber;
-    
-    private String password;
+
+    @ToString.Exclude
+    private transient String password;
     
 }

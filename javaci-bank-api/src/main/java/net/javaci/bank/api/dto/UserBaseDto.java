@@ -5,14 +5,17 @@ import java.time.LocalDate;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 
+import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Getter;
-import lombok.Setter;
 
-@Getter @Setter
+@Getter @Setter @ToString
 public abstract class UserBaseDto {
+
+    @NotEmpty
+    @ApiModelProperty(position = 1, required = true,  value = "id", example = "Not used id add method. " )
+    private Long id;
 
 	@NotEmpty
     @ApiModelProperty(position = 1, required = true,  value = "citizen number", example = "12345678901" )
@@ -39,5 +42,5 @@ public abstract class UserBaseDto {
     
     @ApiModelProperty(position = 7, required = false,  value = "phone number", example = "5491111111" )
     private String phoneNumber;
-    
+
 }
