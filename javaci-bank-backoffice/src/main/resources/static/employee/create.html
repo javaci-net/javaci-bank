@@ -29,30 +29,42 @@
                                 <div class="card shadow-lg border-0 rounded-lg mt-5">
                                     <div class="card-header"><h3 class="text-center font-weight-light my-4">Create Employee</h3></div>
                                     <div class="card-body">
-                                        <form action="/employee/create" method="post">
+                                    
+                                        <form th:action="@{/employee/create}" th:object="${employee}" method="post">
                                             <div class="form-row">
-                                                <div class="col-md-6">
+                                                <div class="col-md-4">
                                                     <div class="form-group">
                                                         <label class="small mb-1" for="inputFirstName">First Name</label>
-                                                        <input class="form-control py-4" id="inputFirstName" type="text" placeholder="Enter first name" />
+                                                        <input class="form-control py-4" id="inputFirstName" type="text" placeholder="Enter first name" 
+                                                        	th:field="*{name}" />
                                                     </div>
                                                 </div>
-                                                <div class="col-md-6">
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label class="small mb-1" for="inputMiddleName">Middle Name</label>
+                                                        <input class="form-control py-4" id="inputMiddleName" type="text" placeholder="Enter middle name" 
+                                                        	th:field="*{middleName}" />
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
                                                     <div class="form-group">
                                                         <label class="small mb-1" for="inputLastName">Last Name</label>
-                                                        <input class="form-control py-4" id="inputLastName" type="text" placeholder="Enter last name" />
+                                                        <input class="form-control py-4" id="inputLastName" type="text" placeholder="Enter last name" 
+                                                        	th:field="*{lastName}" />
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="form-group">
                                                 <label class="small mb-1" for="inputEmailAddress">Email</label>
-                                                <input class="form-control py-4" id="inputEmailAddress" type="email" aria-describedby="emailHelp" placeholder="Enter email address" />
+                                                <input class="form-control py-4" id="inputEmailAddress" type="email" aria-describedby="emailHelp" placeholder="Enter email address" 
+                                                	th:field="*{email}"/>
                                             </div>
                                             <div class="form-row">
                                                 <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label class="small mb-1" for="inputPassword">Password</label>
-                                                        <input class="form-control py-4" id="inputPassword" type="password" placeholder="Enter password" />
+                                                        <input class="form-control py-4" id="inputPassword" type="password" placeholder="Enter password" 
+                                                        	th:field="*{password}"/>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">

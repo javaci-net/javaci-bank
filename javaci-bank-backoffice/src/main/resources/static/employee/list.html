@@ -23,7 +23,9 @@
         
             <div id="layoutSidenav_content">
                 <main>
-                	employee list
+                	<div th:each="e : ${employees}" class="card">
+                		<p class="card-subtitle mb-2 text-muted" th:text="${e.name}">Name</p>
+                	</div>
                 </main>
                 
                	<th:block th:insert="/fragments/common.html :: footer"></th:block>
