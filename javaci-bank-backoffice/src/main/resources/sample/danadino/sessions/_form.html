@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<body>
+<div th:fragment="form">
+    <input th:value="${session.id}" type="hidden" name="id" >
+    <input th:value="${movieId}" type="hidden" name="movieId" >
+    <div class="form-group">
+        <label for="title">Movie Name</label>
+        <input th:value="${movieName}" type="text" class="form-control" id="movieName"  name="movieName" disabled="true" aria-describedby="titleHelp" placeholder="Enter movie title" required>
+        <small id="titleHelp" class="form-text text-muted">Please input the movie's title.</small>
+    </div>
+    <div class="form-group">
+        <label for="title">Date</label>
+        <input th:value="${session.date}" type="text" class="form-control" id="date"  name="date" aria-describedby="titleHelp" placeholder="Ex. 28.02.20" required>
+        <small id="titleHelp" class="form-text text-muted">Please input the movie's title.</small>
+    </div>
+    <div class="form-group">
+        <label for="releaseYear">Time</label>
+        <input th:value="${session.time}" type="text" class="form-control" id="time" name="time" placeholder="Ex. 18:00" required>
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+</div>
+</body>

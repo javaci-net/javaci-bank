@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <!-- Common head content is included from common.html  -->
+    <th:block th:include="/views/fragments/common.html :: commonhead"></th:block>
+
+    <!-- Include custom head for this head after this line -->
+    <title>Page Title</title>
+
+    <!-- You can create a css with styles only for this page -->
+    <!-- <link href="/css/yourpage.css" rel="stylesheet">-->
+</head>
+
+<body>
+
+<!-- Nav bar is located in common.html -->
+<header th:replace="/views/fragments/common.html :: header"></header>
+
+<!-- Begin THIS page content -->
+<main role="main" class="container ">
+    <h1>Movies Currently Playing in our Theaters  <a class="btn btn-success" href="/movies/new" role="button">Create a new Movie</a></h1>
+
+
+    <div class="card-columns">
+        <div th:each="movie : ${movies}" class="card">
+            <div class="card-body">
+                <h4 class="card-title" th:text="${movie.title}">Card title</h4>
+                <h6 class="card-subtitle mb-2 text-muted" th:text="${movie.releaseYear}">Card subtitle</h6>
+                <p class="card-text" th:text="${#strings.abbreviate(movie.synopsis,120)}">Some quick example text to build on the card title and
+                    make up the bulk of the card's content.</p>
+                <a th:unless="${user_logged_in}" class="btn btn-success btn-lg" href="/login">Get A Ticket!</a>
+                <a th:if="${user_logged_in}" class="btn btn-success btn-lg" href="/sessions">Get A Ticket!</a>
+                    
+                <a th:href="@{/movies/{id}(id=${movie.id})}" class="btn btn-outline-info card-link">See More</a>
+                <a class="btn btn-success" th:href="@{/sessions/new/{movieId}(movieId=${movie.id})}"
+                 role="button">Create a new session for the movie</a>
+
+            </div>
+        </div>
+    </div>
+</main>
+<!-- End THIS page content -->
+
+
+<!-- Footer is located in common.html -->
+<footer class="footer" th:replace="/views/fragments/common.html :: footer"></footer>
+
+<!-- Bootstrap Scripts  -->
+<th:block th:include="/views/fragments/common.html :: scripts"></th:block>
+</body>
+</html>

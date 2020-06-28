@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <!-- Common head content is included from common.html  -->
+    <th:block th:include="/views/fragments/common.html :: commonhead"></th:block>
+
+    <!-- Include custom head for this head after this line -->
+    <title>Page Title</title>
+
+    <!-- You can create a css with styles only for this page -->
+    <!-- <link href="/css/yourpage.css" rel="stylesheet">-->
+</head>
+
+<body>
+
+<!-- Nav bar is located in common.html -->
+<header th:replace="/views/fragments/common.html :: header"></header>
+
+<!-- Begin THIS page content -->
+<main role="main" class="container ">
+    <h1>Page content goes here</h1>
+</main>
+<!-- End THIS page content -->
+
+
+<!-- Footer is located in common.html -->
+<footer class="footer" th:replace="/views/fragments/common.html :: footer"> </footer>
+
+<!-- Bootstrap Scripts  -->
+<th:block th:include="/views/fragments/common.html :: scripts"></th:block>
+</body>
+</html>

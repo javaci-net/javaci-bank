@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <!-- Common head content is included from common.html  -->
+    <th:block th:include="/views/fragments/common.html :: commonhead"></th:block>
+
+    <!-- Include custom head for this head after this line -->
+    <title>Donadoni Cinemas</title>
+    <link href="/css/welcome.css" rel="stylesheet">
+</head>
+
+<body>
+
+<!-- Nav bar is located in common.html -->
+<header th:replace="/views/fragments/common.html :: header"></header>
+
+<!-- Begin THIS page content -->
+<main role="main" class="container ">
+
+    <div class="jumbotron">
+        <h1 class="display-4">Welcome to Donadoni Cinemas</h1>
+        <p class="lead">Best place to enjoy a Movie with Friends and Family!</p>
+        <hr class="my-4">
+        <h4>Today is</h4>
+        <p class="lead" th:text="${date}">Feb 2, 2020></p>
+        <p class="lead" th:text="${#dates.format(date, 'dd-MM-yyyy HH:mm')}"></p>
+        <hr class="my-4">
+        <p class="lead">
+            <a th:unless="${user_logged_in}" class="btn btn-success btn-lg" href="/login">Book a Ticket Now!</a>
+            <a th:if="${user_logged_in}" class="btn btn-success btn-lg" href="/sessions">Book a Ticket Now!</a>
+        </p>
+    </div>
+    <div>
+        <img src="images/popcorn.jpg" class="welcome-img">
+    </div>
+
+</main>
+<!-- End THIS page content -->
+
+<!-- Footer is located in common.html -->
+<footer class="footer" th:replace="/views/fragments/common.html :: footer"> </footer>
+
+<!-- Bootstrap Scripts  -->
+<th:block th:include="/views/fragments/common.html :: scripts"></th:block>
+</body>
+</html>
