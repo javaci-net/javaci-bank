@@ -23,8 +23,9 @@
         
             <div id="layoutSidenav_content">
                 <main>
+                	<h2> Employees </h2>
                 	<div th:each="e : ${employees}" class="card">
-                		<p class="card-subtitle mb-2 text-muted" th:text="${e.name}">Name</p>
+                		<h6 class="card-subtitle mb-2 text-muted" th:text="${e.name + ' ' + e.middleName + '&nbsp;' + e.lastName}">Card subtitle</h6>
                 	</div>
                 </main>
                 

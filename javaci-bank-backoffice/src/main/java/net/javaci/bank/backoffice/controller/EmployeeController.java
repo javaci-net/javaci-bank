@@ -29,7 +29,7 @@ public class EmployeeController {
     public String handleCreate(@ModelAttribute Employee employee) {
         employee.setStatus(EmployeeStatusType.INACTIVE);
         employeeDao.save(employee);
-        return "employee/list";
+        return "redirect:/employee/list";
     }
     
     @GetMapping("/list")
