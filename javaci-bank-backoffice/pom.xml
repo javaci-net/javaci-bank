@@ -29,7 +29,13 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-security</artifactId>
 		</dependency>
-
+		
+		<dependency>
+			<groupId>net.javaci.bank</groupId>
+			<artifactId>javaci-bank-db</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		
 	</dependencies>
 
 	<build>
