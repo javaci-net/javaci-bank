@@ -29,8 +29,9 @@
                                 <div class="card shadow-lg border-0 rounded-lg mt-5">
                                     <div class="card-header"><h3 class="text-center font-weight-light my-4">Create Employee</h3></div>
                                     <div class="card-body">
-                                    
-                                        <form th:action="@{/employee/create}" th:object="${employee}" method="post">
+                                        <form th:action="@{/employee/create}" th:object="${employeeDto}" method="post">
+                                        	<ul> <li th:each="err : ${#fields.errors('all')}" th:text="${err}" /> </ul>
+											<ul> <li th:each="err : ${#fields.errors('global')}" th:text="${err}" /> </ul>
                                             <div class="form-row">
                                                 <div class="col-md-4">
                                                     <div class="form-group">
@@ -70,7 +71,9 @@
                                                 <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label class="small mb-1" for="inputConfirmPassword">Confirm Password</label>
-                                                        <input class="form-control py-4" id="inputConfirmPassword" type="password" placeholder="Confirm password" />
+                                                        <input class="form-control py-4" id="inputConfirmPassword" type="password" placeholder="Confirm password" 
+                                                        	th:field="*{confirmPassword}"/>
+                                                        <p th:if="${#fields.hasErrors('confirmPassword')}" th:errors="*{confirmPassword}">Error</p>
                                                     </div>
                                                 </div>
                                             </div>
