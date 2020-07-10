@@ -1,46 +1,81 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
     <head>
-	    <!-- Common head content is included from common.html  -->
-	    <th:block th:insert="/fragments/common.html :: commonhead"></th:block>
-	
-	    <!-- Include custom head for this head after this line -->
-	    <title>Javaci Bank - Create Employee</title>
-	
-	    <!-- You can create a css with styles only for this page -->
-	    <!-- <link href="/css/yourpage.css" rel="stylesheet">-->
-        
+	    <th:block th:insert="/fragments/common.html :: head"></th:block>
+	    <title>Javaci Bank - List Employee</title>
     </head>
     <body class="sb-nav-fixed">
-    
     	<th:block th:insert="/fragments/common.html :: top_menu"></th:block>
-
         <div id="layoutSidenav">
-        
         	<th:block th:insert="/fragments/common.html :: left_menu"></th:block>
-        
             <div id="layoutSidenav_content">
                 <main>
-                	<h2> Employees </h2>
-                	<div th:each="e : ${employees}" class="card">
-                		<h6 class="card-subtitle mb-2 text-muted" th:text="${e.name + ' ' + e.middleName + '&nbsp;' + e.lastName}">Card subtitle</h6>
-                	</div>
+					<br/><br/>
+    				<div class="container-fluid">
+                        <div class="card mb-4">
+                            <div class="card-header">
+                                <i class="fas fa-table mr-1"></i>
+                                Employees
+                            </div>
+                            <div class="card-body">
+                            	<a href="/employee/create" class="button">Create New Employee</a>
+                            	<br/><br/>
+                                <div class="table-responsive">
+                                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                        <thead>
+                                            <tr>
+                                                <th>ID</th>
+                                                <th>citizen Number</th>
+                                                <th>First Name</th>
+                                                <th>Middle Name</th>
+                                                <th>Last Name</th>
+                                                <th>birthDate</th>
+                                                <th>Email</th>
+                                                <th>Phone number</th>
+                                                <th>Statu</th>
+                                                <th>Update</th>
+                                            </tr>
+                                        </thead>
+                                        <tfoot>
+                                            <tr>
+                                                <th>ID</th>
+                                                <th>citizen Number</th>
+                                                <th>First Name</th>
+                                                <th>Middle Name</th>
+                                                <th>Last Name</th>
+                                                <th>birthDate</th>
+                                                <th>Email</th>
+                                                <th>Phone number</th>
+                                                <th>Statu</th>
+                                                <th>Update</th>
+                                            </tr>
+                                        </tfoot>
+                                        <tbody>
+                                        	<div th:each="e : ${employees}" class="card">
+	                                            <tr>
+	                                                <td th:text="${e.id}"></td>
+	                                                <td th:text="${e.citizenNumber}"></td>
+	                                                <td th:text="${e.firstName}"></td>
+	                                                <td th:text="${e.middleName}"></td>
+	                                                <td th:text="${e.lastName}"></td>
+	                                                <td th:text="${e.birthDate}"></td>
+	                                                <td th:text="${e.email}"></td>
+	                                                <td th:text="${e.phoneNumber}"></td>
+	                                                <td th:text="${e.status}"></td>
+	                                                <td><a th:href="@{/employee/update/{id}(id=${e.id})}">UPDATE</a></td>
+	                                            </tr>
+                                            </div>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
                 </main>
-                
                	<th:block th:insert="/fragments/common.html :: footer"></th:block>
-               	
-                
             </div>
         </div>
-        
-        <script src="https://code.jquery.com/jquery-3.5.1.min.js" crossorigin="anonymous"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
-        <script src="js/scripts.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
-        <script src="assets/demo/chart-area-demo.js"></script>
-        <script src="assets/demo/chart-bar-demo.js"></script>
-        <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js" crossorigin="anonymous"></script>
-        <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js" crossorigin="anonymous"></script>
-        <script src="assets/demo/datatables-demo.js"></script>
+        <th:block th:insert="/fragments/common.html :: script"></th:block>
     </body>
 </html>

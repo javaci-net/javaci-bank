@@ -20,7 +20,7 @@ public abstract class UserEntityBase {
     @Column(unique = true)
     private String citizenNumber;
     
-    private String name;
+    private String firstName;
 
     @Column(nullable = true)
     private String middleName;
