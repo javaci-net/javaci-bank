@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html th:lang="${lang}" xmlns:th="http://www.thymeleaf.org">
 <head>
 <th:block th:insert="/fragments/common.html :: head"></th:block>
 <title>Javaci Bank - Back Office</title>
@@ -13,8 +13,10 @@
 
 				<a th:href="@{/?lang=en}">index (English)</a> 
 				<a th:href="@{/?lang=tr}">index (Türkçe)</a> 
+				
 				<br /> 
 				<h1 th:text="#{welcomeMsg}"></h1>
+				
 
 			</main>
 			<th:block th:insert="/fragments/common.html :: footer"></th:block>

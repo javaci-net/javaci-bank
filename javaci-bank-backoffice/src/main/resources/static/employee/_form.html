@@ -11,37 +11,37 @@
 		</ul>
 		<div class="form-row">
 			<div class="col-md-12">
-				<label class="small mb-1" for="inputCitizenNumber">Citizen
-					Number</label> <input class="form-control py-4" id="inputCitizenNumber"
-					type="text" placeholder="Enter Citizen Number"
-					th:field="*{citizenNumber}" />
+				<label class="small mb-1" for="inputCitizenNumber"
+					th:text="#{employee.citizenNumber}"> </label> <input
+					class="form-control py-4" id="inputCitizenNumber" type="text"
+					placeholder="Enter Citizen Number" th:field="*{citizenNumber}" />
 			</div>
 		</div>
 		<div class="form-row">
 			<div class="col-md-4">
 				<div class="form-group">
-					<label class="small mb-1" for="inputFirstName">First Name</label> <input
+					<label class="small mb-1" for="inputFirstName" th:text="#{employee.firstName}"></label> <input
 						class="form-control py-4" id="inputFirstName" type="text"
 						placeholder="Enter first name" th:field="*{firstName}" />
 				</div>
 			</div>
 			<div class="col-md-4">
 				<div class="form-group">
-					<label class="small mb-1" for="inputMiddleName">Middle Name</label>
+					<label class="small mb-1" for="inputMiddleName" th:text="#{employee.middleName}"></label>
 					<input class="form-control py-4" id="inputMiddleName" type="text"
 						placeholder="Enter middle name" th:field="*{middleName}" />
 				</div>
 			</div>
 			<div class="col-md-4">
 				<div class="form-group">
-					<label class="small mb-1" for="inputLastName">Last Name</label> <input
+					<label class="small mb-1" for="inputLastName" th:text="#{employee.lastName}"></label> <input
 						class="form-control py-4" id="inputLastName" type="text"
 						placeholder="Enter last name" th:field="*{lastName}" />
 				</div>
 			</div>
 		</div>
 		<div class="form-group">
-			<label class="small mb-1" for="inputEmailAddress">Email</label> <input
+			<label class="small mb-1" for="inputEmailAddress" th:text="#{employee.email}"></label> <input
 				class="form-control py-4" id="inputEmailAddress" type="email"
 				aria-describedby="emailHelp" placeholder="Enter email address"
 				th:field="*{email}" />
@@ -49,13 +49,27 @@
 		<div class="form-row">
 			<div class="col-md-6">
 				<div class="form-group">
-					<label class="small mb-1" for="inputPhoneNumber">Phone
-						Number</label> <input class="form-control py-4" id="inputPhoneNumber"
+					<label class="small mb-1" for="inputPhoneNumber" th:text="#{employee.phoneNumber}"></label> <input class="form-control py-4" id="inputPhoneNumber"
 						type="text" placeholder="Enter phone number"
 						th:field="*{phoneNumber}" />
 				</div>
 			</div>
+			<div class="col-md-6">
+				<label class="small mb-1" for="selectStatus" th:text="#{employee.status}"></label> <select
+					class="form-control" id="selectStatus" th:field="*{status}">
+					<option
+						th:each="s : ${T(net.javaci.bank.db.model.enumaration.EmployeeStatusType).values()}"
+						th:value="${s}" th:text="${s}"></option>
+				</select>
+			</div>
+
 			<!-- 
+			
+			    <select class="form-control" id="selectStatus" th:field="*{status}">
+			    	<option th:value="'ACTIVE'" th:text="ACTIVE"></option>
+			    	<option th:value="'INACTIVE'" th:text="INACTIVE"></option>
+			    </select>
+			    
                                                 <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label class="small mb-1" for="inputBirthDate">Birth Date</label>
@@ -68,15 +82,14 @@
 		<div class="form-row">
 			<div class="col-md-6">
 				<div class="form-group">
-					<label class="small mb-1" for="inputPassword">Password</label> <input
+					<label class="small mb-1" for="inputPassword" th:text="#{employee.password}"></label> <input
 						class="form-control py-4" id="inputPassword" type="password"
 						placeholder="Enter password" th:field="*{password}" />
 				</div>
 			</div>
 			<div class="col-md-6">
 				<div class="form-group">
-					<label class="small mb-1" for="inputConfirmPassword">Confirm
-						Password</label> <input class="form-control py-4"
+					<label class="small mb-1" for="inputConfirmPassword" th:text="#{employee.confirmPassword}"></label> <input class="form-control py-4"
 						id="inputConfirmPassword" type="password"
 						placeholder="Confirm password" th:field="*{confirmPassword}" />
 					<p th:if="${#fields.hasErrors('confirmPassword')}"
