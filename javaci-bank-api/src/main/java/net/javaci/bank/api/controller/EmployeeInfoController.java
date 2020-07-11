@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -39,7 +40,7 @@ public class EmployeeInfoController {
 
 	@PostMapping("/add")
 	@ResponseBody
-	public Long add(@RequestBody EmployeeAddRequestDto newEmployeeDto) {
+	public Long add(@RequestBody EmployeeAddRequestDto newEmployeeDto, BindingResult bindingResult) {
 		Employee employee = employeeDao.save(convertToEntity(newEmployeeDto));
 		return employee.getId();
 	}

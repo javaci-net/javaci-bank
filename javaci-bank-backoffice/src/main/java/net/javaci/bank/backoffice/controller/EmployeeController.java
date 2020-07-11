@@ -1,5 +1,7 @@
 package net.javaci.bank.backoffice.controller;
 
+import javax.validation.Valid;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import net.javaci.bank.backoffice.dto.EmployeeCreateDto;
 import net.javaci.bank.db.dao.EmployeeDao;
@@ -26,7 +29,7 @@ public class EmployeeController {
 
 	@Autowired
 	private ModelMapper modelMapper;
-
+	
 	@GetMapping("/create")
 	public String renderCreatePage(Model model) {
 		model.addAttribute("employeeDto", new EmployeeCreateDto());
@@ -37,12 +40,13 @@ public class EmployeeController {
 	public String handleCreate(@ModelAttribute @Validated EmployeeCreateDto employeeDto, BindingResult bindingResult,
 			Model model) {
 
-		if (!validateInput(employeeDto, bindingResult, model)) {
-			return "redirect:error/javaScriptValidationIgnored";
-		}
-
 		Employee employeeEntity = new Employee();
 		modelMapper.map(employeeDto, employeeEntity);
+		
+		if (bindingResult.hasErrors()) {
+			return "redirect:error/javaScriptValidationIgnored";
+		}
+		
 		employeeDao.save(employeeEntity);
 		
 		return "redirect:/employee/list";
@@ -70,7 +74,7 @@ public class EmployeeController {
 	}
 
 	@PostMapping("/update/{id}")
-	public String handleUpdate(@ModelAttribute @Validated EmployeeCreateDto employeeDto, BindingResult bindingResult,
+	public String handleUpdate(@ModelAttribute @Valid EmployeeCreateDto employeeDto, BindingResult bindingResult,
 			Model model, @PathVariable("id") Long id) {
 		if (!validateInput(employeeDto, bindingResult, model)) {
 			return "redirect:error/javaScriptValidationIgnored";
@@ -87,5 +91,11 @@ public class EmployeeController {
 	public String renderListPage(Model model) {
 		model.addAttribute("employees", employeeDao.findAll());
 		return "employee/list";
+	}
+	
+	@GetMapping("/checkCitizenNumber/{citizenNumber}")
+	@ResponseBody
+	public boolean checkCitizenNumber(@PathVariable("citizenNumber") String citizenNumber) {
+		return employeeDao.existsByCitizenNumber(citizenNumber);
 	}
 }
