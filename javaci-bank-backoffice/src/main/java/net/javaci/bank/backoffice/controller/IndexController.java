@@ -12,7 +12,7 @@ public class IndexController {
     //@GetMapping(value = {"/index"})
     @GetMapping("/index")
     public String homePage(Model model) {
-        model.addAttribute("welcomeMsg", "Welcome To Javaci-Bank Backoffice");
-        return "employee/index";
+        model.addAttribute("welcomeMsgFromBean", "Welcome To Javaci-Bank Backoffice");
+        return "index";
     }
 }

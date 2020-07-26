@@ -1,6 +1,6 @@
 <!DOCTYPE html>
-<html th:lang="${lang}" xmlns:th="http://www.thymeleaf.org">
-<html lang="en">
+<html th:lang="${lang}" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
     <head>
         <meta charset="utf-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -19,39 +19,36 @@
                         <div class="row justify-content-center">
                             <div class="col-lg-5">
                                 <div class="card shadow-lg border-0 rounded-lg mt-5">
-                                    <div class="card-header"><h3 class="text-center font-weight-light my-4">Login</h3></div>
+                                    <div class="card-header"><h3 class="text-center font-weight-light my-4" th:text="#{login.title}"></h3></div>
                                     <div class="card-body">
                                         <div th:if="${param.error}">
-                                            <div class="alert alert-danger">Invalid username or password.</div>
+                                            <div class="alert alert-danger" th:text="#{login.invalidUsernameOrPassword}"></div>
                                         </div>
                                         <div th:if="${param.logout}">
-                                            <div class="alert alert-info">You have been logged out.</div>
+                                            <div class="alert alert-info" th:text="#{login.logoutInfoMessage}"></div>
                                         </div>
                                         <form th:action="@{/login}" method="post">
                                             <div class="form-group">
-                                                <label class="small mb-1" for="username">Email</label>
-                                                <input class="form-control py-4"  type="text" id="username" name="username"  autofocus="autofocus" placeholder="Username" />
+                                                <label class="small mb-1" for="username" th:text="#{login.email}"></label>
+                                                <input class="form-control py-4" type="text" id="username" name="username"  autofocus="autofocus" th:placeholder="#{login.email}" />
                                             </div>
                                             <div class="form-group">
-                                                <label class="small mb-1" for="password">Password</label>
-                                                <input  class="form-control py-4"  type="password"  id="password" name="password"  placeholder="Password" />
+                                                <label class="small mb-1" for="password" th:text="#{login.password}"></label>
+                                                <input  class="form-control py-4"  type="password"  id="password" name="password"  th:placeholder="#{login.password}" />
                                             </div>
                                             <div class="form-group">
                                                 <div class="custom-control custom-checkbox">
-                                                    <input class="custom-control-input" id="rememberPasswordCheck" type="checkbox" />
-                                                    <label class="custom-control-label" for="rememberPasswordCheck">Remember password</label>
+                                                    <input class="custom-control-input" id="remember-me" name="remember-me" type="checkbox" />
+                                                    <label class="custom-control-label" for="remember-me" th:text="#{login.rememberMe}"></label>
                                                 </div>
                                             </div>
                                             <div class="form-group d-flex align-items-center justify-content-between mt-4 mb-0">
-                                                <a class="small" href="password.html">Forgot Password?</a>
                                                 <input type="submit" name="login-submit" id="login-submit"
                                                        class=" btn btn-primary" value="Log In" />
                                             </div>
                                         </form>
                                     </div>
-                                    <div class="card-footer text-center">
-                                        <div class="small"><a href="register.html">Need an account? Sign up!</a></div>
-                                    </div>
+
                                 </div>
                             </div>
                         </div>
@@ -62,7 +59,7 @@
                 <footer class="py-4 bg-light mt-auto">
                     <div class="container-fluid">
                         <div class="d-flex align-items-center justify-content-between small">
-                            <div class="text-muted">Copyright &copy; Your Website 2020</div>
+                            <div class="text-muted">Copyright &copy; Javaci.net 2020</div>
                             <div>
                                 <a href="#">Privacy Policy</a>
                                 &middot;

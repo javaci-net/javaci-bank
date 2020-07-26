@@ -12,6 +12,8 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
+import java.util.concurrent.TimeUnit;
+
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
@@ -23,10 +25,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                    .antMatchers(
-                        "/js/**",
-                        "/css/**").permitAll()
-                    .anyRequest()
+                    .antMatchers("/js/**", "/css/**")
+                    .permitAll()
+                .anyRequest()
                     .authenticated()
                 .and()
                     .formLogin()
@@ -34,11 +35,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     .permitAll()
                 .and()
                     .logout()
-                    .invalidateHttpSession(true)
-                    .clearAuthentication(true)
                     .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
                     .logoutSuccessUrl("/login?logout")
-                    .permitAll();
+                    .permitAll()
+                .and()
+                    .rememberMe()
+                    .tokenValiditySeconds((int)TimeUnit.DAYS.toSeconds(21))  // Default 14 gün hatırlar.
+                    .key("Javaci.net.very.secret.remember.me.key")
+                    .userDetailsService(userService);
     }
 
     @Bean

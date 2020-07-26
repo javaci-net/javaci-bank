@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html th:lang="${lang}" xmlns:th="http://www.thymeleaf.org">
+<html th:lang="${lang}" xmlns:th="http://www.thymeleaf.org"
+	  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
 <th:block th:insert="/fragments/common.html :: head"></th:block>
 <title>Javaci Bank - Back Office</title>
@@ -16,7 +17,7 @@
 				
 				<br /> 
 				<h1 th:text="#{welcomeMsg}"></h1>
-				
+				<h1 th:text="${welcomeMsgFromBean}"></h1>
 
 			</main>
 			<th:block th:insert="/fragments/common.html :: footer"></th:block>
