@@ -54,16 +54,19 @@
 						<a class="dropdown-item" href="#">Settings</a> 
 						<a class="dropdown-item" href="#">Activity Log</a>
 						<div class="dropdown-divider"></div>
-						<span class="dropdown-item" th:text="#{lang.change}"></span>
-						<select class="dropdown-item" id="locales">
-						    <option value="en" th:text="#{lang.eng}" th:selected="${#strings.equals(#locale, 'en')}"></option>
-						    <option value="tr" th:text="#{lang.tr}" th:selected="${#strings.equals(#locale, 'tr')}"></option>
-						</select>
-						<div class="dropdown-divider"></div>
 						<a class="dropdown-item" th:href="@{/logout}">Logout</a>
 
 					</div></li>
+					
 			</ul>
+			<a th:unless="${#strings.equals(#locale, 'en')}" th:href="@{''(lang=en)}">
+				<img border="0" alt="English" src="/img/united-kingdom-flag-16.png">
+			</a> 
+			<a th:if="${#strings.equals(#locale, 'en')}" th:href="@{''(lang=tr)}">
+				<img border="0" alt="Türkçe" src="/img/turkey-flag-16.png">
+			</a> 
+				
+
 		</nav>
 	</div>
 

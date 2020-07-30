@@ -8,7 +8,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class MainController {
 
     @GetMapping("/")
-    public String root() {
+    public String root(Model model) {
+        model.addAttribute("welcomeMsgFromBean", "Welcome To Javaci-Bank Backoffice");
         return "index";
     }
 

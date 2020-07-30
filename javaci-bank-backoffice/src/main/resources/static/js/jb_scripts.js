@@ -1,14 +1,3 @@
-
-$(document).ready(function() {
-    $("#locales").change(function () {
-        var selectedOption = $('#locales').val();
-        if (selectedOption != ''){
-            window.location.replace(window.location.pathname + '?lang=' + selectedOption);
-        }
-    });
-});
-
-
 // Example starter JavaScript for disabling form submissions if there are invalid fields
 (function() {
   'use strict';

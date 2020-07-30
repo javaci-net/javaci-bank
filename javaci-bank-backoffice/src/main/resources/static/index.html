@@ -11,10 +11,6 @@
 		<th:block th:insert="/fragments/common.html :: left_menu"></th:block>
 		<div id="layoutSidenav_content">
 			<main>
-
-				<a th:href="@{/?lang=en}">index (English)</a> 
-				<a th:href="@{/?lang=tr}">index (Türkçe)</a> 
-				
 				<br /> 
 				<h1 th:text="#{welcomeMsg}"></h1>
 				<h1 th:text="${welcomeMsgFromBean}"></h1>
