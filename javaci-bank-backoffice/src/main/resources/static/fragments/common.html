@@ -65,8 +65,6 @@
 			<a th:if="${#strings.equals(#locale, 'en')}" th:href="@{''(lang=tr)}">
 				<img border="0" alt="Türkçe" src="/img/turkey-flag-16.png">
 			</a> 
-				
-
 		</nav>
 	</div>
 
@@ -97,8 +95,8 @@
 						<div class="collapse" id="collapseLayouts"
 							aria-labelledby="headingOne" data-parent="#sidenavAccordion">
 							<nav class="sb-sidenav-menu-nested nav">
-								<a class="nav-link" href="/employee/list">List Employee</a>
-								<a class="nav-link" href="/employee/create">Create Employee</a> 
+								<a class="nav-link" href="/employee/list" th:text="#{employee.list}"></a>
+								<a class="nav-link" href="/employee/create" th:text="#{employee.create}"></a> 
 							</nav>
 						</div>
 						<a class="nav-link collapsed" href="#" data-toggle="collapse"
