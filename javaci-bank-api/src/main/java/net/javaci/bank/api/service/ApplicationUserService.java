@@ -11,6 +11,10 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
+
 import java.util.Arrays;
 import java.util.Collection;
 
@@ -21,6 +25,7 @@ public class ApplicationUserService implements UserDetailsService {
     private CustomerDao customerDao;
 
     @Autowired
+    @Getter @Setter
     private BCryptPasswordEncoder passwordEncoder;
 
     public Employee findByEmail(String email) {
