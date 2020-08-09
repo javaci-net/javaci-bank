@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
-import net.javaci.bank.api.dto.EmployeeBaseDto;
+import net.javaci.bank.api.dto.EmployeeListDto;
 import net.javaci.bank.api.dto.EmployeeSaveDto;
 import net.javaci.bank.db.dao.EmployeeDao;
 import net.javaci.bank.db.model.Employee;
@@ -34,26 +34,26 @@ public class EmployeeController {
 
 	@GetMapping("/list")
 	@ResponseBody
-	public List<EmployeeBaseDto> listAll() {
+	public List<EmployeeListDto> listAll() {
 		return employeeDao.findAll().stream().map(this::convertToDto).collect(Collectors.toList());
 	}
 
 	@PostMapping("/add")
 	@ResponseBody
-	public Long add(@RequestBody EmployeeSaveDto newEmployeeDto, BindingResult bindingResult) {
-		Employee employee = employeeDao.save(convertToEntity(newEmployeeDto));
+	public Long add(@RequestBody EmployeeSaveDto employeeSaveDto, BindingResult bindingResult) {
+		Employee employee = employeeDao.save(convertToEntity(employeeSaveDto));
 		return employee.getId();
 	}
 
 	@PostMapping("/update/{id}")
 	@ResponseBody
-	public boolean update(@RequestBody EmployeeBaseDto newEmployeeDto, @PathVariable("id") Long id) {
+	public boolean update(@RequestBody EmployeeSaveDto employeeSaveDto, @PathVariable("id") Long id) {
 		final Optional<Employee> employeeOptional = employeeDao.findById(id);
 		if (!employeeOptional.isPresent()) {
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Employee couldnt found by id: " + id);
 		}
 
-		Employee employee = convertToEntity(newEmployeeDto);
+		Employee employee = convertToEntity(employeeSaveDto);
 		
 		employee.setId(employeeOptional.get().getId());
 		
@@ -66,11 +66,11 @@ public class EmployeeController {
 	/* HELPER METHOD(S) */
 	/* --------------------------------------------- */
 
-	private EmployeeBaseDto convertToDto(Employee entity) {
-		return modelMapper.map(entity, EmployeeBaseDto.class);
+	private EmployeeListDto convertToDto(Employee entity) {
+		return modelMapper.map(entity, EmployeeListDto.class);
 	}
 	
-	private Employee convertToEntity(EmployeeBaseDto employeeDto) {
-		return modelMapper.map(employeeDto, Employee.class);
+	private Employee convertToEntity(EmployeeSaveDto employeeSaveDto) {
+		return modelMapper.map(employeeSaveDto, Employee.class);
 	}
 }
