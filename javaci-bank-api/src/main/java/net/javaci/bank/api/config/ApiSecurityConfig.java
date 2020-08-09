@@ -25,6 +25,9 @@ public class ApiSecurityConfig extends WebSecurityConfigurerAdapter {
     private final PasswordEncoder passwordEncoder;
     private final ApplicationUserService applicationUserService;
     private final JwtConfig jwtConfig;
+    
+    // FIXME Korayla bakilacak
+    private static final boolean ENABLE_SECURTY = false; 
 
     @Autowired
     public ApiSecurityConfig(PasswordEncoder passwordEncoder,
@@ -37,26 +40,28 @@ public class ApiSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http
-                .csrf().disable()
-                .sessionManagement()
-                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                .and()
-                .addFilter(new JwtUserPassAuthFilter(authenticationManager(), jwtConfig))
-                .addFilterAfter(new JwtTokenVerifierFilter(jwtConfig), JwtUserPassAuthFilter.class)
-                .authorizeRequests()
-                .antMatchers("/",
-                        "/index.html",
-                        "/v2/api-docs",
-                        "/swagger-resources/**",
-                        "/swagger-ui.html**",
-                        "/webjars/**",
-                        "favicon.ico",
-                        "/h2-console/**",
-                        "/actuator/**").permitAll()
-                //.antMatchers("/api/**").hasRole("USER")
-                .anyRequest()
-                .authenticated();
+    	if (ENABLE_SECURTY) {
+	        http
+	                .csrf().disable()
+	                .sessionManagement()
+	                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+	                .and()
+	                .addFilter(new JwtUserPassAuthFilter(authenticationManager(), jwtConfig))
+	                .addFilterAfter(new JwtTokenVerifierFilter(jwtConfig), JwtUserPassAuthFilter.class)
+	                .authorizeRequests()
+	                .antMatchers("/",
+	                        "/index.html",
+	                        "/v2/api-docs",
+	                        "/swagger-resources/**",
+	                        "/swagger-ui.html**",
+	                        "/webjars/**",
+	                        "favicon.ico",
+	                        "/h2-console/**",
+	                        "/actuator/**").permitAll()
+	                //.antMatchers("/api/**").hasRole("USER")
+	                .anyRequest()
+	                .authenticated();
+    	}
     }
 
     @Override
