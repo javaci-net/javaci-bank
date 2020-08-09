@@ -9,10 +9,10 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter @Setter
-public class CustomerAddRequestDto extends CustomerDto {
-    
-    @NotEmpty	
-    @ApiModelProperty(position = 201, required = true,  value = "password", example = "Ve4y.SeCu4e")
-    private String password;
+public class CustomerListDto extends CustomerBaseDto {
+	
+	@NotEmpty
+    @ApiModelProperty(position = 201, required = true,  value = "id", example = "1" )
+    private Long id;
 }
 	

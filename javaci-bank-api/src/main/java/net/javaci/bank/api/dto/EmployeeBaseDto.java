@@ -7,7 +7,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Getter @Setter
-public class EmployeeDto extends UserBaseDto {
+public abstract class EmployeeBaseDto extends UserBaseDto {
 	
 	@NotEmpty
     @ApiModelProperty(position = 101, required = true,  value = "status", example = "INACTIVE", allowableValues="ACTIVE, INACTIVE")
