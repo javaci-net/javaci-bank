@@ -11,7 +11,7 @@
 	</parent>
 
 	<artifactId>javaci-bank-backoffice</artifactId>
-	<name>Javaci Bank Backoffice</name>
+	<name>Javaci Bank - Backoffice</name>
 	<description>Javaci Bank Backoffice Screens</description>
 
 	<dependencies>
