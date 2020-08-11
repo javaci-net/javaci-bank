@@ -7,10 +7,10 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Getter @Setter
-public class AccountDto extends AccountAddRequestDto {
-
+public class EmployeeListDto extends EmployeeBaseDto {
+    
 	@NotEmpty
-    @ApiModelProperty(position = 101, required = true,  value = "Account Number", example = "123456-00002")
-    private String accountNumber;
-
+    @ApiModelProperty(position = 201, required = true,  value = "id", example = "1" )
+    private Long id;
 }
+	

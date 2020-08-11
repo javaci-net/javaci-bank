@@ -6,9 +6,9 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 
 @Getter @Setter
-public class CustomerDto extends UserBaseDto {
+public abstract class CustomerBaseDto extends UserBaseDto {
    
 	@NotEmpty
-    @ApiModelProperty(position = 9, required = true,  value = "status", example = "UNAPPROVED", allowableValues="ACTIVE, INACTIVE, UNAPPROVED")
+    @ApiModelProperty(position = 101, required = true,  value = "status", example = "UNAPPROVED", allowableValues="ACTIVE, INACTIVE, UNAPPROVED")
     private String status;
 }

@@ -1,6 +1,6 @@
 package net.javaci.bank.api.controller;
 
-import net.javaci.bank.api.dto.CustomerAddRequestDto;
+import net.javaci.bank.api.dto.CustomerSaveDto;
 import net.javaci.bank.db.dao.CustomerDao;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -17,13 +17,13 @@ import static org.junit.jupiter.api.Assertions.*;
 public class CustomerInfoControllerTest {
 
     @Autowired
-    private CustomerInfoController controller;
+    private CustomerController controller;
 
     @Autowired
     private CustomerDao customerDao;
 
-    private CustomerAddRequestDto createCustomerAddRequestDto() {
-        CustomerAddRequestDto dto = new CustomerAddRequestDto();
+    private CustomerSaveDto createCustomerAddRequestDto() {
+        CustomerSaveDto dto = new CustomerSaveDto();
         dto.setCitizenNumber("123");
         dto.setPassword("123");
         dto.setStatus("ACTIVE");
@@ -40,7 +40,7 @@ public class CustomerInfoControllerTest {
 
     @Test
     public void customerAdd() {
-        CustomerAddRequestDto dto = createCustomerAddRequestDto();
+        CustomerSaveDto dto = createCustomerAddRequestDto();
         Long id = controller.add(dto);
         assertEquals(controller.listAll().size(), 1);
         assertTrue(controller.listAll().stream().anyMatch((c) -> id.equals(c.getId())) );
@@ -48,7 +48,7 @@ public class CustomerInfoControllerTest {
 
     @Test
     public void customerAddDuplicateCitizenNumber() {
-        CustomerAddRequestDto dto = createCustomerAddRequestDto();
+        CustomerSaveDto dto = createCustomerAddRequestDto();
         controller.add(dto);
         assertThrows(ResponseStatusException.class, () -> {
             controller.add(dto); } ) ;
@@ -57,7 +57,7 @@ public class CustomerInfoControllerTest {
     @Test
     public void customerUpdate() {
         final String newNAME = "NEW NAME";
-        CustomerAddRequestDto dto = createCustomerAddRequestDto();
+        CustomerSaveDto dto = createCustomerAddRequestDto();
         Long id = controller.add(dto);
         dto.setName(newNAME);
         controller.update(dto, id);

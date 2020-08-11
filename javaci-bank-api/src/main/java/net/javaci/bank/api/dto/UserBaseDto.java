@@ -13,10 +13,6 @@ import io.swagger.annotations.ApiModelProperty;
 @Getter @Setter @ToString
 public abstract class UserBaseDto {
 
-    @NotEmpty
-    @ApiModelProperty(position = 1, required = true,  value = "id", example = "Not used id add method. " )
-    private Long id;
-
 	@NotEmpty
     @ApiModelProperty(position = 1, required = true,  value = "citizen number", example = "12345678901" )
     private String citizenNumber;

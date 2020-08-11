@@ -54,16 +54,17 @@
 						<a class="dropdown-item" href="#">Settings</a> 
 						<a class="dropdown-item" href="#">Activity Log</a>
 						<div class="dropdown-divider"></div>
-						<span class="dropdown-item" th:text="#{lang.change}"></span>
-						<select class="dropdown-item" id="locales">
-						    <option value="en" th:text="#{lang.eng}" th:selected="${#strings.equals(#locale, 'en')}"></option>
-						    <option value="tr" th:text="#{lang.tr}" th:selected="${#strings.equals(#locale, 'tr')}"></option>
-						</select>
-						<div class="dropdown-divider"></div>
 						<a class="dropdown-item" th:href="@{/logout}">Logout</a>
 
 					</div></li>
+					
 			</ul>
+			<a th:unless="${#strings.equals(#locale, 'en')}" th:href="@{''(lang=en)}">
+				<img border="0" alt="English" src="/img/united-kingdom-flag-16.png">
+			</a> 
+			<a th:if="${#strings.equals(#locale, 'en')}" th:href="@{''(lang=tr)}">
+				<img border="0" alt="Türkçe" src="/img/turkey-flag-16.png">
+			</a> 
 		</nav>
 	</div>
 
@@ -94,8 +95,8 @@
 						<div class="collapse" id="collapseLayouts"
 							aria-labelledby="headingOne" data-parent="#sidenavAccordion">
 							<nav class="sb-sidenav-menu-nested nav">
-								<a class="nav-link" href="/employee/list">List Employee</a>
-								<a class="nav-link" href="/employee/create">Create Employee</a> 
+								<a class="nav-link" href="/employee/list" th:text="#{employee.list}"></a>
+								<a class="nav-link" href="/employee/create" th:text="#{employee.create}"></a> 
 							</nav>
 						</div>
 						<a class="nav-link collapsed" href="#" data-toggle="collapse"

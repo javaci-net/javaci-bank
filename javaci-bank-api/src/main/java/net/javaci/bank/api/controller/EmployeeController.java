@@ -17,14 +17,14 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
-import net.javaci.bank.api.dto.EmployeeDto;
-import net.javaci.bank.api.dto.EmployeeAddRequestDto;
+import net.javaci.bank.api.dto.EmployeeListDto;
+import net.javaci.bank.api.dto.EmployeeSaveDto;
 import net.javaci.bank.db.dao.EmployeeDao;
 import net.javaci.bank.db.model.Employee;
 
 @RestController
-@RequestMapping("/api/employee-info")
-public class EmployeeInfoController {
+@RequestMapping("/api/employee")
+public class EmployeeController {
 
 	@Autowired
 	private EmployeeDao employeeDao;
@@ -34,26 +34,26 @@ public class EmployeeInfoController {
 
 	@GetMapping("/list")
 	@ResponseBody
-	public List<EmployeeDto> listAll() {
+	public List<EmployeeListDto> listAll() {
 		return employeeDao.findAll().stream().map(this::convertToDto).collect(Collectors.toList());
 	}
 
 	@PostMapping("/add")
 	@ResponseBody
-	public Long add(@RequestBody EmployeeAddRequestDto newEmployeeDto, BindingResult bindingResult) {
-		Employee employee = employeeDao.save(convertToEntity(newEmployeeDto));
+	public Long add(@RequestBody EmployeeSaveDto employeeSaveDto, BindingResult bindingResult) {
+		Employee employee = employeeDao.save(convertToEntity(employeeSaveDto));
 		return employee.getId();
 	}
 
 	@PostMapping("/update/{id}")
 	@ResponseBody
-	public boolean update(@RequestBody EmployeeDto newEmployeeDto, @PathVariable("id") Long id) {
+	public boolean update(@RequestBody EmployeeSaveDto employeeSaveDto, @PathVariable("id") Long id) {
 		final Optional<Employee> employeeOptional = employeeDao.findById(id);
 		if (!employeeOptional.isPresent()) {
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Employee couldnt found by id: " + id);
 		}
 
-		Employee employee = convertToEntity(newEmployeeDto);
+		Employee employee = convertToEntity(employeeSaveDto);
 		
 		employee.setId(employeeOptional.get().getId());
 		
@@ -66,11 +66,11 @@ public class EmployeeInfoController {
 	/* HELPER METHOD(S) */
 	/* --------------------------------------------- */
 
-	private EmployeeDto convertToDto(Employee entity) {
-		return modelMapper.map(entity, EmployeeDto.class);
+	private EmployeeListDto convertToDto(Employee entity) {
+		return modelMapper.map(entity, EmployeeListDto.class);
 	}
 	
-	private Employee convertToEntity(EmployeeDto employeeDto) {
-		return modelMapper.map(employeeDto, Employee.class);
+	private Employee convertToEntity(EmployeeSaveDto employeeSaveDto) {
+		return modelMapper.map(employeeSaveDto, Employee.class);
 	}
 }

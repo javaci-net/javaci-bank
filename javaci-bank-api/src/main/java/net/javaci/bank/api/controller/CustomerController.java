@@ -11,15 +11,15 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
-import net.javaci.bank.api.dto.CustomerAddRequestDto;
-import net.javaci.bank.api.dto.CustomerDto;
+import net.javaci.bank.api.dto.CustomerSaveDto;
+import net.javaci.bank.api.dto.CustomerListDto;
 import net.javaci.bank.db.dao.CustomerDao;
 import net.javaci.bank.db.model.Customer;
 
 @Slf4j
 @RestController
-@RequestMapping("/api/customer-info")
-public class CustomerInfoController {
+@RequestMapping("/api/customer")
+public class CustomerController {
 
 	@Autowired
 	private CustomerDao customerDao;
@@ -29,34 +29,34 @@ public class CustomerInfoController {
 
 	@GetMapping("/list")
 	@ResponseBody
-	public List<CustomerDto> listAll() {
+	public List<CustomerListDto> listAll() {
 		log.debug("Listing all customers in CustomerInfoController");
 		return customerDao.findAll().stream().map(this::convertToDto).collect(Collectors.toList());
 	}
 
 	@PostMapping("/add")
 	@ResponseBody
-	public Long add(@RequestBody CustomerAddRequestDto newCustomerDto) {
-		log.debug("Adding customer: " + newCustomerDto);
-		Optional<Customer> c = customerDao.findByCitizenNumber(newCustomerDto.getCitizenNumber());
+	public Long add(@RequestBody CustomerSaveDto customerSaveDto) {
+		log.debug("Adding customer: " + customerSaveDto);
+		Optional<Customer> c = customerDao.findByCitizenNumber(customerSaveDto.getCitizenNumber());
 		if (c.isPresent()) {
-			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Citizen number already exist: " + newCustomerDto.getCitizenNumber());
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Citizen number already exist: " + customerSaveDto.getCitizenNumber());
 		}
-		Customer customer = customerDao.save(convertToEntity(newCustomerDto));
+		Customer customer = customerDao.save(convertToEntity(customerSaveDto));
 		log.info("Customer added with id: " + customer.getId());
 		return customer.getId();
 	}
 
 	@PutMapping("/update/{id}")
 	@ResponseBody
-	public boolean update(@RequestBody CustomerDto newCustomerDto, @PathVariable("id") Long id) {
+	public boolean update(@RequestBody CustomerSaveDto customerSaveDto, @PathVariable("id") Long id) {
 		final Optional<Customer> customerOptional = customerDao.findById(id);
 		if (!customerOptional.isPresent()) {
 			log.info("Customer not found with id:" + id);
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Customer couldnt found by id: " + id);
 		}
 
-		Customer customer = convertToEntity(newCustomerDto);
+		Customer customer = convertToEntity(customerSaveDto);
 		
 		customer.setId(customerOptional.get().getId());
 		
@@ -69,12 +69,12 @@ public class CustomerInfoController {
 	/* HELPER METHOD(S) */
 	/* --------------------------------------------- */
 
-	private CustomerDto convertToDto(Customer customer) {
-		return modelMapper.map(customer, CustomerDto.class);
+	private CustomerListDto convertToDto(Customer customer) {
+		return modelMapper.map(customer, CustomerListDto.class);
 	}
 
-	private Customer convertToEntity(CustomerDto customerDto) {
-		return modelMapper.map(customerDto, Customer.class);
+	private Customer convertToEntity(CustomerSaveDto customerSaveDto) {
+		return modelMapper.map(customerSaveDto, Customer.class);
 	}
 
 }

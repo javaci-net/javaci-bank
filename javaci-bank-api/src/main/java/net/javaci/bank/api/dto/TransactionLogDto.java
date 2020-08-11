@@ -15,7 +15,7 @@ import lombok.Setter;
 public class TransactionLogDto {
 
 	@NotEmpty
-	@ApiModelProperty(position = 1, required = true, value = "Transactiom id", example = "987654")
+	@ApiModelProperty(position = 1, required = true, value = "Transaction id", example = "987654")
 	private Long id;
 	
 	@NotEmpty

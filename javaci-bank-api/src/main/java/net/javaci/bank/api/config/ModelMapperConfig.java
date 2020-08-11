@@ -6,7 +6,7 @@ import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import net.javaci.bank.api.dto.AccountDto;
+import net.javaci.bank.api.dto.AccountListDto;
 import net.javaci.bank.db.model.Account;
 
 @Configuration
@@ -24,10 +24,10 @@ public class ModelMapperConfig {
             }
         });
         */
-        modelMapper.addMappings(new PropertyMap<Account, AccountDto>() {
+        modelMapper.addMappings(new PropertyMap<Account, AccountListDto>() {
             @Override
             protected void configure() {
-                map().setCustomer(source.getCustomer().getId());
+                map().setCustomerId(source.getCustomer().getId());
             }
         });
         return modelMapper;

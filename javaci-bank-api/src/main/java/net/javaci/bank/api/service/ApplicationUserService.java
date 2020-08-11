@@ -1,18 +1,21 @@
 package net.javaci.bank.api.service;
 
-import net.javaci.bank.db.dao.CustomerDao;
-import net.javaci.bank.db.model.Employee;
+import java.util.Arrays;
+import java.util.Collection;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.Arrays;
-import java.util.Collection;
+import lombok.Getter;
+import lombok.Setter;
+import net.javaci.bank.db.dao.CustomerDao;
+import net.javaci.bank.db.model.Employee;
 
 @Service
 public class ApplicationUserService implements UserDetailsService {
@@ -21,7 +24,8 @@ public class ApplicationUserService implements UserDetailsService {
     private CustomerDao customerDao;
 
     @Autowired
-    private BCryptPasswordEncoder passwordEncoder;
+    @Getter @Setter
+    private PasswordEncoder passwordEncoder;
 
     public Employee findByEmail(String email) {
         if ("a".equals(email)) { // TODO: email ile db den user cekilecek

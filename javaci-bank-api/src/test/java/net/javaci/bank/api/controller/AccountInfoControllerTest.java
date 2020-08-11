@@ -1,7 +1,7 @@
 package net.javaci.bank.api.controller;
 
-import net.javaci.bank.api.dto.AccountAddRequestDto;
-import net.javaci.bank.api.dto.CustomerAddRequestDto;
+import net.javaci.bank.api.dto.AccountSaveDto;
+import net.javaci.bank.api.dto.CustomerSaveDto;
 import net.javaci.bank.db.dao.AccountDao;
 import net.javaci.bank.db.dao.CustomerDao;
 import org.junit.jupiter.api.BeforeEach;
@@ -19,12 +19,12 @@ public class AccountInfoControllerTest {
 
 
     @Autowired
-    private AccountInfoController controller;
+    private AccountController controller;
 
     @Autowired
     private AccountDao accountDao;
 
-    private AccountAddRequestDto createAccountAddRequestDto() {
+    private AccountSaveDto createAccountAddRequestDto() {
         return null;
     }
 

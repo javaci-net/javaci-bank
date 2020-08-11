@@ -16,8 +16,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
-import net.javaci.bank.api.dto.AccountAddRequestDto;
-import net.javaci.bank.api.dto.AccountDto;
+import net.javaci.bank.api.dto.AccountSaveDto;
+import net.javaci.bank.api.dto.AccountListDto;
 import net.javaci.bank.db.dao.AccountDao;
 import net.javaci.bank.db.dao.CustomerDao;
 import net.javaci.bank.db.model.Account;
@@ -26,8 +26,8 @@ import net.javaci.bank.util.AccountNumberGenerator;
 
 @Slf4j
 @RestController
-@RequestMapping("/api/account-info")
-public class AccountInfoController {
+@RequestMapping("/api/account")
+public class AccountController {
 
 	@Autowired
 	private AccountDao accountDao;
@@ -43,17 +43,17 @@ public class AccountInfoController {
 
 	@GetMapping("/list")
 	@ResponseBody
-	public List<AccountDto> listAll() {
+	public List<AccountListDto> listAll() {
 		return accountDao.findAll().stream().map(this::convertToDto).collect(Collectors.toList());
 	}
 
 	@PostMapping("/add")
 	@ResponseBody
-	public Long add(@RequestBody AccountAddRequestDto newAccountDto) {
+	public Long add(@RequestBody AccountSaveDto newAccountDto) {
 		log.debug("Adding customer: " + newAccountDto);
-		final Optional<Customer> customerOptional = customerDao.findById(newAccountDto.getCustomer());
+		final Optional<Customer> customerOptional = customerDao.findById(newAccountDto.getCustomerId());
 		if (!customerOptional.isPresent()) {
-			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Customer does not exists with ID: " + newAccountDto.getCustomer());
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Customer does not exists with ID: " + newAccountDto.getCustomerId());
 		}
 
 		Account account = convertToEntity(newAccountDto);
@@ -72,7 +72,7 @@ public class AccountInfoController {
 
 	@GetMapping("/get")
 	@ResponseBody
-	public AccountDto get(Long accountId) {
+	public AccountListDto get(Long accountId) {
 		final Optional<Account> account = accountDao.findById(accountId);
 		if (!account.isPresent()) {
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Account does not exists with ID: " + accountId);
@@ -88,7 +88,7 @@ public class AccountInfoController {
 	 */
 	@PostMapping("/close")
 	@ResponseBody
-	public AccountDto close(@RequestBody Long accountId) {
+	public AccountListDto close(@RequestBody Long accountId) {
 		// TODO Implement
 		return null;
 	}
@@ -97,11 +97,11 @@ public class AccountInfoController {
 	/* HELPER METHOD(S) */
 	/* --------------------------------------------- */
 
-	private AccountDto convertToDto(Account account) {
-		return modelMapper.map(account, AccountDto.class);
+	private AccountListDto convertToDto(Account account) {
+		return modelMapper.map(account, AccountListDto.class);
 	}
 	
-	private Account convertToEntity(AccountAddRequestDto accountDto) {
+	private Account convertToEntity(AccountSaveDto accountDto) {
 		return modelMapper.map(accountDto, Account.class);
 	}
 }
