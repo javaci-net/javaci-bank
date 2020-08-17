@@ -56,6 +56,7 @@ public class ApiSecurityConfig extends WebSecurityConfigurerAdapter {
                     "/actuator/**").permitAll()
             .anyRequest()
             .authenticated();
+        http.cors();
     }
 
 	@Override
