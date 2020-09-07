@@ -44,13 +44,6 @@
 			<version>1.2.0</version>
 		</dependency>
 
-		<!-- https://www.baeldung.com/java-money-and-currency -->
-		<dependency>
-			<groupId>org.javamoney</groupId>
-			<artifactId>moneta</artifactId>
-			<version>1.1</version>
-		</dependency>
-
 		<dependency>
 			<groupId>com.h2database</groupId>
 			<artifactId>h2</artifactId>
