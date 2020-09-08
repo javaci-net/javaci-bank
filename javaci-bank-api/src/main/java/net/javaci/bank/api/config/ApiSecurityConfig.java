@@ -1,7 +1,9 @@
 package net.javaci.bank.api.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -14,6 +16,13 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import net.javaci.bank.api.jwt.JwtTokenVerifierFilter;
 import net.javaci.bank.api.jwt.JwtUserPassAuthFilter;
 import net.javaci.bank.api.service.ApplicationUserService;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+
+import java.util.Arrays;
+import java.util.Collections;
 
 
 @Configuration
@@ -37,6 +46,7 @@ public class ApiSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
             .csrf().disable()
+			.cors().and() // by default uses a Bean by the name of corsConfigurationSource
             .sessionManagement()
             .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
             .and()
@@ -56,7 +66,6 @@ public class ApiSecurityConfig extends WebSecurityConfigurerAdapter {
                     "/actuator/**").permitAll()
             .anyRequest()
             .authenticated();
-        http.cors();
     }
 
 	@Override
@@ -65,6 +74,18 @@ public class ApiSecurityConfig extends WebSecurityConfigurerAdapter {
 		provider.setPasswordEncoder(passwordEncoder);
 		provider.setUserDetailsService(applicationUserService);
 		auth.authenticationProvider(provider);
+	}
+
+	@Bean
+	CorsConfigurationSource corsConfigurationSource() {
+		// CorsConfiguration configuration = new CorsConfiguration().applyPermitDefaultValues(); // Kolaylik icin bu da kullanilabilir
+		CorsConfiguration configuration = new CorsConfiguration();
+		configuration.setAllowedOrigins(Arrays.asList("*"));
+		configuration.setAllowedMethods(Arrays.asList("GET","POST"));
+		configuration.setAllowedHeaders(Arrays.asList("*"));
+		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+		source.registerCorsConfiguration("/**", configuration);
+		return source;
 	}
 
 }
