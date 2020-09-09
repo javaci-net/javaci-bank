@@ -81,7 +81,7 @@ public class ApiSecurityConfig extends WebSecurityConfigurerAdapter {
 		// CorsConfiguration configuration = new CorsConfiguration().applyPermitDefaultValues(); // Kolaylik icin bu da kullanilabilir
 		CorsConfiguration configuration = new CorsConfiguration();
 		configuration.setAllowedOrigins(Arrays.asList("*"));
-		configuration.setAllowedMethods(Arrays.asList("GET","POST"));
+		configuration.setAllowedMethods(Arrays.asList("GET","POST", "PUT", "DELETE"));
 		configuration.setAllowedHeaders(Arrays.asList("*"));
 		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
 		source.registerCorsConfiguration("/**", configuration);
