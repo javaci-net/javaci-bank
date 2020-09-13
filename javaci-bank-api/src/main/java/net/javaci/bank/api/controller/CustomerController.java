@@ -64,11 +64,30 @@ public class CustomerController {
 		log.info(String.format("Customer updated: %s", customer));
 		return true;
 	}
+	
+	@GetMapping("/get/{citizenNumber}")
+	@ResponseBody
+	public CustomerSaveDto getByCitizenNumber(@PathVariable("citizenNumber") String citizenNumber) {
+		
+		final Optional<Customer> customerOptional = customerDao.findByCitizenNumber(citizenNumber);
+		if (!customerOptional.isPresent()) {
+			log.info("Customer not found with citizenNumber:" + citizenNumber);
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Customer couldnt found by citizenNumber: " + citizenNumber);
+		}
+
+		Customer customer = customerOptional.get();
+		
+		return convertToSaveDto(customer);
+	}
 
 	/* --------------------------------------------- */
 	/* HELPER METHOD(S) */
 	/* --------------------------------------------- */
 
+	private CustomerSaveDto convertToSaveDto(Customer customer) {
+		return modelMapper.map(customer, CustomerSaveDto.class);
+	}
+	
 	private CustomerListDto convertToDto(Customer customer) {
 		return modelMapper.map(customer, CustomerListDto.class);
 	}
