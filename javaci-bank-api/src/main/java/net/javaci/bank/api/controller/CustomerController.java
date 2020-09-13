@@ -65,7 +65,7 @@ public class CustomerController {
 		return true;
 	}
 	
-	@GetMapping("/get/{citizenNumber}")
+	@GetMapping("/getByCitizenNumber/{citizenNumber}")
 	@ResponseBody
 	public CustomerSaveDto getByCitizenNumber(@PathVariable("citizenNumber") String citizenNumber) {
 		
