@@ -8,6 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -15,6 +16,7 @@ import net.javaci.bank.api.dto.CustomerSaveDto;
 import net.javaci.bank.api.dto.CustomerListDto;
 import net.javaci.bank.db.dao.CustomerDao;
 import net.javaci.bank.db.model.Customer;
+import net.javaci.bank.db.model.enumaration.CustomerStatusType;
 
 @Slf4j
 @RestController
@@ -26,6 +28,9 @@ public class CustomerController {
 
 	@Autowired
 	private ModelMapper modelMapper;
+	
+	@Autowired
+	private PasswordEncoder passwordEncoder;
 
 	@GetMapping("/list")
 	@ResponseBody
@@ -34,7 +39,7 @@ public class CustomerController {
 		return customerDao.findAll().stream().map(this::convertToDto).collect(Collectors.toList());
 	}
 
-	@PostMapping("/add")
+	@PostMapping("/register")
 	@ResponseBody
 	public Long add(@RequestBody CustomerSaveDto customerSaveDto) {
 		log.debug("Adding customer: " + customerSaveDto);
@@ -42,7 +47,14 @@ public class CustomerController {
 		if (c.isPresent()) {
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Citizen number already exist: " + customerSaveDto.getCitizenNumber());
 		}
-		Customer customer = customerDao.save(convertToEntity(customerSaveDto));
+		Customer customer = convertToEntity(customerSaveDto);
+		
+		// FIXME 
+		customer.setStatus(CustomerStatusType.ACTIVE);
+		
+		customer.setPassword(passwordEncoder.encode(customer.getPassword()));
+		
+		customer = customerDao.save(customer);
 		log.info("Customer added with id: " + customer.getId());
 		return customer.getId();
 	}
@@ -67,7 +79,7 @@ public class CustomerController {
 	
 	@GetMapping("/getByCitizenNumber/{citizenNumber}")
 	@ResponseBody
-	public CustomerSaveDto getByCitizenNumber(@PathVariable("citizenNumber") String citizenNumber) {
+	public CustomerListDto getByCitizenNumber(@PathVariable("citizenNumber") String citizenNumber) {
 		
 		final Optional<Customer> customerOptional = customerDao.findByCitizenNumber(citizenNumber);
 		if (!customerOptional.isPresent()) {
@@ -77,17 +89,13 @@ public class CustomerController {
 
 		Customer customer = customerOptional.get();
 		
-		return convertToSaveDto(customer);
+		return convertToDto(customer);
 	}
 
 	/* --------------------------------------------- */
 	/* HELPER METHOD(S) */
 	/* --------------------------------------------- */
 
-	private CustomerSaveDto convertToSaveDto(Customer customer) {
-		return modelMapper.map(customer, CustomerSaveDto.class);
-	}
-	
 	private CustomerListDto convertToDto(Customer customer) {
 		return modelMapper.map(customer, CustomerListDto.class);
 	}

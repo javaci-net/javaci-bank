@@ -63,7 +63,8 @@ public class ApiSecurityConfig extends WebSecurityConfigurerAdapter {
                     "/webjars/**",
                     "favicon.ico",
                     "/h2-console/**",
-                    "/actuator/**").permitAll()
+                    "/actuator/**",
+                    "/api/customer/register").permitAll()
             .anyRequest()
             .authenticated();
     }

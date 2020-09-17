@@ -47,7 +47,8 @@ public abstract class UserEntityBase {
     @Column(nullable = true)
     private String phoneNumber;
 
+    @Column(nullable = false)
     @ToString.Exclude
-    private transient String password;
+    private String password;
     
 }
