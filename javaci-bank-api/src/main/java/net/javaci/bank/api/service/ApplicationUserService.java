@@ -33,7 +33,7 @@ public class ApplicationUserService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String citizenNumber) throws UsernameNotFoundException {
     	final Optional<Customer> customerOptional = customerDao.findByCitizenNumber(citizenNumber);
-        if (customerOptional.isEmpty()) {
+        if (!customerOptional.isPresent()) {
         	throw new UsernameNotFoundException("Invalid username or password...");
         }
         Customer c = customerOptional.get();
