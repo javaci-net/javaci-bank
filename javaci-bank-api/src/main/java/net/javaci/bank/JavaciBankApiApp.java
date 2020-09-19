@@ -16,7 +16,7 @@ public class JavaciBankApiApp implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        log.debug("Starting Javaci Bank Api App");
+        log.debug("Javaci Bank Api App Started");
     }
 
 }

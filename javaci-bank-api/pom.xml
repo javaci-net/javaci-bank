@@ -116,7 +116,18 @@
 			<scope>runtime</scope>
 		</dependency>
 
+		<!-- spring's support for quartz -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-quartz</artifactId>
+		</dependency>
 
+		<!-- gson json parsing library -->
+		<dependency>
+			<groupId>com.google.code.gson</groupId>
+			<artifactId>gson</artifactId>
+			<version>2.8.6</version>
+		</dependency>
 	</dependencies>
 
 	<build>

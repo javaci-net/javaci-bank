@@ -15,7 +15,7 @@ import javax.persistence.ManyToOne;
 
 import lombok.Getter;
 import lombok.Setter;
-import net.javaci.bank.db.model.enumaration.AccountCurrrency;
+import net.javaci.bank.db.model.enumaration.AccountCurrency;
 import net.javaci.bank.db.model.enumaration.AccountStatusType;
 
 @Entity
@@ -44,7 +44,7 @@ public class Account {
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private AccountCurrrency currency;
+    private AccountCurrency currency;
     
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
