@@ -43,10 +43,7 @@ public class ApplicationUserService implements UserDetailsService {
         }
         
         return new org.springframework.security.core.userdetails.User(c.getCitizenNumber(),
-        		c.getPassword(), mapRolesToAuthorities("USER"));
+        		c.getPassword(), Arrays.asList(new SimpleGrantedAuthority("USER")));
     }
 
-    private Collection<? extends GrantedAuthority> mapRolesToAuthorities(String role) {
-        return Arrays.asList(new SimpleGrantedAuthority(role)); 
-    }
 }

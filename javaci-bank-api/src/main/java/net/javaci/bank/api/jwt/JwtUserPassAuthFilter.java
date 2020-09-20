@@ -35,6 +35,8 @@ public class JwtUserPassAuthFilter extends UsernamePasswordAuthenticationFilter 
         logger.info("JwtUserPassAuthFilter created");
     }
 
+
+
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request,
                                                 HttpServletResponse response) {
