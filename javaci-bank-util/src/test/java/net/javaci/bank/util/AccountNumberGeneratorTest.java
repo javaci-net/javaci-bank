@@ -19,6 +19,6 @@ public class AccountNumberGeneratorTest {
     @Test
     public void testGenerateAccountNumber() {
         String accountNumber = accountNumberGenerator.generateAccountNumber("1234", 987);
-
+        assertEquals("1234-00987", accountNumber);
     }
 }
