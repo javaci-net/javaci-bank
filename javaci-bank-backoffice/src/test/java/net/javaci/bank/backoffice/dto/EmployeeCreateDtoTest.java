@@ -8,8 +8,8 @@ import org.springframework.test.context.junit4.SpringRunner;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
-@RunWith(SpringRunner.class)
-@SpringBootTest()
+// @RunWith(SpringRunner.class)
+// @SpringBootTest()
 public class EmployeeCreateDtoTest {
 
     @Test
