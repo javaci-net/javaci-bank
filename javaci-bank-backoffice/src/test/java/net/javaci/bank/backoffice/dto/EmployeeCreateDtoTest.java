@@ -1,5 +1,4 @@
 package net.javaci.bank.backoffice.dto;
-
 import net.javaci.bank.util.AccountNumberGenerator;
 import org.junit.Test;
 import org.junit.runner.RunWith;
