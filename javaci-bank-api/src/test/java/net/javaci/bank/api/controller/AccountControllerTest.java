@@ -1,6 +1,7 @@
 package net.javaci.bank.api.controller;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -16,6 +17,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -30,6 +32,7 @@ import net.javaci.bank.db.model.Account;
 
 @SpringBootTest
 @AutoConfigureMockMvc
+@AutoConfigureRestDocs
 @ExtendWith(MockitoExtension.class)
 public class AccountControllerTest {
 
@@ -66,7 +69,8 @@ public class AccountControllerTest {
 			.andDo(print())
 			.andExpect(status().isOk())
 			.andExpect(
-				content().json("[\n" + 
+				content()
+				.json("[\n" + 
 					"  {\n" + 
 					"    \"customerId\": null,\n" + 
 					"    \"accountName\": \"account-1\",\n" + 
@@ -90,6 +94,9 @@ public class AccountControllerTest {
 					"]"
 				)
 			);
+		
+		// Document
+		perform.andDo(document("{class-name}/{method-name}"));
 	}
 	
 }

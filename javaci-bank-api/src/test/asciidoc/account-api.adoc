@@ -1,0 +1,32 @@
+= Accounts REST Service API Guide
+:doctype: book
+:icons: font
+:source-highlighter: highlightjs
+:toc: left
+:toclevels: 4
+:sectlinks:
+
+= Resources
+
+== Accounts List REST Service
+
+=== Request structure
+
+include::{snippets}/account-controller-test/test-list-request/http-request.adoc[]
+
+=== Request parameters
+
+include::{snippets}/account-controller-test/test-list-request/request-body.adoc[]
+
+=== Response fields
+
+include::{snippets}/account-controller-test/test-list-request/response-body.adoc[]
+
+=== Example response
+
+include::{snippets}/account-controller-test/test-list-request/http-response.adoc[]
+
+=== CURL request
+
+include::{snippets}/account-controller-test/test-list-request/curl-request.adoc[]
+

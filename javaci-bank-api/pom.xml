@@ -134,6 +134,12 @@
 		    <scope>test</scope>
 		</dependency>
 		
+		<dependency>
+			<groupId>org.springframework.restdocs</groupId>
+			<artifactId>spring-restdocs-mockmvc</artifactId>
+			<scope>test</scope>
+		</dependency>
+		
 	</dependencies>
 
 	<build>
@@ -170,6 +176,30 @@
 							-Dserver.port=$PORT $JAR_OPTS</web>
 					</processTypes>
 				</configuration>
+			</plugin>
+			
+			<plugin>
+			    <groupId>org.asciidoctor</groupId>
+			    <artifactId>asciidoctor-maven-plugin</artifactId>
+			    <version>1.5.6</version>
+			    <executions>
+			        <execution>
+			            <id>generate-docs</id>
+			            <phase>test</phase>
+			            <goals>
+			                <goal>process-asciidoc</goal>
+			            </goals>
+			            <configuration>
+			                <backend>html</backend>
+			                <doctype>book</doctype>
+			                <attributes>
+			                    <snippets>${project.build.directory}/generated-snippets</snippets>
+			                </attributes>
+			                <sourceDirectory>src/test/asciidoc</sourceDirectory>
+			                <outputDirectory>src/main/resources/static</outputDirectory>
+			            </configuration>
+			        </execution>
+			    </executions>
 			</plugin>
 		</plugins>
 	</build>
