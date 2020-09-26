@@ -5,28 +5,25 @@
 :toc: left
 :toclevels: 4
 :sectlinks:
-
-= Resources
+:nofooter:
 
 == Accounts List REST Service
 
-=== Request structure
+=== CURL request
 
-include::{snippets}/account-controller-test/test-list-request/http-request.adoc[]
+include::{snippets}/account-controller-test/test-list-request/curl-request.adoc[]
 
-=== Request parameters
+=== Request Parameters
 
-include::{snippets}/account-controller-test/test-list-request/request-body.adoc[]
+None
 
 === Response fields
 
-include::{snippets}/account-controller-test/test-list-request/response-body.adoc[]
+include::{snippets}/account-controller-test/test-list-request/response-fields.adoc[]
 
 === Example response
 
 include::{snippets}/account-controller-test/test-list-request/http-response.adoc[]
 
-=== CURL request
 
-include::{snippets}/account-controller-test/test-list-request/curl-request.adoc[]
 

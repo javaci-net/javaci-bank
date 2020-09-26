@@ -1,10 +1,19 @@
 package net.javaci.bank.api.controller;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.Matchers.containsString;
+import static org.hamcrest.Matchers.hasSize;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
+import static org.springframework.restdocs.operation.preprocess.Preprocessors.preprocessRequest;
+import static org.springframework.restdocs.operation.preprocess.Preprocessors.preprocessResponse;
+import static org.springframework.restdocs.operation.preprocess.Preprocessors.prettyPrint;
+import static org.springframework.restdocs.operation.preprocess.Preprocessors.removeHeaders;
+import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
+import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.util.ArrayList;
@@ -21,6 +30,7 @@ import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDoc
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.restdocs.payload.JsonFieldType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 
@@ -68,6 +78,10 @@ public class AccountControllerTest {
 		perform
 			.andDo(print())
 			.andExpect(status().isOk())
+			.andExpect(jsonPath("$").isArray())
+			.andExpect(jsonPath("$", hasSize(2)))
+			.andExpect(jsonPath("$[0].accountName", containsString("account-1") ))
+			.andExpect(jsonPath("$[1].accountName", containsString("account-2") ))
 			.andExpect(
 				content()
 				.json("[\n" + 
@@ -96,7 +110,23 @@ public class AccountControllerTest {
 			);
 		
 		// Document
-		perform.andDo(document("{class-name}/{method-name}"));
+		perform.andDo(
+				document(
+						"{class-name}/{method-name}",
+						preprocessRequest(removeHeaders("Authorization")), 
+			            preprocessResponse(prettyPrint()),
+						responseFields(
+                                fieldWithPath("[].customerId").description("Account's Customer Id").type(JsonFieldType.VARIES),
+                                fieldWithPath("[].accountName").description("Account Name").type(JsonFieldType.STRING),
+                                fieldWithPath("[].description").description("Account Description").type(JsonFieldType.VARIES),
+                                fieldWithPath("[].balance").description("Account Balance").type(JsonFieldType.VARIES),
+                                fieldWithPath("[].currency").description("Account Currency").type(JsonFieldType.VARIES),
+                                fieldWithPath("[].status").description("Account Status").type(JsonFieldType.VARIES),
+                                fieldWithPath("[].id").description("Account Id").type(JsonFieldType.VARIES),
+                                fieldWithPath("[].accountNumber").description("Account No").type(JsonFieldType.VARIES)
+                        )
+				)
+		);
 	}
 	
 }
