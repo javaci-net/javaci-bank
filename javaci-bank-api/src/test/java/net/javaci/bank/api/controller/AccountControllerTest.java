@@ -20,6 +20,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.ResultActions;
 
 import net.javaci.bank.api.config.JwtConfig;
 import net.javaci.bank.api.helper.JwtConstants;
@@ -51,16 +52,21 @@ public class AccountControllerTest {
 		accountList.add(Account.builder().accountName("account-1").build());
 		accountList.add(Account.builder().accountName("account-2").build());
 		Mockito.when(accountDao.findAll()).thenReturn(accountList);
-		String token = JwtUserPassAuthFilter.createJwtToken("john", Collections.EMPTY_SET, jwtConfig);
+		String token = JwtUserPassAuthFilter.createJwtToken("john", Collections.emptySet(), jwtConfig);
 		
-		this.mockMvc
+		// When
+		ResultActions perform = this.mockMvc
 			.perform(
 					get(AccountController.API_ACCOUNT_BASE_URL + "/list")
 					.header(JwtConstants.AUTHORIZATION, JwtConstants.BEARER_PREFIX + token)
-			)
+			);
+		
+		// Then
+		perform
 			.andDo(print())
 			.andExpect(status().isOk())
-			.andExpect(content().json("[\n" + 
+			.andExpect(
+				content().json("[\n" + 
 					"  {\n" + 
 					"    \"customerId\": null,\n" + 
 					"    \"accountName\": \"account-1\",\n" + 
@@ -81,7 +87,9 @@ public class AccountControllerTest {
 					"    \"id\": null,\n" + 
 					"    \"accountNumber\": null\n" + 
 					"  }\n" + 
-					"]"));
+					"]"
+				)
+			);
 	}
 	
 }
