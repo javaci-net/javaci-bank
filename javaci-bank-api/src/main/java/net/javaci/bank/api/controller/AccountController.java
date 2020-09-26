@@ -27,9 +27,11 @@ import net.javaci.bank.util.AccountNumberGenerator;
 
 @Slf4j
 @RestController
-@RequestMapping("/api/account")
+@RequestMapping(AccountController.API_ACCOUNT_BASE_URL)
 public class AccountController {
 
+	public static final String API_ACCOUNT_BASE_URL = "/api/account";
+	
 	@Autowired private AccountDao accountDao;
 	@Autowired private CustomerDao customerDao;
 	@Autowired private ModelMapper modelMapper;

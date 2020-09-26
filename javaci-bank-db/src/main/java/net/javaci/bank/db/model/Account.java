@@ -13,13 +13,14 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import net.javaci.bank.db.model.enumaration.AccountCurrency;
 import net.javaci.bank.db.model.enumaration.AccountStatusType;
 
 @Entity
-@Getter @Setter
+@Getter @Setter @Builder
 public class Account {
 
     @Id
