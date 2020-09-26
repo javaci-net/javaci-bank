@@ -12,8 +12,9 @@
 		<div id="layoutSidenav_content">
 			<main>
 				<br /> 
-				<h1 th:text="#{welcomeMsg}"></h1>
+				<h1><span th:text="#{welcomeMsg}"></span> <span sec:authentication="name"></span></h1>
 				<h1 th:text="${welcomeMsgFromBean}"></h1>
+				<h1 th:text="${welcomeMsgFromMessagesAndBean}"></h1>
 
 			</main>
 			<th:block th:insert="fragments/common.html :: footer"></th:block>

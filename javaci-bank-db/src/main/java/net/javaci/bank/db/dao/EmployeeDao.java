@@ -13,4 +13,6 @@ public interface EmployeeDao extends JpaRepository<Employee, Long> {
 
 	boolean existsByCitizenNumber(String citizenNumber);
 
+	Employee findByEmail(String email);
+
 }

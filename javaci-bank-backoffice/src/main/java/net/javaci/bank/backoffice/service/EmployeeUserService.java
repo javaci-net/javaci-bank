@@ -21,24 +21,9 @@ public class EmployeeUserService implements UserDetailsService {
     @Autowired
     private EmployeeDao employeeDao;
 
-    @Autowired
-    private BCryptPasswordEncoder passwordEncoder;
-
-    public Employee findByEmail(String email) {
-        if ("a".equals(email)) { // TODO: email ile db den user cekilecek
-            Employee e = new Employee();
-            e.setEmail(email);
-            e.setFirstName("Koray");
-            e.setLastName("Gecici");
-            e.setPassword(passwordEncoder.encode("a"));
-            return e;
-        }
-        return null;
-    }
-
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        Employee emp = findByEmail(email);
+        Employee emp = employeeDao.findByEmail(email);
         if (emp == null){
             throw new UsernameNotFoundException("Invalid username or password...");
         }
