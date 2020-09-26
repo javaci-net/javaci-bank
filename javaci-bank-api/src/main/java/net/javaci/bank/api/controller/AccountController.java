@@ -22,6 +22,7 @@ import net.javaci.bank.db.dao.AccountDao;
 import net.javaci.bank.db.dao.CustomerDao;
 import net.javaci.bank.db.model.Account;
 import net.javaci.bank.db.model.Customer;
+import net.javaci.bank.db.model.enumaration.AccountStatusType;
 import net.javaci.bank.util.AccountNumberGenerator;
 
 @Slf4j
@@ -29,17 +30,10 @@ import net.javaci.bank.util.AccountNumberGenerator;
 @RequestMapping("/api/account")
 public class AccountController {
 
-	@Autowired
-	private AccountDao accountDao;
-
-	@Autowired
-	private CustomerDao customerDao;
-
-	@Autowired
-	private ModelMapper modelMapper;
-
-	@Autowired
-	private AccountNumberGenerator accountNumberGenerator;
+	@Autowired private AccountDao accountDao;
+	@Autowired private CustomerDao customerDao;
+	@Autowired private ModelMapper modelMapper;
+	@Autowired private AccountNumberGenerator accountNumberGenerator;
 
 	@GetMapping("/list")
 	@ResponseBody
@@ -50,20 +44,18 @@ public class AccountController {
 	@PostMapping("/add")
 	@ResponseBody
 	public Long add(@RequestBody AccountSaveDto newAccountDto) {
-		log.debug("Adding customer: " + newAccountDto);
-		final Optional<Customer> customerOptional = customerDao.findById(newAccountDto.getCustomerId());
-		if (!customerOptional.isPresent()) {
-			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Customer does not exists with ID: " + newAccountDto.getCustomerId());
-		}
+		
+		log.debug("Adding account: {}", newAccountDto);
 
+		// Find and set customer to account
 		Account account = convertToEntity(newAccountDto);
-
-		Customer customer = customerOptional.get();
+		Customer customer = findCustomer(newAccountDto.getCustomerId());
 		account.setCustomer(customer);
+		
+		// Set account number
 		int numberOfAccount = accountDao.countByCustomerId(customer.getId());
-
-		account.setAccountNumber(
-				accountNumberGenerator.generateAccountNumber(customer.getCitizenNumber(), numberOfAccount + 1));
+		String newAccountNo = accountNumberGenerator.generateAccountNumber(customer.getCitizenNumber(), numberOfAccount + 1);
+		account.setAccountNumber(newAccountNo);
 
 		account = accountDao.save(account);
 
@@ -73,12 +65,8 @@ public class AccountController {
 	@GetMapping("/get")
 	@ResponseBody
 	public AccountListDto get(Long accountId) {
-		final Optional<Account> account = accountDao.findById(accountId);
-		if (!account.isPresent()) {
-			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Account does not exists with ID: " + accountId);
-		}
-
-		return convertToDto(account.get());
+		Account account = findAccount(accountId);
+		return convertToDto(account);
 	}
 
 	/**
@@ -89,13 +77,33 @@ public class AccountController {
 	@PostMapping("/close")
 	@ResponseBody
 	public AccountListDto close(@RequestBody Long accountId) {
-		// TODO Implement
-		return null;
+		Account account = findAccount(accountId);
+		account.setStatus(AccountStatusType.CLOSED);
+		account = accountDao.save(account);
+		return convertToDto(account);
 	}
 
 	/* --------------------------------------------- */
 	/* HELPER METHOD(S) */
 	/* --------------------------------------------- */
+
+	private Customer findCustomer(Long customerId) {
+		final Optional<Customer> customerToBeSearched = customerDao.findById(customerId);
+		if (!customerToBeSearched.isPresent()) {
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Customer does not exists with ID: " + customerId);
+		}
+		Customer customer = customerToBeSearched.get();
+		return customer;
+	}
+
+	private Account findAccount(Long accountId) {
+		final Optional<Account> accountToBeSearched = accountDao.findById(accountId);
+		if (!accountToBeSearched.isPresent()) {
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Account does not exists with ID: " + accountId);
+		}
+		Account account = accountToBeSearched.get();
+		return account;
+	}
 
 	private AccountListDto convertToDto(Account account) {
 		return modelMapper.map(account, AccountListDto.class);
