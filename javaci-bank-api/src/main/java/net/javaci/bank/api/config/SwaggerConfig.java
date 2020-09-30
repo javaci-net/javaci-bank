@@ -1,11 +1,19 @@
 package net.javaci.bank.api.config;
 
+import java.util.Arrays;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
+
+import com.fasterxml.classmate.TypeBindings;
+import com.fasterxml.classmate.types.ResolvedObjectType;
+
+import net.javaci.bank.api.model.UserPassAuthRequest;
+import net.javaci.bank.api.model.UserPassAuthResponse;
 import springfox.bean.validators.configuration.BeanValidatorPluginsConfiguration;
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.PathSelectors;
@@ -18,8 +26,6 @@ import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spi.service.contexts.SecurityContext;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
-
-import java.util.Arrays;
 
 @Configuration
 @EnableSwagger2
@@ -43,6 +49,10 @@ public class SwaggerConfig extends WebMvcConfigurationSupport {
                 .paths(PathSelectors.any())
                 .build()
                 .apiInfo(apiInfo())
+                .additionalModels(
+                	ResolvedObjectType.create(UserPassAuthRequest.class, TypeBindings.emptyBindings(), null, null),
+                	ResolvedObjectType.create(UserPassAuthResponse.class, TypeBindings.emptyBindings(), null, null)
+                )
                 .securitySchemes(Arrays.asList(apiKey()))
                 .securityContexts(Arrays.asList(securityContext));
     }

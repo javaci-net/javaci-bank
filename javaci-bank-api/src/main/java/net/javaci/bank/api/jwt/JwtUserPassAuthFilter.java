@@ -18,28 +18,29 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.Gson;
 
 import io.jsonwebtoken.Jwts;
 import lombok.extern.slf4j.Slf4j;
 import net.javaci.bank.api.config.JwtConfig;
 import net.javaci.bank.api.helper.JwtConstants;
 import net.javaci.bank.api.model.UserPassAuthRequest;
+import net.javaci.bank.api.model.UserPassAuthResponse;
 
-@Slf4j
 /**
  * ust siniftan "/login" adresine post data gonderildiginde Controller gibi calisan filtredir seklinde
  */
+@Slf4j
 public class JwtUserPassAuthFilter extends UsernamePasswordAuthenticationFilter {
+	
     private final AuthenticationManager authenticationManager;
     private final JwtConfig jwtConfig;
 
-    public JwtUserPassAuthFilter(AuthenticationManager authenticationManager,
-                                 JwtConfig jwtConfig) {
+    public JwtUserPassAuthFilter(AuthenticationManager authenticationManager, JwtConfig jwtConfig) {
         this.authenticationManager = authenticationManager;
         this.jwtConfig = jwtConfig;
         logger.info("JwtUserPassAuthFilter created");
     }
-
 
 
     @Override
@@ -60,15 +61,16 @@ public class JwtUserPassAuthFilter extends UsernamePasswordAuthenticationFilter 
         }
         return auth;
     }
-
+    
     @Override
     protected void successfulAuthentication(HttpServletRequest request,
                                             HttpServletResponse response,
                                             FilterChain chain,
                                             Authentication authResult) throws IOException, ServletException {
         String token = createJwtToken(authResult.getName(), authResult.getAuthorities(), jwtConfig);
-
-        response.addHeader(JwtConstants.AUTHORIZATION, JwtConstants.BEARER_PREFIX + " " + token);
+        String jwtToken = JwtConstants.BEARER_PREFIX + " " + token;
+		response.addHeader(JwtConstants.AUTHORIZATION, jwtToken);
+        response.getWriter().write(new Gson().toJson(new UserPassAuthResponse(authResult, jwtToken)));
         logger.info(String.format("Jwt token successfully added to header for user: %s" , authResult.getName()));
     }
 

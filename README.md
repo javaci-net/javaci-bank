@@ -8,9 +8,9 @@ Project: <https://github.com/orgs/javaci-net/projects/2>
 
 You can access live site from following urls :
 
-[Local Url](http://localhost:8080/api.html# "Local")  
-[Domain Url](http://www.javacibank.com/api.html# "Javacibank.com")  
-[Heroku Url](https://javaci-bank.herokuapp.com/api.html# "Herokuapp")  
+[Local Url](http://localhost:8080/ "Local")  
+[Domain Url](http://api.javacibank.com/ "Javacibank.com")  
+[Heroku Url](https://javaci-bank.herokuapp.com/# "Herokuapp")  
 
 ## Database
 
@@ -18,7 +18,7 @@ Uses embdedded H2 db by default (jdbc:h2:mem:testdb)
 Access /h2-console/ for admin console
 
 [Local Url](http://localhost:8080/h2-console/ "Local")  
-[Domain Url](http://www.javacibank.com/h2-console/ "Javacibank.com")  
+[Domain Url](http://www.javacibank.com/h2-console/ "Javacibank.com")  Not working
 [Heroku Url](https://javaci-bank.herokuapp.com/h2-console/ "Herokuapp")  
 
 ## API

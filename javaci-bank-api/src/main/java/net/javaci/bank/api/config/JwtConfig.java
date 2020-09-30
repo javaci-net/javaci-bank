@@ -17,6 +17,8 @@ public class JwtConfig {
     private String secretKey;
 
     private Integer tokenExpirationAfterDays;
+    
+    private String authtype;
 
     // Jwt key olusturma algoritmasini birden fazla yerde kullandigimiz icin bu sekilde methoda aldik
     public SecretKey createSecretKey() {

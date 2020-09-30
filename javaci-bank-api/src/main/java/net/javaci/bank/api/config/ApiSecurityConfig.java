@@ -1,9 +1,10 @@
 package net.javaci.bank.api.config;
 
+import java.util.Arrays;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -12,17 +13,16 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.password.PasswordEncoder;
-
-import net.javaci.bank.api.jwt.JwtTokenVerifierFilter;
-import net.javaci.bank.api.jwt.JwtUserPassAuthFilter;
-import net.javaci.bank.api.service.ApplicationUserService;
+import org.springframework.security.web.header.writers.frameoptions.XFrameOptionsHeaderWriter;
+import org.springframework.security.web.header.writers.frameoptions.XFrameOptionsHeaderWriter.XFrameOptionsMode;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
-import org.springframework.web.servlet.config.annotation.CorsRegistry;
 
-import java.util.Arrays;
-import java.util.Collections;
+import net.javaci.bank.api.jwt.JwtTokenVerifierFilter;
+import net.javaci.bank.api.jwt.JwtUserPassAuthFilter;
+import net.javaci.bank.api.jwt.JwtUserPassAuthFilterNoCheck;
+import net.javaci.bank.api.service.ApplicationUserService;
 
 
 @Configuration
@@ -45,14 +45,21 @@ public class ApiSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-            .csrf().disable()
-			.cors().and() // by default uses a Bean by the name of corsConfigurationSource
-            .sessionManagement()
-            .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-            .and()
-            .addFilter(new JwtUserPassAuthFilter(authenticationManager(), jwtConfig))
+        	// added to allow h2-console frames
+        	.headers().addHeaderWriter(new XFrameOptionsHeaderWriter(XFrameOptionsMode.SAMEORIGIN)).and()
+        	
+        	// by default uses a Bean by the name of corsConfigurationSource
+            .csrf().disable().cors().and() 
+            
+            // session configs - stateless
+            .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
+            
+            // jwt authorization filters
+            .addFilter(addJwtAuthorizationFilter())
             .addFilterAfter(new JwtTokenVerifierFilter(jwtConfig), JwtUserPassAuthFilter.class)
             .authorizeRequests()
+            
+            // set allowed urls (no security)
             .antMatchers("/",
                     "/index.html",
                     "/v2/api-docs",
@@ -68,6 +75,13 @@ public class ApiSecurityConfig extends WebSecurityConfigurerAdapter {
             .anyRequest()
             .authenticated();
     }
+
+	private JwtUserPassAuthFilter addJwtAuthorizationFilter() throws Exception {
+		if (jwtConfig.getAuthtype() != null && "none".equals(jwtConfig.getAuthtype())) {
+			return new JwtUserPassAuthFilterNoCheck(authenticationManager(), jwtConfig);
+		}
+		return new JwtUserPassAuthFilter(authenticationManager(), jwtConfig);
+	}
 
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {

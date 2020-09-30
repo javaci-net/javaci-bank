@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,8 +15,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
-import net.javaci.bank.api.dto.AccountSaveDto;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
+import lombok.extern.slf4j.Slf4j;
 import net.javaci.bank.api.dto.AccountListDto;
+import net.javaci.bank.api.dto.AccountSaveDto;
 import net.javaci.bank.db.dao.AccountDao;
 import net.javaci.bank.db.dao.CustomerDao;
 import net.javaci.bank.db.model.Account;
@@ -25,6 +28,7 @@ import net.javaci.bank.db.model.Customer;
 import net.javaci.bank.db.model.enumaration.AccountStatusType;
 import net.javaci.bank.util.AccountNumberGenerator;
 
+@Api(description = "User Bank Accounts API")
 @Slf4j
 @RestController
 @RequestMapping(AccountController.API_ACCOUNT_BASE_URL)
@@ -37,6 +41,7 @@ public class AccountController {
 	@Autowired private ModelMapper modelMapper;
 	@Autowired private AccountNumberGenerator accountNumberGenerator;
 
+	@ApiOperation("Returns list of all Accounts in the system.")
 	@GetMapping("/list")
 	@ResponseBody
 	public List<AccountListDto> listAll() {
@@ -66,7 +71,10 @@ public class AccountController {
 
 	@GetMapping("/get")
 	@ResponseBody
-	public AccountListDto get(Long accountId) {
+	public AccountListDto get(
+			@ApiParam(value="Id of the account. Cannot be empty.", required = true, example = "1") 
+			Long accountId
+	) {
 		Account account = findAccount(accountId);
 		return convertToDto(account);
 	}
