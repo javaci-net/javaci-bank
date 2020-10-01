@@ -30,7 +30,7 @@ public class LoginControler {
     	
     	checkDefaultUser();
     	
-        return "login";
+        return "user/login";
     }
 
 	public void checkDefaultUser() {

@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html th:lang="${lang}" xmlns:th="http://www.thymeleaf.org"
+	  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+<th:block th:insert="fragments/common.html :: head"></th:block>
+<title>Javaci Bank - Back Office</title>
+</head>
+<body class="sb-nav-fixed">
+	<th:block th:insert="fragments/common.html :: top_menu"></th:block>
+	<div id="layoutSidenav">
+		<th:block th:insert="fragments/common.html :: left_menu"></th:block>
+		<div id="layoutSidenav_content">
+			<main>
+				<br /> 
+				Transaction List
+			</main>
+			<th:block th:insert="fragments/common.html :: footer"></th:block>
+		</div>
+	</div>
+	<th:block th:insert="fragments/common.html :: script"></th:block>
+</body>
+</html>

@@ -51,10 +51,12 @@
 					aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
 					<div class="dropdown-menu dropdown-menu-right"
 						aria-labelledby="userDropdown">
-						<a class="dropdown-item" href="#">Settings</a> 
-						<a class="dropdown-item" href="#">Activity Log</a>
+						<a class="dropdown-item" href="/user/tasks" th:text="#{menu.tasks}"></a>
 						<div class="dropdown-divider"></div>
-						<a class="dropdown-item" th:href="@{/logout}">Logout</a>
+						<a class="dropdown-item" href="/user/profile" th:text="#{menu.profile}"></a>
+						<a class="dropdown-item" href="/user/changePassword" th:text="#{menu.changePassword}"></a>
+						<div class="dropdown-divider"></div>
+						<a class="dropdown-item" th:href="@{/logout}" th:text="#{menu.logout}"></a>
 
 					</div></li>
 					
@@ -75,16 +77,16 @@
 				id="sidenavAccordion">
 				<div class="sb-sidenav-menu">
 					<div class="nav">
-						<div class="sb-sidenav-menu-heading">Core</div>
+						<div class="sb-sidenav-menu-heading"></div>
 						<a class="nav-link" href="/">
 							<div class="sb-nav-link-icon">
 								<i class="fas fa-tachometer-alt"></i>
-							</div> Dashboard
+							</div> <span th:text="#{menu.dashboard}"></span>
 						</a>
-						<div class="sb-sidenav-menu-heading">Interface</div>
+						<div class="sb-sidenav-menu-heading"></div>
 						<a class="nav-link collapsed" href="#" data-toggle="collapse"
-							data-target="#collapseLayouts" aria-expanded="false"
-							aria-controls="collapseLayouts">
+							data-target="#collapseEmployee" aria-expanded="false"
+							aria-controls="collapseEmployee">
 							<div class="sb-nav-link-icon">
 								<i class="fas fa-columns"></i>
 							</div> <span th:text="#{employee}"></span>
@@ -92,7 +94,7 @@
 								<i class="fas fa-angle-down"></i>
 							</div>
 						</a>
-						<div class="collapse" id="collapseLayouts"
+						<div class="collapse" id="collapseEmployee"
 							aria-labelledby="headingOne" data-parent="#sidenavAccordion">
 							<nav class="sb-sidenav-menu-nested nav">
 								<a class="nav-link" href="/employee/list" th:text="#{employee.list}"></a>
@@ -100,67 +102,37 @@
 							</nav>
 						</div>
 						<a class="nav-link collapsed" href="#" data-toggle="collapse"
-							data-target="#collapsePages" aria-expanded="false"
-							aria-controls="collapsePages">
+							data-target="#collapseCustomer" aria-expanded="false"
+							aria-controls="collapseCustomer">
 							<div class="sb-nav-link-icon">
 								<i class="fas fa-book-open"></i>
-							</div> Pages
+							</div> <span th:text="#{customer}"></span>
 							<div class="sb-sidenav-collapse-arrow">
 								<i class="fas fa-angle-down"></i>
 							</div>
 						</a>
-						<div class="collapse" id="collapsePages"
-							aria-labelledby="headingTwo" data-parent="#sidenavAccordion">
-							<nav class="sb-sidenav-menu-nested nav accordion"
-								id="sidenavAccordionPages">
-								<a class="nav-link collapsed" href="#" data-toggle="collapse"
-									data-target="#pagesCollapseAuth" aria-expanded="false"
-									aria-controls="pagesCollapseAuth"> Authentication
-									<div class="sb-sidenav-collapse-arrow">
-										<i class="fas fa-angle-down"></i>
-									</div>
-								</a>
-								<div class="collapse" id="pagesCollapseAuth"
-									aria-labelledby="headingOne"
-									data-parent="#sidenavAccordionPages">
-									<nav class="sb-sidenav-menu-nested nav">
-										<a class="nav-link" href="login.html">Login</a> <a
-											class="nav-link" href="register.html">Register</a> <a
-											class="nav-link" href="password.html">Forgot Password</a>
-									</nav>
-								</div>
-								<a class="nav-link collapsed" href="#" data-toggle="collapse"
-									data-target="#pagesCollapseError" aria-expanded="false"
-									aria-controls="pagesCollapseError"> Error
-									<div class="sb-sidenav-collapse-arrow">
-										<i class="fas fa-angle-down"></i>
-									</div>
-								</a>
-								<div class="collapse" id="pagesCollapseError"
-									aria-labelledby="headingOne"
-									data-parent="#sidenavAccordionPages">
-									<nav class="sb-sidenav-menu-nested nav">
-										<a class="nav-link" href="401.html">401 Page</a> <a
-											class="nav-link" href="404.html">404 Page</a> <a
-											class="nav-link" href="500.html">500 Page</a>
-									</nav>
-								</div>
+						<div class="collapse" id="collapseCustomer"
+							aria-labelledby="headingOne" data-parent="#sidenavAccordion">
+							<nav class="sb-sidenav-menu-nested nav">
+								<a class="nav-link" href="/customer/list" th:text="#{customer.list}"></a>
+								<a class="nav-link" href="/account/list" th:text="#{customer.account}"></a>
+								<a class="nav-link" href="/transaction/list" th:text="#{customer.transaction}"></a>
+								
 							</nav>
 						</div>
-						<div class="sb-sidenav-menu-heading">Addons</div>
-						<a class="nav-link" href="charts.html">
+						 
+						
+						<div class="sb-sidenav-menu-heading"></div>
+						<a class="nav-link" th:href="@{/logout}">
 							<div class="sb-nav-link-icon">
 								<i class="fas fa-chart-area"></i>
-							</div> Charts
-						</a> <a class="nav-link" href="tables.html">
-							<div class="sb-nav-link-icon">
-								<i class="fas fa-table"></i>
-							</div> Tables
-						</a>
+							</div> <span th:text="#{menu.logout}"></span>
+						</a> 
+						
 					</div>
 				</div>
 				<div class="sb-sidenav-footer">
-					<div class="small">Logged in as:</div>
+					<div class="small" th:text="#{common.LoggedInAs}"></div>
 					<span sec:authentication="name"></span>
 				</div>
 			</nav>

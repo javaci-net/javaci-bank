@@ -27,7 +27,7 @@
 					<label class="small mb-1" for="inputFirstName"
 						th:text="#{employee.firstName}"></label> <input
 						class="form-control py-4" id="inputFirstName" type="text"
-						placeholder="Enter first name" th:field="*{firstName}" />
+						th:placeholder="#{employee.firstName.placeholder}" th:field="*{firstName}" />
 				</div>
 			</div>
 			<div class="col-md-4">
@@ -35,7 +35,7 @@
 					<label class="small mb-1" for="inputMiddleName"
 						th:text="#{employee.middleName}"></label> <input
 						class="form-control py-4" id="inputMiddleName" type="text"
-						placeholder="Enter middle name" th:field="*{middleName}" />
+						th:placeholder="#{employee.middleName.placeholder}" th:field="*{middleName}" />
 				</div>
 			</div>
 			<div class="col-md-4">
@@ -43,7 +43,7 @@
 					<label class="small mb-1" for="inputLastName"
 						th:text="#{employee.lastName}"></label> <input
 						class="form-control py-4" id="inputLastName" type="text"
-						placeholder="Enter last name" th:field="*{lastName}" />
+						th:placeholder="#{employee.lastName.placeholder}" th:field="*{lastName}" />
 				</div>
 			</div>
 		</div>

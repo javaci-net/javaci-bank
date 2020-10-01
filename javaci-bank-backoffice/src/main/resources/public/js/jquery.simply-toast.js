@@ -9,7 +9,7 @@
 			amount: 20
 		},
 		align: "right",
-		width: 250,
+		width: 300,
 		delay: 4000,
 		allow_dismiss: true,
 		stackup_spacing: 10
