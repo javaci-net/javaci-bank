@@ -35,7 +35,7 @@ public class AccountController {
 			model.addAttribute("customerName", null);
 		} else {
 			Optional<Customer> optCust = customerDao.findById(customerId);
-			if (optCust.isEmpty()) {
+			if (optCust.isPresent() == false) {
 				model.addAttribute("customerName", null);
 			} else {
 				Customer cust = optCust.get();
