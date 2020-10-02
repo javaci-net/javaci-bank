@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html th:lang="${lang}" xmlns:th="http://www.thymeleaf.org">
     <head>
-	    <th:block th:insert="/fragments/common.html :: head"></th:block>
+	    <th:block th:insert="fragments/common.html :: head"></th:block>
 	    <title th:text="#{employee.create.title}"></title>
     </head>
     <body class="sb-nav-fixed">
-    	<th:block th:insert="/fragments/common.html :: top_menu"></th:block>
+    	<th:block th:insert="fragments/common.html :: top_menu"></th:block>
         <div id="layoutSidenav">
-        	<th:block th:insert="/fragments/common.html :: left_menu"></th:block>
+        	<th:block th:insert="fragments/common.html :: left_menu"></th:block>
             <div id="layoutSidenav_content">
                 <main>
                 
@@ -32,10 +32,10 @@
                     </div>
                      
 				</main>
-               	<th:block th:insert="/fragments/common.html :: footer"></th:block>
+               	<th:block th:insert="fragments/common.html :: footer"></th:block>
             </div>
         </div>
-        <th:block th:insert="/fragments/common.html :: script"></th:block>
+        <th:block th:insert="fragments/common.html :: script"></th:block>
         <th:block th:insert="/employee/_form.html :: script"></th:block>
     </body>
 </html>
