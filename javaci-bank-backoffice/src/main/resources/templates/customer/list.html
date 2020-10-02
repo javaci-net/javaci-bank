@@ -1,9 +1,8 @@
 <!DOCTYPE html>
-<html th:lang="${lang}" xmlns:th="http://www.thymeleaf.org"
-	  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
 <th:block th:insert="fragments/common.html :: head"></th:block>
-<title>Javaci Bank - Back Office</title>
+<title th:text="#{customer.list.title}"></title>
 </head>
 <body class="sb-nav-fixed">
 	<th:block th:insert="fragments/common.html :: top_menu"></th:block>
@@ -11,8 +10,54 @@
 		<th:block th:insert="fragments/common.html :: left_menu"></th:block>
 		<div id="layoutSidenav_content">
 			<main>
-				<br /> 
-				Customer List
+				<br />
+				<br />
+				<div class="container-fluid">
+					<div class="card mb-4">
+						<div class="card-header">
+							<i class="fas fa-table mr-1"></i> <span th:text="#{customer}" />
+						</div>
+						<div class="card-body">
+							<div class="table-responsive">
+								<div th:text="#{common.emptyTable}"
+									th:if="${customers?.isEmpty()}"></div>
+								<table class="table table-bordered" id="dataTable" width="100%"
+									cellspacing="0" th:if="${not customers?.isEmpty()}">
+									<thead>
+										<tr>
+											<th>ID</th>
+											<th th:text="#{customer.citizenNumber}"></th>
+											<th th:text="#{customer.firstName}"></th>
+											<th th:text="#{customer.middleName}"></th>
+											<th th:text="#{customer.lastName}"></th>
+											<th th:text="#{customer.birthDate}"></th>
+											<th th:text="#{customer.email}"></th>
+											<th th:text="#{customer.phoneNumber}"></th>
+											<th th:text="#{customer.status}"></th>
+											<th th:text="#{customer.update}"></th>
+										</tr>
+									</thead>
+									<tbody>
+										<div th:each="c : ${customers}" class="card">
+											<tr>
+												<td th:text="${c.id}"></td>
+												<td th:text="${c.citizenNumber}"></td>
+												<td th:text="${c.firstName}"></td>
+												<td th:text="${c.middleName}"></td>
+												<td th:text="${c.lastName}"></td>
+												<td th:text="${c.birthDate}"></td>
+												<td th:text="${c.email}"></td>
+												<td th:text="${c.phoneNumber}"></td>
+												<td th:text="${c.status}"></td>
+												<td></td>
+											</tr>
+										</div>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
 			</main>
 			<th:block th:insert="fragments/common.html :: footer"></th:block>
 		</div>
