@@ -18,8 +18,8 @@ public abstract class UserBaseDto {
     private String citizenNumber;
     
 	@NotEmpty
-    @ApiModelProperty(position = 2, required = true,  value = "name", example = "Volkan")
-    private String name;
+    @ApiModelProperty(position = 2, required = true,  value = "First name", example = "Volkan")
+    private String firstName;
 
     @ApiModelProperty(position = 3, required = false,  value = "middle name", example = "Ozkan" )
     private String middleName;
