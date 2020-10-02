@@ -30,6 +30,12 @@ public class EmployeeController {
 	@Autowired
 	private ModelMapper modelMapper;
 	
+	@GetMapping("/list")
+	public String renderListPage(Model model) {
+		model.addAttribute("employees", employeeDao.findAll());
+		return "employee/list";
+	}
+	
 	@GetMapping("/create")
 	public String renderCreatePage(Model model) {
 		model.addAttribute("employeeDto", new EmployeeCreateDto());
@@ -52,13 +58,11 @@ public class EmployeeController {
 		return "redirect:/employee/list";
 	}
 
-
 	private boolean validateInput(EmployeeCreateDto employeeDto, BindingResult bindingResult, Model model) {
 		if (!employeeDto.getConfirmPassword().equals(employeeDto.getPassword())) {
 			bindingResult.addError(new ObjectError("confirmPassword", "Input same password"));
 			return false;
 		}
-
 		return true;
 	}
 
@@ -85,12 +89,6 @@ public class EmployeeController {
 		employeeDao.save(employeeEntity);
 		
 		return "redirect:/employee/list";
-	}
-
-	@GetMapping("/list")
-	public String renderListPage(Model model) {
-		model.addAttribute("employees", employeeDao.findAll());
-		return "employee/list";
 	}
 	
 	@GetMapping("/checkCitizenNumber/{citizenNumber}")

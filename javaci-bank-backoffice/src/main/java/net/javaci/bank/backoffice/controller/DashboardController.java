@@ -19,13 +19,13 @@ public class DashboardController {
 	private MessageSource messageSource;
 	
     @GetMapping("/")
-    public String root(Model model, Principal user, Locale loc) {
+    public String root(Model model, Principal user, Locale locale) {
     	// ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
     	// messageSource.setBasenames("lang/res");
 
     	log.debug(messageSource.getMessage("welcomeMsg", null, Locale.ENGLISH));
     	log.debug(messageSource.getMessage("welcomeMsg", null, new Locale("TR", "TR")));
-    	log.debug(messageSource.getMessage("welcomeMsg", null, loc));
+    	log.debug(messageSource.getMessage("welcomeMsg", null, locale));
     	
         // model.addAttribute("welcomeMsgFromBean", "Welcome To Javaci-Bank Backoffice from Controler");
         // model.addAttribute("welcomeMsgFromMessagesAndBean", messageSource.getMessage("welcomeMsg", null, loc) +  " from Controler");
