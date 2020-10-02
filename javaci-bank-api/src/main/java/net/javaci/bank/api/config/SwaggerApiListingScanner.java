@@ -3,6 +3,7 @@ package net.javaci.bank.api.config;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -49,7 +50,9 @@ public class SwaggerApiListingScanner implements ApiListingScannerPlugin {
                         new ApiDescription(null, "/login", "login", Collections.singletonList(
                                 new OperationBuilder(operationNames)
                                         .summary("login")
-                                        .tags(Set.of("jwt-authentication-filter"))
+                                        // .tags(Set.of("jwt-authentication-filter"))
+                                        // FIXME Set.of 1.9 da geldigi icin heroku da depley hatasi veriyor ilginc bir sekilde localde vermiyor???
+                                        .tags(new HashSet<>(Arrays.asList("jwt-authentication-filter")))
                                         .authorizations(new ArrayList<>())
                                         .position(1)
                                         .codegenMethodNameStem("loginPost")
@@ -97,8 +100,10 @@ public class SwaggerApiListingScanner implements ApiListingScannerPlugin {
 		        .code(404)
 		        .responseModel(new ModelRef("ApiError"))
 		        .build();
-		
-		return Set.of(code200, code401, code403, code404);
+        
+		// return Set.of(code200, code401, code403, code404);
+        // FIXME Set.of 1.9 da geldigi icin heroku da depley hatasi veriyor ilginc bir sekilde localde vermiyor???
+		return new HashSet<>(Arrays.asList(code200, code401, code403, code404));
     }
     // tag::api-listing-plugin[]
 
