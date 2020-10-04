@@ -57,17 +57,6 @@ public class AccountController {
 		return accountDao.findAllByCustomer(customer).stream().map(this::convertToDto).collect(Collectors.toList());
 	}
 
-	/*
-	 * @ApiOperation("Returns list of all Accounts in the system with pagination support"
-	 * )
-	 * 
-	 * @GetMapping("/list-with-pages")
-	 * 
-	 * @ResponseBody public Page<AccountListDto> listAllWithPages (@RequestBody
-	 * Pageable pageable) { return
-	 * accountDao.findAll(pageable).map(this::convertToDto); }
-	 */
-
 	@PostMapping("/create")
 	@ResponseBody
 	public Long create(@RequestBody AccountSaveDto newAccountDto, Principal user) {
