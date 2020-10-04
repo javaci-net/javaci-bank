@@ -1,8 +1,9 @@
 package net.javaci.bank.backoffice.controller;
 
-import java.util.Locale;
-import java.util.Optional;
-
+import net.javaci.bank.db.dao.AccountDao;
+import net.javaci.bank.db.dao.CustomerDao;
+import net.javaci.bank.db.model.Customer;
+import net.javaci.bank.util.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
@@ -11,15 +12,17 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import net.javaci.bank.db.dao.AccountDao;
-import net.javaci.bank.db.dao.CustomerDao;
-import net.javaci.bank.db.model.Customer;
-import net.javaci.bank.util.StringUtil;
+import java.util.Locale;
+import java.util.Optional;
 
 @Controller
-@RequestMapping("/account")
+@RequestMapping(AccountController.BASE_URL)
 public class AccountController {
-	
+
+	public static final String BASE_URL = "/account";
+
+	public static final String LIST_URL = "/list";
+
 	@Autowired
 	private MessageSource messageSource;
 
@@ -29,7 +32,7 @@ public class AccountController {
 	@Autowired
 	private AccountDao accountDao;
 
-	@GetMapping("/list")
+	@GetMapping(LIST_URL)
 	public String renderListPage(Model model, @RequestParam(required = false) Long customerId, Locale locale) {
 		if (customerId == null) {
 			model.addAttribute("customerName", null);
