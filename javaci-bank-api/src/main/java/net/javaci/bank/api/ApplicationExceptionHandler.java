@@ -12,6 +12,7 @@ public class ApplicationExceptionHandler {
 
 	@ExceptionHandler(DataAccessException.class)
 	public ResponseEntity<String> handleGeneralExcepiton(Exception exception) {
+		// FIXME bunu iyilestirebilir miyiz??
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(exception.getMessage());
 	}
 }
