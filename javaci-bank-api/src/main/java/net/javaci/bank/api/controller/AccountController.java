@@ -1,5 +1,6 @@
 package net.javaci.bank.api.controller;
 
+import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -37,41 +38,53 @@ import net.javaci.bank.util.AccountNumberGenerator;
 public class AccountController {
 
 	public static final String API_ACCOUNT_BASE_URL = "/api/account";
-	
-	@Autowired private AccountDao accountDao;
-	@Autowired private CustomerDao customerDao;
-	@Autowired private ModelMapper modelMapper;
-	@Autowired private AccountNumberGenerator accountNumberGenerator;
+
+	@Autowired
+	private AccountDao accountDao;
+	@Autowired
+	private CustomerDao customerDao;
+	@Autowired
+	private ModelMapper modelMapper;
+	@Autowired
+	private AccountNumberGenerator accountNumberGenerator;
 
 	@ApiOperation("Returns list of all Accounts in the system. Deprecated, use listAllWithPages")
-	@Deprecated
 	@GetMapping("/list")
 	@ResponseBody
-	public List<AccountListDto> listAll() {
-		return accountDao.findAll().stream().map(this::convertToDto).collect(Collectors.toList());
-	}
-	
-	@ApiOperation("Returns list of all Accounts in the system with pagination support")
-	@GetMapping("/list-with-pages")
-	@ResponseBody 
-	public Page<AccountListDto> listAllWithPages (@RequestBody Pageable pageable) {
-	    return accountDao.findAll(pageable).map(this::convertToDto);
+	public List<AccountListDto> listAll(Principal user) {
+		Customer customer = customerDao.findByCitizenNumber(user.getName()).get();
+
+		return accountDao.findAllByCustomer(customer).stream().map(this::convertToDto).collect(Collectors.toList());
 	}
 
-	@PostMapping("/add")
+	/*
+	 * @ApiOperation("Returns list of all Accounts in the system with pagination support"
+	 * )
+	 * 
+	 * @GetMapping("/list-with-pages")
+	 * 
+	 * @ResponseBody public Page<AccountListDto> listAllWithPages (@RequestBody
+	 * Pageable pageable) { return
+	 * accountDao.findAll(pageable).map(this::convertToDto); }
+	 */
+
+	@PostMapping("/create")
 	@ResponseBody
-	public Long add(@RequestBody AccountSaveDto newAccountDto) {
-		
-		log.debug("Adding account: {}", newAccountDto);
+	public Long create(@RequestBody AccountSaveDto newAccountDto, Principal user) {
+		Customer customer = customerDao.findByCitizenNumber(user.getName()).get();
+
+		// TODO ayni para biriinden aktif iki hesap olamaz currency ye uniq index
+		// atilabilir
+		log.debug("Create account: {}", newAccountDto);
 
 		// Find and set customer to account
 		Account account = convertToEntity(newAccountDto);
-		Customer customer = findCustomer(newAccountDto.getCustomerId());
 		account.setCustomer(customer);
-		
+
 		// Set account number
 		int numberOfAccount = accountDao.countByCustomerId(customer.getId());
-		String newAccountNo = accountNumberGenerator.generateAccountNumber(customer.getCitizenNumber(), numberOfAccount + 1);
+		String newAccountNo = accountNumberGenerator.generateAccountNumber(customer.getCitizenNumber(),
+				numberOfAccount + 1);
 		account.setAccountNumber(newAccountNo);
 
 		account = accountDao.save(account);
@@ -79,13 +92,14 @@ public class AccountController {
 		return account.getId();
 	}
 
-	@GetMapping("/get")
+	@GetMapping("/getInfo")
 	@ResponseBody
-	public AccountListDto get(
-			@ApiParam(value="Id of the account. Cannot be empty.", required = true, example = "1") 
-			Long accountId
-	) {
+	public AccountListDto getInfo(
+			@ApiParam(value = "Id of the account. Cannot be empty.", required = true, example = "1") Long accountId) {
+		// TODO bu account id bu musteriye mi ait
 		Account account = findAccount(accountId);
+		// if (account.getCustomer().getId().equals())
+
 		return convertToDto(account);
 	}
 
@@ -97,7 +111,10 @@ public class AccountController {
 	@PostMapping("/close")
 	@ResponseBody
 	public AccountListDto close(@RequestBody Long accountId) {
+		// TODO bu account id bu musteriye mi ait
 		Account account = findAccount(accountId);
+		// if (account.getCustomer().getId().equals())
+
 		account.setStatus(AccountStatusType.CLOSED);
 		account = accountDao.save(account);
 		return convertToDto(account);
@@ -110,7 +127,8 @@ public class AccountController {
 	private Customer findCustomer(Long customerId) {
 		final Optional<Customer> customerToBeSearched = customerDao.findById(customerId);
 		if (!customerToBeSearched.isPresent()) {
-			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Customer does not exists with ID: " + customerId);
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+					"Customer does not exists with ID: " + customerId);
 		}
 		Customer customer = customerToBeSearched.get();
 		return customer;
@@ -128,7 +146,7 @@ public class AccountController {
 	private AccountListDto convertToDto(Account account) {
 		return modelMapper.map(account, AccountListDto.class);
 	}
-	
+
 	private Account convertToEntity(AccountSaveDto accountDto) {
 		return modelMapper.map(accountDto, Account.class);
 	}
