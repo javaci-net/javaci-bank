@@ -1,6 +1,9 @@
 package net.javaci.bank.api.controller;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.Gson;
 import net.javaci.bank.api.config.JwtConfig;
+import net.javaci.bank.api.dto.CustomerSaveDto;
 import net.javaci.bank.api.helper.JwtConstants;
 import net.javaci.bank.api.jwt.JwtUserPassAuthFilter;
 import net.javaci.bank.db.dao.CustomerDao;
@@ -15,18 +18,23 @@ import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDoc
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.ResultActions;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.comparesEqualTo;
 import static org.hamcrest.Matchers.hasSize;
+import static org.mockito.ArgumentMatchers.any;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -46,6 +54,9 @@ public class CustomerControllerTest {
 	@MockBean
 	private CustomerDao customerDao;
 
+	private String mockJwtToken() {
+		return JwtConstants.BEARER_PREFIX + " " + JwtUserPassAuthFilter.createJwtToken("john", Collections.emptySet(), jwtConfig);
+	}
 	@Test
 	public void contextLoads() throws Exception {
 		assertThat(controller).isNotNull();
@@ -66,13 +77,12 @@ public class CustomerControllerTest {
 				.status(CustomerStatusType.INACTIVE)
 				.build());
 		Mockito.when(customerDao.findAll()).thenReturn(customerList);
-		String token = JwtUserPassAuthFilter.createJwtToken("john", Collections.emptySet(), jwtConfig);
 
 		// When
 		ResultActions perform = this.mockMvc
 				.perform(
 						get(CustomerController.BASE_URL + "/list")
-								.header(JwtConstants.AUTHORIZATION, JwtConstants.BEARER_PREFIX + " " + token)
+								.header(JwtConstants.AUTHORIZATION, mockJwtToken())
 				);
 
 		// Then
@@ -120,7 +130,63 @@ public class CustomerControllerTest {
 	}
 
 	@Test
-	public void testDuplicateCitizenNumber() {
+	public void registerSuccessfully() throws Exception {
+		// Given
+		final Long createdId = 9999L;
+		Mockito.when(customerDao.findByCitizenNumber(any())).thenReturn(Optional.empty());
+		Mockito.when(customerDao.save(any())).thenReturn(Customer.builder().id(createdId).build());
 
+		// When
+		CustomerSaveDto customerSaveDto = new CustomerSaveDto();
+		customerSaveDto.setCitizenNumber("1");
+		customerSaveDto.setPassword("mySecret");
+
+		ResultActions perform = this.mockMvc
+				.perform(
+						post(CustomerController.BASE_URL + "/register")
+								.header(JwtConstants.AUTHORIZATION, mockJwtToken())
+								.content(new ObjectMapper().writeValueAsString(customerSaveDto))
+								.contentType(MediaType.APPLICATION_JSON)
+				);
+
+		// Then
+		MvcResult result = perform
+				.andDo(print())
+				.andExpect(status().isOk())
+				.andReturn();
+
+		assertThat(result.getResponse().getContentAsString()).isEqualTo("" + createdId);
 	}
+
+	@Test
+	public void registerWithDuplicateCitizenNumber() throws Exception {
+        // Given
+        final String citizenNumber = "0001111";
+        Mockito.when(customerDao.findByCitizenNumber(citizenNumber)).thenReturn(
+			Optional.of(
+				Customer.builder().id(1L)
+                    .citizenNumber(citizenNumber)
+                    .birthDate(LocalDate.parse("1980-10-01"))
+                    .password("secretPassword")
+                    .status(CustomerStatusType.ACTIVE)
+                    .build()
+			)
+		);
+
+		// When
+        ResultActions perform = this.mockMvc
+                .perform(
+                        post(CustomerController.BASE_URL + "/register")
+                                .header(JwtConstants.AUTHORIZATION, mockJwtToken())
+                                .content(new Gson().toJson(Customer.builder().citizenNumber(citizenNumber)))
+								.contentType(MediaType.APPLICATION_JSON)
+                );
+
+        // Then
+        perform
+                .andDo(print())
+                .andExpect(status().isBadRequest());
+	}
+
+
 }
