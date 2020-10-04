@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import net.javaci.bank.backoffice.utils.EntityOneLineDescriptionUtil;
 import net.javaci.bank.db.dao.AccountDao;
 import net.javaci.bank.db.dao.CustomerDao;
 import net.javaci.bank.db.model.Customer;
@@ -19,15 +20,15 @@ import net.javaci.bank.util.StringUtil;
 @Controller
 @RequestMapping("/account")
 public class AccountController {
-	
-	@Autowired
-	private MessageSource messageSource;
 
 	@Autowired
 	private CustomerDao customerDao;
 
 	@Autowired
 	private AccountDao accountDao;
+
+	@Autowired
+	private EntityOneLineDescriptionUtil descriptionUtil;
 
 	@GetMapping("/list")
 	public String renderListPage(Model model, @RequestParam(required = false) Long customerId, Locale locale) {
@@ -38,34 +39,13 @@ public class AccountController {
 			if (optCust.isPresent() == false) {
 				model.addAttribute("customerName", null);
 			} else {
-				Customer cust = optCust.get();
-				model.addAttribute("customerName", findFullName(cust, locale));
-				model.addAttribute("accounts", accountDao.findAllByCustomer(cust));
+				Customer customer = optCust.get();
+				model.addAttribute("customerName", descriptionUtil.findCustomerOneLineDescription(customer, locale));
+				model.addAttribute("accounts", accountDao.findAllByCustomer(customer));
 			}
 		}
 
 		return "account/list";
 	}
 
-	private Object findFullName(Customer cust, Locale locale) {
-		StringBuilder sb = new StringBuilder();
-		sb.append(cust.getFirstName());
-		sb.append(" ");
-
-		if (StringUtil.isBlankString(cust.getMiddleName())) {
-			sb.append(cust.getMiddleName());
-			sb.append(" ");
-		}
-
-		sb.append(cust.getLastName());
-		sb.append(" (ID: ");
-		sb.append(cust.getId());
-		sb.append(", ");
-		sb.append(messageSource.getMessage("customer.citizenNumber", null, locale));
-		sb.append(": ");
-		sb.append(cust.getCitizenNumber());
-		sb.append(")");
-
-		return sb.toString();
-	}
 }

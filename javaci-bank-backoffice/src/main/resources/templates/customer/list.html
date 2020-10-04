@@ -10,12 +10,11 @@
 		<th:block th:insert="fragments/common.html :: left_menu"></th:block>
 		<div id="layoutSidenav_content">
 			<main>
-				<br />
-				<br />
+				<br /> <br />
 				<div class="container-fluid">
 					<div class="card mb-4">
-						<div class="card-header" th:text="#{customer}" >
-							<i class="fas fa-table mr-1"></i> 
+						<div class="card-header" th:text="#{customer}">
+							<i class="fas fa-table mr-1"></i>
 						</div>
 						<div class="card-body">
 							<div class="table-responsive">
@@ -34,7 +33,7 @@
 											<th th:text="#{customer.email}"></th>
 											<th th:text="#{customer.phoneNumber}"></th>
 											<th th:text="#{customer.status}"></th>
-											<th th:text="#{customer.update}"></th>
+											<th th:text="#{customer.accounts}"></th>
 										</tr>
 									</thead>
 									<tbody>
@@ -49,7 +48,8 @@
 												<td th:text="${c.email}"></td>
 												<td th:text="${c.phoneNumber}"></td>
 												<td th:text="${c.status}"></td>
-												<td></td>
+												<td><a th:href="@{/account/list(customerId=${c.id})}"
+													th:text="#{customer.accounts}"></a></td>
 											</tr>
 										</div>
 									</tbody>
