@@ -35,3 +35,4 @@ javaci-bank-db/.gitignore
 javaci-bank-util/.gitignore
 /javaci-bank.mv.db
 /javaci-bank.lock.db
+/javaci-bank.trace.db
