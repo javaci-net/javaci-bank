@@ -6,6 +6,8 @@ import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -41,11 +43,19 @@ public class AccountController {
 	@Autowired private ModelMapper modelMapper;
 	@Autowired private AccountNumberGenerator accountNumberGenerator;
 
-	@ApiOperation("Returns list of all Accounts in the system.")
+	@ApiOperation("Returns list of all Accounts in the system. Deprecated, use listAllWithPages")
+	@Deprecated
 	@GetMapping("/list")
 	@ResponseBody
 	public List<AccountListDto> listAll() {
 		return accountDao.findAll().stream().map(this::convertToDto).collect(Collectors.toList());
+	}
+	
+	@ApiOperation("Returns list of all Accounts in the system with pagination support")
+	@GetMapping("/list-with-pages")
+	@ResponseBody 
+	public Page<AccountListDto> listAllWithPages (@RequestBody Pageable pageable) {
+	    return accountDao.findAll(pageable).map(this::convertToDto);
 	}
 
 	@PostMapping("/add")
