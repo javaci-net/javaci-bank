@@ -45,6 +45,10 @@ public class TransactionLog {
     @Column(nullable = false)
     private BigDecimal amount;
 
+    /** The signed balance of the transaction */
+    @Column(nullable = false)
+    private BigDecimal balance;
+    
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private TransactionLogType type;
