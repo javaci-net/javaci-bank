@@ -18,8 +18,13 @@ import net.javaci.bank.db.model.Customer;
 import net.javaci.bank.util.StringUtil;
 
 @Controller
-@RequestMapping("/account")
+@RequestMapping(AccountController.BASE_URL)
 public class AccountController {
+
+
+	public static final String BASE_URL = "/account";
+
+	public static final String LIST_URL = "/list";
 
 	@Autowired
 	private CustomerDao customerDao;
@@ -30,7 +35,7 @@ public class AccountController {
 	@Autowired
 	private EntityOneLineDescriptionUtil descriptionUtil;
 
-	@GetMapping("/list")
+	@GetMapping(LIST_URL)
 	public String renderListPage(Model model, @RequestParam(required = false) Long customerId, Locale locale) {
 		if (customerId == null) {
 			model.addAttribute("customerName", null);
