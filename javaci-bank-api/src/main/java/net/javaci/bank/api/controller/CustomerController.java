@@ -1,10 +1,11 @@
 package net.javaci.bank.api.controller;
 
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
-
 import lombok.extern.slf4j.Slf4j;
+import net.javaci.bank.api.dto.CustomerListDto;
+import net.javaci.bank.api.dto.CustomerSaveDto;
+import net.javaci.bank.db.dao.CustomerDao;
+import net.javaci.bank.db.model.Customer;
+import net.javaci.bank.db.model.enumaration.CustomerStatusType;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -12,16 +13,16 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
-import net.javaci.bank.api.dto.CustomerSaveDto;
-import net.javaci.bank.api.dto.CustomerListDto;
-import net.javaci.bank.db.dao.CustomerDao;
-import net.javaci.bank.db.model.Customer;
-import net.javaci.bank.db.model.enumaration.CustomerStatusType;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Slf4j
 @RestController
-@RequestMapping("/api/customer")
+@RequestMapping(CustomerController.BASE_URL)
 public class CustomerController {
+
+	public static final String BASE_URL = "/api/customer";
 
 	@Autowired
 	private CustomerDao customerDao;
