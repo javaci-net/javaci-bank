@@ -52,7 +52,7 @@ public class AccountController {
 	}
 	
 	@ApiOperation("Returns list of all Accounts in the system with pagination support")
-	@GetMapping("/list-with-pages")
+	@PostMapping("/list-with-pages")
 	@ResponseBody 
 	public Page<AccountListDto> listAllWithPages (@RequestBody Pageable pageable) {
 	    return accountDao.findAll(pageable).map(this::convertToDto);
