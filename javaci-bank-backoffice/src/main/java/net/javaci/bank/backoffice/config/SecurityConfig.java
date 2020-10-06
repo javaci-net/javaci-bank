@@ -47,6 +47,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     .tokenValiditySeconds((int)TimeUnit.DAYS.toSeconds(21))  // Default 14 gün hatırlar.
                     .key("Javaci.net.very.secret.remember.me.key")
                     .userDetailsService(userService);
+        
+        // FIXME Ne olduklarini bilmiyorum h2-consol a baglanabilmek icin ekledim Koray a soracagim - Volkan
+        http.csrf().disable();
+        http.headers().frameOptions().disable();
     }
 
     @Bean
