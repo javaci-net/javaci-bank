@@ -12,10 +12,6 @@ import lombok.Setter;
 
 @Getter @Setter
 public class AccountSaveDto {
-
-    @NotEmpty
-    @ApiModelProperty(position = 1, required = true,  value = "Account Owner - customer id", example = "987654")
-    private Long customerId;
     
     @NotEmpty
     @ApiModelProperty(position = 2, required = true,  value = "Account Name", example = "Investment")

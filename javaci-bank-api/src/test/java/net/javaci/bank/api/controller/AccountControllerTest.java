@@ -49,7 +49,7 @@ public class AccountControllerTest {
 	@Autowired private JwtConfig jwtConfig;
 	@Autowired private MockMvc mockMvc;
 	
-	@InjectMocks private AccountController controller;
+	@InjectMocks private AccountApi controller;
 	@MockBean private AccountDao accountDao;
 	
 	@Test
@@ -70,7 +70,7 @@ public class AccountControllerTest {
 		// When
 		ResultActions perform = this.mockMvc
 			.perform(
-					get(AccountController.API_ACCOUNT_BASE_URL + "/list")
+					get(AccountApi.API_ACCOUNT_BASE_URL + "/list")
 					.header(JwtConstants.AUTHORIZATION, JwtConstants.BEARER_PREFIX + token)
 			);
 		

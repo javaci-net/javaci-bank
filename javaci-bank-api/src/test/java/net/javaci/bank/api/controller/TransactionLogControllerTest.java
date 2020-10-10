@@ -10,7 +10,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 public class TransactionLogControllerTest {
 
 	@Autowired
-	private TransactionLogController controller;
+	private TransactionLogApi controller;
 	
 	@Test
 	public void contextLoads() throws Exception {

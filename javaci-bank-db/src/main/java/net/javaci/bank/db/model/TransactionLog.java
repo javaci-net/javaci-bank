@@ -16,7 +16,7 @@ import javax.persistence.ManyToOne;
 
 import lombok.Getter;
 import lombok.Setter;
-import net.javaci.bank.db.model.enumaration.TransactionLogType;
+import net.javaci.bank.db.model.enumeration.TransactionLogType;
 
 /**
  * The Transactions resource represents the known transactions on the account.

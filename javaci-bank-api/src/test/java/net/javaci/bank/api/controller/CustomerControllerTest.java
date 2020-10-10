@@ -8,7 +8,8 @@ import net.javaci.bank.api.jwt.JwtConstants;
 import net.javaci.bank.api.jwt.JwtUserPassAuthFilter;
 import net.javaci.bank.db.dao.CustomerDao;
 import net.javaci.bank.db.model.Customer;
-import net.javaci.bank.db.model.enumaration.CustomerStatusType;
+import net.javaci.bank.db.model.enumeration.CustomerStatusType;
+
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mockito;
@@ -49,7 +50,7 @@ public class CustomerControllerTest {
 	@Autowired private MockMvc mockMvc;
 
 	@Autowired
-	private CustomerController controller;
+	private CustomerApi controller;
 
 	@MockBean
 	private CustomerDao customerDao;
@@ -81,7 +82,7 @@ public class CustomerControllerTest {
 		// When
 		ResultActions perform = this.mockMvc
 				.perform(
-						get(CustomerController.BASE_URL + "/list")
+						get(CustomerApi.BASE_URL + "/list")
 								.header(JwtConstants.AUTHORIZATION, mockJwtToken())
 				);
 
@@ -143,7 +144,7 @@ public class CustomerControllerTest {
 
 		ResultActions perform = this.mockMvc
 				.perform(
-						post(CustomerController.BASE_URL + "/register")
+						post(CustomerApi.BASE_URL + "/register")
 								.header(JwtConstants.AUTHORIZATION, mockJwtToken())
 								.content(new ObjectMapper().writeValueAsString(customerSaveDto))
 								.contentType(MediaType.APPLICATION_JSON)
@@ -176,7 +177,7 @@ public class CustomerControllerTest {
 		// When
         ResultActions perform = this.mockMvc
                 .perform(
-                        post(CustomerController.BASE_URL + "/register")
+                        post(CustomerApi.BASE_URL + "/register")
                                 .header(JwtConstants.AUTHORIZATION, mockJwtToken())
                                 .content(new Gson().toJson(Customer.builder().citizenNumber(citizenNumber)))
 								.contentType(MediaType.APPLICATION_JSON)

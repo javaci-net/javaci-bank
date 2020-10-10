@@ -23,7 +23,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-    	// FIXME login sonrasi request edilen sayfaya geri donulmesi
     	// FIXME session timeout sonrası login sayfasına gidilmesi
     	
         http
@@ -47,11 +46,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     .permitAll()
                 .and()
                     .rememberMe()
-                    .tokenValiditySeconds((int)TimeUnit.DAYS.toSeconds(21))  // Default 14 gün hatırlar.
+                    .tokenValiditySeconds((int)TimeUnit.DAYS.toSeconds(21))
                     .key("Javaci.net.very.secret.remember.me.key")
                     .userDetailsService(userService);
         
-        // FIXME Ne olduklarini bilmiyorum h2-consol a baglanabilmek icin ekledim Koray a soracagim - Volkan
         http.csrf().disable();
         http.headers().frameOptions().disable();
     }

@@ -18,7 +18,7 @@ import net.javaci.bank.db.model.TransactionLog;
 
 @RestController
 @RequestMapping("/api/transaction")
-public class TransactionLogController {
+public class TransactionLogApi {
 
     @Autowired
     private TransactionLogDao transactionLogDao;

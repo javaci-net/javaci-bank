@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 import net.javaci.bank.db.dao.EmployeeDao;
 import net.javaci.bank.db.model.Employee;
-import net.javaci.bank.db.model.enumaration.EmployeeStatusType;
+import net.javaci.bank.db.model.enumeration.EmployeeStatusType;
 
 @Controller
 public class LoginControler {

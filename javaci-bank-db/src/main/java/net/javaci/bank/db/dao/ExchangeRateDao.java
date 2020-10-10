@@ -10,7 +10,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import net.javaci.bank.db.model.ExchangeRate;
-import net.javaci.bank.db.model.enumaration.AccountCurrency;
+import net.javaci.bank.db.model.enumeration.AccountCurrency;
 
 @Transactional
 @Repository

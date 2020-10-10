@@ -18,7 +18,7 @@ import lombok.Setter;
 import net.javaci.bank.db.dao.CustomerDao;
 import net.javaci.bank.db.model.Customer;
 import net.javaci.bank.db.model.Employee;
-import net.javaci.bank.db.model.enumaration.CustomerStatusType;
+import net.javaci.bank.db.model.enumeration.CustomerStatusType;
 
 @Service
 public class ApplicationUserService implements UserDetailsService {

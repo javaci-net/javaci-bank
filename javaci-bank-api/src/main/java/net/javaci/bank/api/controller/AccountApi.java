@@ -25,14 +25,14 @@ import net.javaci.bank.api.jwt.JwtAuthenticationHelper;
 import net.javaci.bank.db.dao.AccountDao;
 import net.javaci.bank.db.model.Account;
 import net.javaci.bank.db.model.Customer;
-import net.javaci.bank.db.model.enumaration.AccountStatusType;
+import net.javaci.bank.db.model.enumeration.AccountStatusType;
 import net.javaci.bank.util.AccountNumberGenerator;
 
 @Api(description = "User Bank Accounts API for the logged-in customer")
 @Slf4j
 @RestController
-@RequestMapping(AccountController.API_ACCOUNT_BASE_URL)
-public class AccountController {
+@RequestMapping(AccountApi.API_ACCOUNT_BASE_URL)
+public class AccountApi {
 
 	public static final String API_ACCOUNT_BASE_URL = "/api/account";
 

@@ -16,7 +16,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import net.javaci.bank.db.model.enumaration.CustomerStatusType;
+import net.javaci.bank.db.model.enumeration.CustomerStatusType;
 
 @Entity
 @Getter @Setter @NoArgsConstructor

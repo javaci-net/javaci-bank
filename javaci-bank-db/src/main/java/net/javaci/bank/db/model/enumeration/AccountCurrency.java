@@ -1,4 +1,4 @@
-package net.javaci.bank.db.model.enumaration;
+package net.javaci.bank.db.model.enumeration;
 
 public enum AccountCurrency {
     TL("TRY"),

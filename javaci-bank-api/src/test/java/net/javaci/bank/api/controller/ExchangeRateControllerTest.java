@@ -10,7 +10,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 public class ExchangeRateControllerTest {
 
 	@Autowired
-	private ExchangeRateController controller;
+	private ExchangeRateApi controller;
 	
 	@Test
 	public void contextLoads() throws Exception {

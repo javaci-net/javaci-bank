@@ -7,7 +7,7 @@ import javax.persistence.Enumerated;
 
 import lombok.Getter;
 import lombok.Setter;
-import net.javaci.bank.db.model.enumaration.EmployeeStatusType;
+import net.javaci.bank.db.model.enumeration.EmployeeStatusType;
 
 @Entity
 @Getter @Setter

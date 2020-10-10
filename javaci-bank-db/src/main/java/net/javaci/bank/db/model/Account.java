@@ -18,8 +18,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import net.javaci.bank.db.model.enumaration.AccountCurrency;
-import net.javaci.bank.db.model.enumaration.AccountStatusType;
+import net.javaci.bank.db.model.enumeration.AccountCurrency;
+import net.javaci.bank.db.model.enumeration.AccountStatusType;
 
 @Entity
 @Getter @Setter

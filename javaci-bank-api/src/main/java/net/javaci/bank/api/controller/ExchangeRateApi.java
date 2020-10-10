@@ -15,7 +15,7 @@ import net.javaci.bank.db.model.ExchangeRate;
 
 @RestController
 @RequestMapping("/api/foreign-exchange")
-public class ExchangeRateController {
+public class ExchangeRateApi {
 
 	@Autowired private ExchangeRateDao exchangeRateDao;
 	

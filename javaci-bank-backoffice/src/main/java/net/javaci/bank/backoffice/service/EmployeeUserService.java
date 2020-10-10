@@ -3,7 +3,7 @@ package net.javaci.bank.backoffice.service;
 
 import net.javaci.bank.db.dao.EmployeeDao;
 import net.javaci.bank.db.model.Employee;
-import net.javaci.bank.db.model.enumaration.EmployeeStatusType;
+import net.javaci.bank.db.model.enumeration.EmployeeStatusType;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;

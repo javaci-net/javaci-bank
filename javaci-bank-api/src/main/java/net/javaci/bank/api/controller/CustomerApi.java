@@ -21,12 +21,12 @@ import net.javaci.bank.api.dto.CustomerListDto;
 import net.javaci.bank.api.dto.CustomerSaveDto;
 import net.javaci.bank.db.dao.CustomerDao;
 import net.javaci.bank.db.model.Customer;
-import net.javaci.bank.db.model.enumaration.CustomerStatusType;
+import net.javaci.bank.db.model.enumeration.CustomerStatusType;
 
 @Slf4j
 @RestController
-@RequestMapping(CustomerController.BASE_URL)
-public class CustomerController {
+@RequestMapping(CustomerApi.BASE_URL)
+public class CustomerApi {
 
 	public static final String BASE_URL = "/api/customer";
 
