@@ -4,7 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import net.javaci.bank.api.config.JwtConfig;
 import net.javaci.bank.api.dto.CustomerSaveDto;
-import net.javaci.bank.api.helper.JwtConstants;
+import net.javaci.bank.api.jwt.JwtConstants;
 import net.javaci.bank.api.jwt.JwtUserPassAuthFilter;
 import net.javaci.bank.db.dao.CustomerDao;
 import net.javaci.bank.db.model.Customer;

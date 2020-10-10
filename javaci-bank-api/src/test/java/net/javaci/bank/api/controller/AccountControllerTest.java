@@ -35,7 +35,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 
 import net.javaci.bank.api.config.JwtConfig;
-import net.javaci.bank.api.helper.JwtConstants;
+import net.javaci.bank.api.jwt.JwtConstants;
 import net.javaci.bank.api.jwt.JwtUserPassAuthFilter;
 import net.javaci.bank.db.dao.AccountDao;
 import net.javaci.bank.db.model.Account;

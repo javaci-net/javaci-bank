@@ -1,4 +1,4 @@
-package net.javaci.bank.api.helper;
+package net.javaci.bank.api.jwt;
 
 public final class JwtConstants {
 

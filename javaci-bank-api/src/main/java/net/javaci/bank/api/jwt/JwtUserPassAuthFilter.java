@@ -23,7 +23,6 @@ import com.google.gson.Gson;
 import io.jsonwebtoken.Jwts;
 import lombok.extern.slf4j.Slf4j;
 import net.javaci.bank.api.config.JwtConfig;
-import net.javaci.bank.api.helper.JwtConstants;
 import net.javaci.bank.api.model.UserPassAuthRequest;
 import net.javaci.bank.api.model.UserPassAuthResponse;
 

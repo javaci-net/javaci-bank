@@ -86,6 +86,7 @@ public class SwaggerApiListingScanner implements ApiListingScannerPlugin {
                         .responseModel(new ModelRef("UserPassAuthResponse"))
                         .build();
         
+        /*--
 		ResponseMessage code401 = new ResponseMessageBuilder()
                         .code(401)
                         .responseModel(new ModelRef("ApiError"))
@@ -100,10 +101,9 @@ public class SwaggerApiListingScanner implements ApiListingScannerPlugin {
 		        .code(404)
 		        .responseModel(new ModelRef("ApiError"))
 		        .build();
+        */
         
-		// return Set.of(code200, code401, code403, code404);
-        // FIXME Set.of 1.9 da geldigi icin heroku da depley hatasi veriyor ilginc bir sekilde localde vermiyor???
-		return new HashSet<>(Arrays.asList(code200, code401, code403, code404));
+		return new HashSet<>(Arrays.asList(code200/*, code401, code403, code404*/ ));
     }
     // tag::api-listing-plugin[]
 

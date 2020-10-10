@@ -17,9 +17,17 @@ You can access live site from following urls :
 Uses embdedded H2 db by default (jdbc:h2:mem:testdb)
 Access /h2-console/ for admin console
 
-[Local Url](http://localhost:8080/h2-console/ "Local")  
-[Domain Url](http://www.javacibank.com/h2-console/ "Javacibank.com")  Not working
-[Heroku Url](https://javaci-bank.herokuapp.com/h2-console/ "Herokuapp")  
+### Development Environment
+
+We use h2 data file mode in development environment.
+
+[Local Url](http://localhost:8080/h2-console/ "Local") 
+
+### Production Environment
+
+Production uses Heroku Postgre Add-On: Execute following command:
+
+    heroku pg:psql postgresql-cylindrical-79376 --app javaci-bank-api
 
 ## API
 
