@@ -1,13 +1,15 @@
 package net.javaci.bank.backoffice.controller;
 
+import java.security.Principal;
+
 import javax.validation.Valid;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.ObjectError;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -29,13 +31,16 @@ public class EmployeeController {
 
 	@Autowired
 	private ModelMapper modelMapper;
-	
+
+	@Autowired
+	private PasswordEncoder passwordEncoder;
+
 	@GetMapping("/list")
 	public String renderListPage(Model model) {
 		model.addAttribute("employees", employeeDao.findAll());
 		return "employee/list";
 	}
-	
+
 	@GetMapping("/create")
 	public String renderCreatePage(Model model) {
 		model.addAttribute("employeeDto", new EmployeeCreateDto());
@@ -46,54 +51,67 @@ public class EmployeeController {
 	public String handleCreate(@ModelAttribute @Validated EmployeeCreateDto employeeDto, BindingResult bindingResult,
 			Model model) {
 
+		if (bindingResult.hasErrors() || !employeeDto.getConfirmPassword().equals(employeeDto.getPassword())) {
+			return "error/javaScriptValidationIgnored";
+		}
+
 		Employee employeeEntity = new Employee();
 		modelMapper.map(employeeDto, employeeEntity);
-		
-		if (bindingResult.hasErrors()) {
-			return "redirect:error/javaScriptValidationIgnored";
-		}
-		
+
+		// Encoding password
+		employeeEntity.setPassword(passwordEncoder.encode(employeeEntity.getPassword()));
+
 		employeeDao.save(employeeEntity);
-		
+
 		return "redirect:/employee/list";
 	}
 
-	private boolean validateInput(EmployeeCreateDto employeeDto, BindingResult bindingResult, Model model) {
-		if (!employeeDto.getConfirmPassword().equals(employeeDto.getPassword())) {
-			bindingResult.addError(new ObjectError("confirmPassword", "Input same password"));
-			return false;
-		}
-		return true;
+	@GetMapping("/profile")
+	public String renderProfilePage(Model model, Principal user) {
+
+		Employee employeeEntity = employeeDao.findByEmail(user.getName());
+		EmployeeCreateDto employeeDto = new EmployeeCreateDto();
+
+		modelMapper.map(employeeEntity, employeeDto);
+
+		model.addAttribute("employeeDto", employeeDto);
+		
+		return "employee/update";
 	}
 
+	// FIXME role kontrolu yap
 	@GetMapping("/update/{id}")
 	public String renderUpdatePage(Model model, @PathVariable("id") Long id) {
 		Employee employeeEntity = employeeDao.findById(id).get();
 		EmployeeCreateDto employeeDto = new EmployeeCreateDto();
-		
+
 		modelMapper.map(employeeEntity, employeeDto);
-		
+
 		model.addAttribute("employeeDto", employeeDto);
+		
 		return "employee/update";
 	}
 
+	// FIXME role kontrolu yap
 	@PostMapping("/update/{id}")
 	public String handleUpdate(@ModelAttribute @Valid EmployeeCreateDto employeeDto, BindingResult bindingResult,
 			Model model, @PathVariable("id") Long id) {
-		if (!validateInput(employeeDto, bindingResult, model)) {
-			return "redirect:error/javaScriptValidationIgnored";
+
+		if (bindingResult.hasErrors()) {
+			return "error/javaScriptValidationIgnored";
 		}
 
 		Employee employeeEntity = employeeDao.findById(id).get();
 		modelMapper.map(employeeDto, employeeEntity);
 		employeeDao.save(employeeEntity);
-		
+
 		return "redirect:/employee/list";
 	}
-	
+
 	@GetMapping("/checkCitizenNumber/{citizenNumber}")
 	@ResponseBody
 	public boolean checkCitizenNumber(@PathVariable("citizenNumber") String citizenNumber) {
 		return employeeDao.existsByCitizenNumber(citizenNumber);
 	}
+
 }

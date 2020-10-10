@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import net.javaci.bank.backoffice.utils.EntityOneLineDescriptionUtil;
 import net.javaci.bank.db.dao.AccountDao;
-import net.javaci.bank.db.dao.CustomerDao;
 import net.javaci.bank.db.dao.TransactionLogDao;
 import net.javaci.bank.db.model.Account;
 import net.javaci.bank.db.model.Customer;
@@ -20,9 +19,6 @@ import net.javaci.bank.db.model.Customer;
 @Controller
 @RequestMapping("/transaction")
 public class TransactionController {
-
-	@Autowired
-	private CustomerDao customerDao;
 
 	@Autowired
 	private AccountDao accountDao;

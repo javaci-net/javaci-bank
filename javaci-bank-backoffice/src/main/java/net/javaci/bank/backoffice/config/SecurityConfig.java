@@ -23,6 +23,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+    	// FIXME login sonrasi request edilen sayfaya geri donulmesi
+    	// FIXME session timeout sonrası login sayfasına gidilmesi
+    	
         http
                 .authorizeRequests()
                     .antMatchers(

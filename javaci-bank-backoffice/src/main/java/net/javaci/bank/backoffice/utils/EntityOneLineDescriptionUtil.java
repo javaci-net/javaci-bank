@@ -16,7 +16,7 @@ public class EntityOneLineDescriptionUtil {
 	@Autowired
 	private MessageSource messageSource;
 	
-	public Object findCustomerOneLineDescription(Customer cust, Locale locale) {
+	public String findCustomerOneLineDescription(Customer cust, Locale locale) {
 		StringBuilder sb = new StringBuilder();
 		
 		sb.append(cust.getFirstName());
@@ -30,16 +30,23 @@ public class EntityOneLineDescriptionUtil {
 		sb.append(cust.getLastName());
 		sb.append(" (ID: ");
 		sb.append(cust.getId());
+		
 		sb.append(", ");
 		sb.append(messageSource.getMessage("customer.citizenNumber", null, locale));
 		sb.append(": ");
 		sb.append(cust.getCitizenNumber());
+		
+		sb.append(", ");
+		sb.append(messageSource.getMessage("customer.email", null, locale));
+		sb.append(": ");
+		sb.append(cust.getEmail());
+		
 		sb.append(")");
 
 		return sb.toString();
 	}
 
-	public Object findAccountOneLineDescription(Account account, Locale locale) {
+	public String findAccountOneLineDescription(Account account, Locale locale) {
 		StringBuilder sb = new StringBuilder();
 		
 		sb.append("ID: ");

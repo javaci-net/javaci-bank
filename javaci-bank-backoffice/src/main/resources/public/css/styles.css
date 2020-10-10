@@ -1,3 +1,19 @@
+/*
+	JAVACIBANK CUSTOM CSS START
+*/
+
+
+#suggesstion-box-list{float:left;list-style:none;margin-top:-3px;padding:0;position: absolute;}
+#suggesstion-box-list li{padding: 10px; background: #f0f0f0; border-bottom: #bbb9b9 1px solid; }
+#suggesstion-box-list li:hover{background:#ece3d2;cursor: pointer;}
+#search-box{padding: 10px;border: #a8d4b1 1px solid;border-radius:4px; width: 100%;}
+
+
+/*
+	JAVACIBANK CUSTOM CSS END
+*/
+
+
 @charset "UTF-8";
 /*!
 * Start Bootstrap - SB Admin v6.0.1 (https://startbootstrap.com/templates/sb-admin)
@@ -1993,7 +2009,7 @@ pre code {
 .form-control {
   display: block;
   width: 100%;
-  height: calc(1.5em + 0.75rem + 2px);
+  height: calc(1.5em + 0.75rem + 14px);
   padding: 0.375rem 0.75rem;
   font-size: 1rem;
   font-weight: 400;
@@ -5545,8 +5561,8 @@ a.close.disabled {
 
 @media (min-width: 576px) {
   .modal-dialog {
-    max-width: 500px;
-    margin: 1.75rem auto;
+    max-width: 850px;
+    margin: 10rem auto;
   }
 
   .modal-dialog-scrollable {

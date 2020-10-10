@@ -1,26 +1,31 @@
 package net.javaci.bank.backoffice.controller;
 
-import java.util.Optional;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Locale;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.server.ResponseStatusException;
 
+import net.javaci.bank.backoffice.dto.CustomerListDto;
+import net.javaci.bank.backoffice.utils.EntityOneLineDescriptionUtil;
 import net.javaci.bank.db.dao.CustomerDao;
 import net.javaci.bank.db.model.Customer;
 
 @Controller
 @RequestMapping("/customer")
 public class CustomerController {
-	
 	@Autowired
 	private CustomerDao customerDao;
+	
+	@Autowired
+	private EntityOneLineDescriptionUtil descriptionUtil;
 	
 	@GetMapping("/list")
 	public String renderListPage(Model model) {
@@ -28,26 +33,20 @@ public class CustomerController {
 		
 		return "customer/list";
 	}
-	/*
-	
-	@GetMapping("/getByCitizenNumber/{citizenNumber}")
+
+	@PostMapping("/getByfilteredCustomers/")
 	@ResponseBody
-	public CustomerListDto getByCitizenNumber(@PathVariable("citizenNumber") String citizenNumber) {
+	public List<CustomerListDto> getByfilteredCustomers(@RequestParam(name = "keyword") String searchKey, Locale locale) {
+		List<Customer> allCustomers = customerDao.findAll();
+		List<CustomerListDto> returnList = new LinkedList<>();
 		
-		final Optional<Customer> customerOptional = customerDao.findByCitizenNumber(citizenNumber);
-		if (!customerOptional.isPresent()) {
-			log.info("Customer not found with citizenNumber:" + citizenNumber);
-			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Customer couldnt found by citizenNumber: " + citizenNumber);
+		for (int i = 0; i < allCustomers.size(); i++) {
+			String descriiption = descriptionUtil.findCustomerOneLineDescription(allCustomers.get(i), locale);
+			if (descriiption.toLowerCase(locale).contains(searchKey.toLowerCase(locale))) {
+				returnList.add(new CustomerListDto(allCustomers.get(i).getId(), descriiption));
+			}
 		}
-
-		Customer customer = customerOptional.get();
 		
-		return convertToDto(customer);
+		return returnList;
 	}
-	
-	private CustomerListDto convertToDto(Customer customer) {
-		return modelMapper.map(customer, CustomerListDto.class);
-	}
-	*/
-
 }

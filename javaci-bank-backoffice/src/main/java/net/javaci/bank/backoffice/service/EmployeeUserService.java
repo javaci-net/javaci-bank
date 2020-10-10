@@ -3,13 +3,14 @@ package net.javaci.bank.backoffice.service;
 
 import net.javaci.bank.db.dao.EmployeeDao;
 import net.javaci.bank.db.model.Employee;
+import net.javaci.bank.db.model.enumaration.EmployeeStatusType;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
@@ -24,7 +25,7 @@ public class EmployeeUserService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         Employee emp = employeeDao.findByEmail(email);
-        if (emp == null){
+        if (emp == null || emp.getStatus() != EmployeeStatusType.ACTIVE){
             throw new UsernameNotFoundException("Invalid username or password...");
         }
         return new org.springframework.security.core.userdetails.User(emp.getEmail(),

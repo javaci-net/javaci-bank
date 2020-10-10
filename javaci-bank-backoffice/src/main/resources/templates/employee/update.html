@@ -1,42 +1,43 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-    <head>
-	    <th:block th:insert="fragments/common.html :: head"></th:block>
-	    <title th:text="#{employee.update.title}"></title>
-    </head>
-    <body class="sb-nav-fixed">
-    	<th:block th:insert="fragments/common.html :: top_menu"></th:block>
-        <div id="layoutSidenav">
-        	<th:block th:insert="fragments/common.html :: left_menu"></th:block>
-            <div id="layoutSidenav_content">
-                <main>
-                
-                	<div class="container">
-                        <div class="row justify-content-center">
-                            <div class="col-lg-7">
-                                <div class="card shadow-lg border-0 rounded-lg mt-5">
-                                    <div class="card-header"><h3 class="text-center font-weight-light my-4" th:text="#{employee.update}"></h3></div>
-                                    <div class="card-body">
-                                        <form th:action="@{/employee/update/{id}(id=${employeeDto.id})}" th:object="${employeeDto}" method="post" class="needs-validation" novalidate>
-                                        	
-                                        	<input type="hidden" th:field="*{status}"/>
-                                        	
-                                        	<th:block th:include="/employee/_form.html :: form"></th:block>
-                                        	
-                                        	<div class="form-group mt-4 mb-0">
-												<button class="btn btn-primary btn-block" th:text="#{employee.update}"></button>
-											</div>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-				</main>
-               	<th:block th:insert="fragments/common.html :: footer"></th:block>
-            </div>
-        </div>
-        <th:block th:insert="fragments/common.html :: script"></th:block>
-    </body>
+<head>
+<th:block th:insert="fragments/common.html :: head"></th:block>
+<title th:text="#{employee.update.title}"></title>
+</head>
+<body class="sb-nav-fixed">
+	<th:block th:insert="fragments/common.html :: top_menu"></th:block>
+	<div id="layoutSidenav">
+		<th:block th:insert="fragments/common.html :: left_menu"></th:block>
+		<div id="layoutSidenav_content">
+			<main>
+
+				<div class="container">
+					<div class="row justify-content-center">
+						<div class="col-lg-7">
+							<div class="card shadow-lg border-0 rounded-lg mt-5">
+								<div class="card-header">
+									<h3 class="text-center font-weight-light my-4"
+										th:text="#{employee.update}"></h3>
+								</div>
+								<div class="card-body">
+									<form
+										th:action="@{/employee/update/{id}(id=${employeeDto.id})}"
+										th:object="${employeeDto}" method="post"
+										class="needs-validation" novalidate>
+
+										<th:block th:include="/employee/_form.html :: form('update')"></th:block>
+
+									</form>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+			</main>
+			<th:block th:insert="fragments/common.html :: footer"></th:block>
+		</div>
+	</div>
+	<th:block th:insert="fragments/common.html :: script"></th:block>
+</body>
 </html>

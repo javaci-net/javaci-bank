@@ -3,6 +3,7 @@
 <head>
 <th:block th:insert="fragments/common.html :: head"></th:block>
 <title th:text="#{account.list.title}"></title>
+
 </head>
 <body class="sb-nav-fixed">
 	<th:block th:insert="fragments/common.html :: top_menu"></th:block>
@@ -15,20 +16,46 @@
 					<div class="card">
 						<div class="card-header" th:text="#{customer}"></div>
 						<div class="card-body">
-							<h5 class="card-title">
-								<b><span th:remove="tag" th:text="#{customer}"></span>: </b><span
-									th:remove="tag" th:text="${customerName}"></span>
-							</h5>
-
+						
+							<div th:remove="tag" th:if="${customer}">
+								<p class="card-text">
+									<b>ID: </b><span th:remove="tag" th:text="${customer.id}"></span>
+								</p>
+								<p class="card-text">
+									<b><span th:remove="tag" th:text="#{customer.citizenNumber}"></span>:
+									</b><span th:remove="tag" th:text="${customer.citizenNumber}"></span><br>
+								</p>
+								
+								<p class="card-text">
+									<b><span th:remove="tag" th:text="#{customer.email}"></span>:
+									</b><span th:remove="tag" th:text="${customer.email}"></span><br>
+								</p>
+								
+								<p class="card-text">
+									<b><span th:remove="tag" th:text="#{customer.firstName}"></span>:
+									</b><span th:remove="tag" th:text="${customer.firstName}"></span><br>
+								</p>
+								
+								<p class="card-text" th:if="#{customer.middleName}">
+									<b><span th:remove="tag" th:text="#{customer.middleName}"></span>:
+									</b><span th:remove="tag" th:text="${customer.middleName}"></span><br>
+								</p>
+								
+								<p class="card-text">
+									<b><span th:remove="tag" th:text="#{customer.lastName}"></span>:
+									</b><span th:remove="tag" th:text="${customer.lastName}"></span><br>
+								</p>
+							</div>
+							
 							<!-- Button trigger modal -->
 							<button type="button" class="btn btn-primary" data-toggle="modal"
-								data-target="#exampleModal" th:text="#{account.selectCustomer}"></button>
+								data-target="#modalPanel" th:text="#{account.selectCustomer}"></button>
 						</div>
 					</div>
 
 					<br /> <br />
 
-					<div class="card mb-4" th:if="${customerName}">
+					<div class="card mb-4" th:if="${customer}">
 						<div class="card-header" th:text="#{account.list}">
 							<i class="fas fa-table mr-1"></i>
 						</div>
@@ -37,7 +64,7 @@
 								<div th:text="#{common.emptyTable}"
 									th:if="${accounts?.isEmpty()}"></div>
 								<table class="table table-bordered" id="dataTable" width="100%"
-									cellspacing="0" th:if="${not accounts?.isEmpty()}">
+									cellspacing="0" >
 									<thead>
 										<tr>
 											<th>ID</th>
@@ -73,33 +100,118 @@
 				</div>
 
 				<!-- Modal -->
-				<div class="modal fade" id="exampleModal" tabindex="-1"
-					role="dialog" aria-labelledby="exampleModalLabel"
-					aria-hidden="true">
+				<div class="modal fade" id="modalPanel" tabindex="-1" role="dialog"
+					aria-labelledby="exampleModalLabel" aria-hidden="true">
 					<div class="modal-dialog" role="document">
 						<div class="modal-content">
 							<div class="modal-header">
-								<h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+								<h5 class="modal-title" id="exampleModalLabel"
+									th:text="#{account.selectCustomerTitle}"></h5>
 								<button type="button" class="close" data-dismiss="modal"
 									aria-label="Close">
 									<span aria-hidden="true">&times;</span>
 								</button>
 							</div>
-							<div class="modal-body">...</div>
+							<div class="modal-body">
+								<input type="text" id="search-box"
+									th:placeholder="#{account.selectCustomer}" />
+								<div id="suggesstion-box"></div>
+							</div>
 							<div class="modal-footer">
 								<button type="button" class="btn btn-secondary"
-									data-dismiss="modal">Close</button>
-								<button type="button" class="btn btn-primary">Save
-									changes</button>
+									data-dismiss="modal" th:text="#{common.close}"></button>
 							</div>
 						</div>
 					</div>
 				</div>
-
 			</main>
 			<th:block th:insert="fragments/common.html :: footer"></th:block>
 		</div>
 	</div>
 	<th:block th:insert="fragments/common.html :: script"></th:block>
+	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+
+	<script>
+		$(document)
+				.ready(
+						function() {
+							$("#search-box")
+									.keyup(
+											function() {
+												$
+														.ajax({
+															type : "POST",
+															url : "/customer/getByfilteredCustomers/",
+															data : 'keyword='
+																	+ $(this)
+																			.val(),
+															beforeSend : function() {
+																$("#search-box")
+																		.css(
+																				"background",
+																				"#FFF url(/img/LoaderIcon.gif) no-repeat 165px");
+															},
+															success : function(
+																	data) {
+																$(
+																		"#suggesstion-box")
+																		.show();
+
+																var html = '<ul id="suggesstion-box-list">';
+
+																for (i = 0; i < data.length; i++) {
+																	html += '<li onClick="selectCustomer('
+																			+ data[i]['id']
+																			+ ');" >'
+																			+ data[i]['decription']
+																			+ '</li>';
+																}
+
+																html += '</ul>';
+
+																$(
+																		"#suggesstion-box")
+																		.html(
+																				html);
+																$("#search-box")
+																		.css(
+																				"background",
+																				"#FFF");
+															}
+														});
+											});
+						});
+
+		function selectCustomer(id) {
+			var currentUrl = window.location.href;
+
+			var newUrl;
+
+			if (currentUrl.includes("customerId=")) {
+				var idIndex = currentUrl.indexOf("customerId=")
+						+ "customerId=".length;
+
+				if (currentUrl.indexOf("&", idIndex) == -1) {
+					newUrl = currentUrl.substring(0, idIndex) + id;
+				} else {
+					var idEndIndex = currentUrl.indexOf("&", idIndex)
+					newUrl = currentUrl.substring(0, idIndex)
+							+ id
+							+ currentUrl.substring(idEndIndex,
+									currentUrl.length);
+				}
+			} else if (currentUrl.includes("?")) {
+				newUrl = window.location.href + "&customerId=" + id;
+			} else {
+				newUrl = window.location.href + "?customerId=" + id;
+			}
+
+			window.location.replace(newUrl);
+
+		}
+	</script>
+
+
 </body>
 </html>

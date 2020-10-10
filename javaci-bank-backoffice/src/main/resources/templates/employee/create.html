@@ -1,41 +1,100 @@
 <!DOCTYPE html>
 <html th:lang="${lang}" xmlns:th="http://www.thymeleaf.org">
-    <head>
-	    <th:block th:insert="fragments/common.html :: head"></th:block>
-	    <title th:text="#{employee.create.title}"></title>
-    </head>
-    <body class="sb-nav-fixed">
-    	<th:block th:insert="fragments/common.html :: top_menu"></th:block>
-        <div id="layoutSidenav">
-        	<th:block th:insert="fragments/common.html :: left_menu"></th:block>
-            <div id="layoutSidenav_content">
-                <main>
-                
-                	<div class="container">
-                        <div class="row justify-content-center">
-                            <div class="col-lg-7">
-                                <div class="card shadow-lg border-0 rounded-lg mt-5">
-                                    <div class="card-header"><h3 class="text-center font-weight-light my-4" th:text="#{employee.create}"></h3></div>
-                                    <div class="card-body">
-                                        <form th:action="@{/employee/create}" th:object="${employeeDto}" method="post" class="needs-validation" novalidate>
-                                        	<th:block th:include="/employee/_form.html :: form"></th:block>
-                                        	
-                                        	<div class="form-group mt-4 mb-0">
-												<button class="btn btn-primary btn-block" th:text="#{employee.create}"></button>
-											</div>
-                   
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                     
-				</main>
-               	<th:block th:insert="fragments/common.html :: footer"></th:block>
-            </div>
-        </div>
-        <th:block th:insert="fragments/common.html :: script"></th:block>
-        <th:block th:insert="/employee/_form.html :: script"></th:block>
-    </body>
+<head>
+<th:block th:insert="fragments/common.html :: head"></th:block>
+<title th:text="#{employee.create.title}"></title>
+</head>
+<body class="sb-nav-fixed">
+	<th:block th:insert="fragments/common.html :: top_menu"></th:block>
+	<div id="layoutSidenav">
+		<th:block th:insert="fragments/common.html :: left_menu"></th:block>
+		<div id="layoutSidenav_content">
+			<main>
+
+				<div class="container">
+					<div class="row justify-content-center">
+						<div class="col-lg-7">
+							<div class="card shadow-lg border-0 rounded-lg mt-5">
+								<div class="card-header">
+									<h3 class="text-center font-weight-light my-4"
+										th:text="#{employee.create}"></h3>
+								</div>
+								<div class="card-body">
+									<form th:action="@{/employee/create}"
+										th:object="${employeeDto}" method="post"
+										class="needs-validation" novalidate>
+
+										<th:block th:include="/employee/_form.html :: form('create')"></th:block>
+									</form>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
+					aria-labelledby="exampleModalLabel" aria-hidden="true">
+					<div class="modal-dialog" role="document">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h5 class="modal-title" id="exampleModalLabel"
+									th:text="#{common.error}"></h5>
+								<button type="button" class="close" data-dismiss="modal"
+									aria-label="Close">
+									<span aria-hidden="true">&times;</span>
+								</button>
+							</div>
+							<div class="modal-body"
+								th:text="#{employee.passwordConformationNotSame}"></div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-secondary"
+									data-dismiss="modal" th:text="#{common.close}"></button>
+							</div>
+						</div>
+					</div>
+				</div>
+
+			</main>
+			<th:block th:insert="fragments/common.html :: footer"></th:block>
+		</div>
+	</div>
+	<th:block th:insert="fragments/common.html :: script"></th:block>
+
+	<script th:inline="javascript">
+			$(document).ready(function(){
+			  $("#citizenNumberInput").keyup(function(){
+				  if (this.value) {
+					  $.get("/employee/checkCitizenNumber/" + this.value, function(data, status){
+						  	if (data) {
+						  		var uniqeIndexError = [[#{employee.citizenNumber.uniqeIndexError}]];
+						  		$('#citizenNumberError').text(uniqeIndexError);
+						  		$("#citizenNumberGroup").addClass('was-validated');
+						  		$('#citizenNumberInput').attr("pattern", ".{0,0}");
+						  		
+						  	} else {
+						  		var required = [[#{employee.citizenNumber.required}]];
+						  		$('#citizenNumberError').html(required);
+						  		$("#citizenNumberGroup").removeClass('was-validated');
+						  		$('#citizenNumberInput').removeAttr("pattern");
+					  		}
+						  	 
+						  });
+				  } else {
+					  var required = [[#{employee.citizenNumber.required}]];
+				  		$('#citizenNumberError').html(required);
+				  		$("#citizenNumberGroup").removeClass('was-validated');
+				  		$('#citizenNumberInput').removeAttr("pattern");
+				  }
+			  });
+			});
+			
+			
+			$("form").submit(function( event ) {
+				  if ($('#inputPassword').val() != $('#inputConfirmPassword').val()) {
+					  $('#myModal').modal('show');
+					  event.preventDefault();
+				  }
+				});
+		</script>
+</body>
 </html>

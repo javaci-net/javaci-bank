@@ -2,7 +2,7 @@
 <html th:lang="${lang}" xmlns:th="http://www.thymeleaf.org"
 	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 
-<head th:fragment="head">
+<head th:remove="tag" th:fragment="head">
 
 <meta charset="utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -23,7 +23,7 @@
 
 <body>
 
-	<div th:fragment="top_menu">
+	<div th:remove="tag" th:fragment="top_menu">
 		<nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
 			<a class="navbar-brand" href="/">Javaci Bank</a>
 			<button class="btn btn-link btn-sm order-1 order-lg-0"
@@ -54,7 +54,7 @@
 						<a class="dropdown-item" href="/user/tasks"
 							th:text="#{menu.tasks}"></a>
 						<div class="dropdown-divider"></div>
-						<a class="dropdown-item" href="/user/profile"
+						<a class="dropdown-item" href="/employee/profile"
 							th:text="#{menu.profile}"></a> <a class="dropdown-item"
 							href="/user/changePassword" th:text="#{menu.changePassword}"></a>
 						<div class="dropdown-divider"></div>
@@ -78,7 +78,7 @@
 		</nav>
 	</div>
 
-	<div th:fragment="left_menu">
+	<div th:remove="tag" th:fragment="left_menu">
 
 		<div id="layoutSidenav_nav">
 			<nav class="sb-sidenav accordion sb-sidenav-dark"
@@ -166,7 +166,7 @@
 		</div>
 	</footer>
 
-	<div th:fragment="script">
+	<div th:remove="tag" th:fragment="script">
 		<script src="https://code.jquery.com/jquery-3.5.1.min.js"
 			crossorigin="anonymous"></script>
 		<script
