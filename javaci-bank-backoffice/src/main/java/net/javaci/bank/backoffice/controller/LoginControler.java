@@ -1,27 +1,19 @@
 package net.javaci.bank.backoffice.controller;
 
 import java.security.Principal;
-import java.time.LocalDate;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
-import net.javaci.bank.db.dao.EmployeeDao;
-import net.javaci.bank.db.model.Employee;
-import net.javaci.bank.db.model.enumeration.EmployeeRoleType;
-import net.javaci.bank.db.model.enumeration.EmployeeStatusType;
+import net.javaci.bank.backoffice.service.RestoreDBService;
 
 @Controller
 public class LoginControler {
 	
 	@Autowired
-	private BCryptPasswordEncoder passwordEncoder;
-
-	@Autowired
-	private EmployeeDao employeeDao;
+	private RestoreDBService restoreDBService;
 
     @GetMapping("/login")
     public String login(Model model, Principal user) {
@@ -30,25 +22,9 @@ public class LoginControler {
             return "redirect:/";
         }
     	
-    	checkDefaultUser();
+    	restoreDBService.checkEmptyDB();
     	
         return "user/login";
     }
-
-	public void checkDefaultUser() {
-		Employee admin = employeeDao.findByEmail("admin");
-		if (admin == null) {
-			admin = new Employee();
-			admin.setEmail("admin");
-			admin.setFirstName("Koray");
-			admin.setLastName("Gecici");
-			admin.setPassword(passwordEncoder.encode("admin"));
-			admin.setCitizenNumber("123456789");
-			admin.setBirthDate(LocalDate.of(1980, 1, 1));
-			admin.setStatus(EmployeeStatusType.ACTIVE);
-			admin.setRole(EmployeeRoleType.ADMIN);
-			employeeDao.save(admin);
-		}
-	}
-    
+	
 }

@@ -3,7 +3,8 @@ package net.javaci.bank.db.model.enumeration;
 public enum AccountCurrency {
     TL("TRY"),
     USD("USD"),
-    EURO("EUR");
+    EURO("EUR"),
+    GOLD("GOLD");
 
     public final String code;
 
