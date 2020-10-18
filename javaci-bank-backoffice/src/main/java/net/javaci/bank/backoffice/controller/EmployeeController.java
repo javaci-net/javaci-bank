@@ -24,7 +24,7 @@ import net.javaci.bank.db.model.Employee;
 
 @Controller
 @RequestMapping("/employee")
-public class EmployeeController {
+public class EmployeeController extends AbstractController {
 
 	@Autowired
 	private EmployeeDao employeeDao;
@@ -43,13 +43,19 @@ public class EmployeeController {
 
 	@GetMapping("/create")
 	public String renderCreatePage(Model model) {
+		if (canModifyData() == false) {
+			return "error/notAdminError";
+		}
+
 		model.addAttribute("employeeDto", new EmployeeCreateDto());
 		return "employee/create";
 	}
 
 	@PostMapping("/create")
-	public String handleCreate(@ModelAttribute @Validated EmployeeCreateDto employeeDto, BindingResult bindingResult,
-			Model model) {
+	public String handleCreate(@ModelAttribute @Validated EmployeeCreateDto employeeDto, BindingResult bindingResult) {
+		if (canModifyData() == false) {
+			return "error/notAdminError";
+		}
 
 		if (bindingResult.hasErrors() || !employeeDto.getConfirmPassword().equals(employeeDto.getPassword())) {
 			return "error/javaScriptValidationIgnored";
@@ -59,43 +65,37 @@ public class EmployeeController {
 		modelMapper.map(employeeDto, employeeEntity);
 
 		// Encoding password
-		employeeEntity.setPassword(passwordEncoder.encode(employeeEntity.getPassword()));
+		employeeEntity.setPassword(passwordEncoder.encode(employeeDto.getPassword()));
 
 		employeeDao.save(employeeEntity);
 
 		return "redirect:/employee/list";
 	}
 
-	@GetMapping("/profile")
-	public String renderProfilePage(Model model, Principal user) {
-
-		Employee employeeEntity = employeeDao.findByEmail(user.getName());
-		EmployeeCreateDto employeeDto = new EmployeeCreateDto();
-
-		modelMapper.map(employeeEntity, employeeDto);
-
-		model.addAttribute("employeeDto", employeeDto);
-		
-		return "employee/update";
-	}
-
-	// FIXME role kontrolu yap
 	@GetMapping("/update/{id}")
-	public String renderUpdatePage(Model model, @PathVariable("id") Long id) {
+	public String renderUpdatePage(Model model, @PathVariable("id") Long id, Principal user) {
+		
+		if (!canModifyData() && !isLogginUser(id)) {
+			return "error/notAdminError";
+		}
+
 		Employee employeeEntity = employeeDao.findById(id).get();
 		EmployeeCreateDto employeeDto = new EmployeeCreateDto();
 
 		modelMapper.map(employeeEntity, employeeDto);
 
 		model.addAttribute("employeeDto", employeeDto);
-		
+
 		return "employee/update";
 	}
 
-	// FIXME role kontrolu yap
 	@PostMapping("/update/{id}")
 	public String handleUpdate(@ModelAttribute @Valid EmployeeCreateDto employeeDto, BindingResult bindingResult,
-			Model model, @PathVariable("id") Long id) {
+			Model model, @PathVariable("id") Long id, Principal user) {
+
+		if (!canModifyData() && !isLogginUser(id)) {
+			return "error/notAdminError";
+		}
 
 		if (bindingResult.hasErrors()) {
 			return "error/javaScriptValidationIgnored";
@@ -103,6 +103,7 @@ public class EmployeeController {
 
 		Employee employeeEntity = employeeDao.findById(id).get();
 		modelMapper.map(employeeDto, employeeEntity);
+		
 		employeeDao.save(employeeEntity);
 
 		return "redirect:/employee/list";

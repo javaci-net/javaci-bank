@@ -1,6 +1,7 @@
 package net.javaci.bank.backoffice.controller;
 
 import java.security.Principal;
+import java.time.LocalDate;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 import net.javaci.bank.db.dao.EmployeeDao;
 import net.javaci.bank.db.model.Employee;
+import net.javaci.bank.db.model.enumeration.EmployeeRoleType;
 import net.javaci.bank.db.model.enumeration.EmployeeStatusType;
 
 @Controller
@@ -42,7 +44,9 @@ public class LoginControler {
 			admin.setLastName("Gecici");
 			admin.setPassword(passwordEncoder.encode("admin"));
 			admin.setCitizenNumber("123456789");
+			admin.setBirthDate(LocalDate.of(1980, 1, 1));
 			admin.setStatus(EmployeeStatusType.ACTIVE);
+			admin.setRole(EmployeeRoleType.ADMIN);
 			employeeDao.save(admin);
 		}
 	}

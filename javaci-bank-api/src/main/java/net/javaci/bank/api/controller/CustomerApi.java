@@ -51,7 +51,7 @@ public class CustomerApi {
 		
 		Customer customer = convertToEntity(customerSaveDto);
 		
-		// FIXME 
+		// FIXME backoffice tamamlanınca kaldırılacak
 		customer.setStatus(CustomerStatusType.ACTIVE);
 		
 		customer.setPassword(passwordEncoder.encode(customer.getPassword()));

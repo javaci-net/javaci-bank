@@ -54,7 +54,7 @@
 						<a class="dropdown-item" href="/user/tasks"
 							th:text="#{menu.tasks}"></a>
 						<div class="dropdown-divider"></div>
-						<a class="dropdown-item" href="/employee/profile"
+						<a class="dropdown-item" href="/user/profile"
 							th:text="#{menu.profile}"></a> <a class="dropdown-item"
 							href="/user/changePassword" th:text="#{menu.changePassword}"></a>
 						<div class="dropdown-divider"></div>
@@ -102,11 +102,12 @@
 								<i class="fas fa-angle-down"></i>
 							</div>
 						</a>
-						<div class="collapse" id="collapseEmployee"
+						<div  class="collapse" id="collapseEmployee"
 							aria-labelledby="headingOne" data-parent="#sidenavAccordion">
 							<nav class="sb-sidenav-menu-nested nav">
 								<a class="nav-link" href="/employee/list"
-									th:text="#{employee.list}"></a> <a class="nav-link"
+									th:text="#{employee.list}"></a> 
+									<a sec:authorize="hasAuthority('ADMIN')" class="nav-link"
 									href="/employee/create" th:text="#{employee.create}"></a>
 							</nav>
 						</div>
@@ -183,6 +184,39 @@
 		<script
 			src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js"
 			crossorigin="anonymous"></script>
+	</div>
+	
+	<div th:remove="tag" th:fragment="passwordChecker">
+	<div class="modal fade" id="passwordErroModel" tabindex="-1" role="dialog"
+		aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLabel"
+						th:text="#{common.error}"></h5>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body"
+					th:text="#{employee.passwordConformationNotSame}"></div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary"
+						data-dismiss="modal" th:text="#{common.close}"></button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<script th:inline="javascript">
+		$("form").submit(function( event ) {
+			  if ($('#inputPassword').val() != $('#inputConfirmPassword').val()) {
+				  $('#passwordErroModel').modal('show');
+				  event.preventDefault();
+			  }
+		});
+	</script>
 	</div>
 </body>
 </html>

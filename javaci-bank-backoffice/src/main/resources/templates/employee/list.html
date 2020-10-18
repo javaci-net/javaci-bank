@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
 <th:block th:insert="fragments/common.html :: head"></th:block>
 <title th:text="#{employee.list.title}"></title>
@@ -15,10 +15,10 @@
 				<div class="container-fluid">
 					<div class="card mb-4">
 						<div class="card-header">
-							<i class="fas fa-table mr-1"></i> <span th:text="#{employees}" />
+							<i class="fas fa-table mr-1"></i> <span th:text="#{employees}"></span>
 						</div>
 						<div class="card-body">
-							<a href="/employee/create" class="button"
+							<a sec:authorize="hasAuthority('ADMIN')" href="/employee/create" class="button"
 								th:text="#{employee.createNew}"></a> <br />
 							<br />
 							<div class="table-responsive">
@@ -37,7 +37,8 @@
 											<th th:text="#{employee.email}"></th>
 											<th th:text="#{employee.phoneNumber}"></th>
 											<th th:text="#{employee.status}"></th>
-											<th th:text="#{employee.update}"></th>
+											<th th:text="#{employee.role}"></th>
+											<th th:text="#{employee.update}" sec:authorize="hasAuthority('ADMIN')"></th>
 										</tr>
 									</thead>
 									<tbody>
@@ -52,8 +53,10 @@
 												<td th:text="${e.email}"></td>
 												<td th:text="${e.phoneNumber}"></td>
 												<td th:text="${e.status}"></td>
-												<td><a th:href="@{/employee/update/{id}(id=${e.id})}"
-													th:text="#{employee.update}"></a></td>
+												<td th:text="${e.role}"></td>
+												<td sec:authorize="hasAuthority('ADMIN')" >
+													<a th:href="@{/employee/update/{id}(id=${e.id})}" th:text="#{employee.update}" ></a>
+												</td>
 											</tr>
 										</div>
 									</tbody>

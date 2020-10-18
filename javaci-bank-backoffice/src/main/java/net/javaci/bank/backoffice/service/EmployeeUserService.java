@@ -30,11 +30,11 @@ public class EmployeeUserService implements UserDetailsService {
         }
         return new org.springframework.security.core.userdetails.User(emp.getEmail(),
                 emp.getPassword(),
-                mapRolesToAuthorities("USER") );
+                mapRolesToAuthorities(emp.getRole().name()));
     }
 
     private Collection<? extends GrantedAuthority> mapRolesToAuthorities(String role){
-        return Arrays.asList(new SimpleGrantedAuthority(role)); // TODO User ın role lerinden alacagiz
+        return Arrays.asList(new SimpleGrantedAuthority(role));
     }
 
 }

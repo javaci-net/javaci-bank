@@ -7,6 +7,7 @@ import javax.persistence.Enumerated;
 
 import lombok.Getter;
 import lombok.Setter;
+import net.javaci.bank.db.model.enumeration.EmployeeRoleType;
 import net.javaci.bank.db.model.enumeration.EmployeeStatusType;
 
 @Entity
@@ -15,5 +16,10 @@ public class Employee extends UserEntityBase {
 	@Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private EmployeeStatusType status;
+	
+	@Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private EmployeeRoleType role = EmployeeRoleType.USER;
+	
     
 }

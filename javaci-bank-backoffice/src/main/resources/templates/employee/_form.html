@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:th="http://www.thymeleaf.org">
+	xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <body>
 	<div th:fragment="form(includer)">
 		<div class="form-group" id="citizenNumberGroup">
@@ -96,6 +96,21 @@
 					<div class="invalid-feedback"
 						th:text="#{employee.birthDate.required}"></div>
 				</div>
+			</div>
+		</div>
+		
+		<div class="form-row" sec:authorize="hasAuthority('ADMIN')" >
+			<div class="col-md-6">
+				<label class="small mb-1" for="selectRole"
+					th:text="#{employee.role}"></label> <select name="role"
+					class="form-control" id="selectRole" th:field="*{role}"
+					required>
+					<option value="" th:text="#{common.select}"></option>
+					<option
+						th:each="status : ${T(net.javaci.bank.db.model.enumeration.EmployeeRoleType).values()}"
+						th:value="${status}" th:text="${status}"></option>
+				</select>
+				<div class="invalid-feedback" th:text="#{employee.status.required}"></div>
 			</div>
 		</div>
 
