@@ -69,7 +69,7 @@
 					required>
 					<option value="" th:text="#{common.select}"></option>
 					<option
-						th:each="status : ${T(net.javaci.bank.db.model.enumaration.EmployeeStatusType).values()}"
+						th:each="status : ${T(net.javaci.bank.db.model.enumeration.EmployeeStatusType).values()}"
 						th:value="${status}" th:text="${status}"></option>
 				</select>
 				<div class="invalid-feedback" th:text="#{employee.status.required}"></div>
