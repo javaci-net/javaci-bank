@@ -26,7 +26,7 @@ import net.javaci.bank.db.model.enumeration.EmployeeStatusType;
 @Service
 public class RestoreDBService {
 
-	private final static int RECORD_SIZE = 5;
+	private final static int RECORD_SIZE = 10;
 
 	@Autowired
 	private EmployeeDao employeeDao;
