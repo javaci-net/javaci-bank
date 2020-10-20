@@ -49,7 +49,7 @@
 												<td th:text="${e.firstName}"></td>
 												<td th:text="${e.middleName}"></td>
 												<td th:text="${e.lastName}"></td>
-												<td th:text="${e.birthDate}"></td>
+												<td th:text="${#temporals.format(e.birthDate, 'dd-MM-yyyy')}"></td>
 												<td th:text="${e.email}"></td>
 												<td th:text="${e.phoneNumber}"></td>
 												<td th:text="${e.status}"></td>
