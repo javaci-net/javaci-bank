@@ -2,6 +2,7 @@ package net.javaci.bank.backoffice.service;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 import java.util.Random;
@@ -192,7 +193,7 @@ public class RestoreDBService {
 	
 	private static Random random = new Random();
 
-	private static final List<String> NAME_LIST = List.of("JALE", "ALİ", "MAHMUT", "MANSUR KÜRŞAD",
+	private static final List<String> NAME_LIST = Arrays.asList(new String[] {"JALE", "ALİ", "MAHMUT", "MANSUR KÜRŞAD",
 			"GAMZE", "MİRAÇ", "YÜCEL", "KUBİLAY", "HAYATİ", "BEDRİYE MÜGE", "BİRSEN", "SERDAL", "BÜNYAMİN", "ÖZGÜR",
 			"FERDİ", "REYHAN", "İLHAN", "GÜLŞAH", "NALAN", "SEMİH", "ERGÜN", "FATİH", "ŞENAY", "SERKAN", "EMRE",
 			"BAHATTİN", "IRAZCA", "HATİCE", "BARIŞ", "REZAN", "FATİH", "FUAT", "GÖKHAN", "ORHAN", "MEHMET", "EVREN",
@@ -437,9 +438,9 @@ public class RestoreDBService {
 			"MEHMET", "MUSTAFA", "NEVZAT", "OSMAN", "ONUR", "MUSTAFA ALİ", "MEHTAP", "MURAT", "MUSA", "FİLİZ",
 			"HALENUR", "KEZİBAN", "EFRUZ", "EMİN", "FATİH", "ÜNAL", "VOLKAN", "BAYRAM", "BERAAT", "MEHMET", "MÜCAHİT",
 			"SABRİ SEFA", "RAŞAN", "RABİA ŞEBNEM", "AHMET", "AHMET", "ZÜBEYDE", "BÜŞRA", "BURCU", "ALİ", "IŞIL",
-			"GÖZDE", "ESMA", "KÜBRA", "YAŞAR GÖZDE", "YILMAZ", "ZEYNEP", "CANER", "VOLKAN", "EMRE KAĞAN");
+			"GÖZDE", "ESMA", "KÜBRA", "YAŞAR GÖZDE", "YILMAZ", "ZEYNEP", "CANER", "VOLKAN", "EMRE KAĞAN"});
 
-	private static final List<String> SURNAME_LIST = List.of("ŞEN", "KANDEMİR", "ÇEVİK", "ERKURAN",
+	private static final List<String> SURNAME_LIST = Arrays.asList(new String[] {"ŞEN", "KANDEMİR", "ÇEVİK", "ERKURAN",
 			"TÜTEN", "ÖZTÜRK", "YÜZBAŞIOĞLU", "VURAL", "YÜCEL", "SÖNMEZ", "ERTEKİN", "DEDE", "UYANIK", "ASLAN",
 			"AKBULUT", "ORHON", "UZ", "YAVUZ", "ERDEM", "KULAÇ", "KAYA", "SELVİ", "AKPINAR", "ABACIOĞLU", "ÇAY", "IŞIK",
 			"ÖZER", "ÖZDEMİR", "ÖZTÜRK", "TAHTACI", "BÜYÜKCAM", "KULAKSIZ", "AKSEL", "EROĞLU", "KARAKUM", "DAL", "ÖCAL",
@@ -678,6 +679,6 @@ public class RestoreDBService {
 			"DUMAN", "KOPAN", "KARAASLAN", "KAHREMAN", "AVCI", "KURUL", "BÜYÜK", "SAĞLAM", "SANSARCI", "AKKAN",
 			"PİRDOĞAN", "RENÇBER", "DAĞDELEN", "SÜLÜK", "KÖSE", "YILMAZ", "SAĞLAM", "KARAMAN", "MUTLUER", "ERDEM",
 			"EYÜP", "YAKIŞAN", "TEKİN", "NALBANT", "YILDIRIM", "ERŞEN", "SARIEKİZ", "ÇETİNKAYA", "ALKAÇ", "ŞEN",
-			"GÜLEŞEN", "UYAR", "GÜÇLÜ", "YAZICI", "DOĞANGÜZEL", "AKKAYA", "FEYZULLAHOĞLU", "ŞAHİN");
+			"GÜLEŞEN", "UYAR", "GÜÇLÜ", "YAZICI", "DOĞANGÜZEL", "AKKAYA", "FEYZULLAHOĞLU", "ŞAHİN"});
 
 }
