@@ -165,7 +165,7 @@ public class RestoreDBService {
 	}
 
 	private LocalDate generateBirthDate() {
-		return LocalDate.of(random.nextInt(50) + 18, random.nextInt(12) + 1, random.nextInt(28) + 1);
+		return LocalDate.of(random.nextInt(50) + 1918, random.nextInt(12) + 1, random.nextInt(28) + 1);
 	}
 	
 	private String convertNameFormat(String name) {
