@@ -43,7 +43,7 @@ public abstract class UserEntityBase {
 
     @Column(nullable = false)
     @NotEmpty
-    @Size(min = 3)
+    @Size(min = 2)
     private String lastName;
     
     @DateTimeFormat(pattern = "yyyy-MM-dd")

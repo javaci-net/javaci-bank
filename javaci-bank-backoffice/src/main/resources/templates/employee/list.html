@@ -42,7 +42,7 @@
 										</tr>
 									</thead>
 									<tbody>
-										<div th:each="e : ${employees}" class="card">
+										<div th:remove="tag" th:each="e : ${employees}" class="card">
 											<tr>
 												<td th:text="${e.id}"></td>
 												<td th:text="${e.citizenNumber}"></td>

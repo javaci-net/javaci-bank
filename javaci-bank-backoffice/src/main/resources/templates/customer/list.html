@@ -37,7 +37,7 @@
 										</tr>
 									</thead>
 									<tbody>
-										<div th:each="c : ${customers}" class="card">
+										<div th:remove="tag" th:each="c : ${customers}" class="card">
 											<tr>
 												<td th:text="${c.id}"></td>
 												<td th:text="${c.citizenNumber}"></td>
