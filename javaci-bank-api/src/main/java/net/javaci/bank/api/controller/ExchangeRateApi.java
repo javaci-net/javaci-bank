@@ -28,7 +28,7 @@ public class ExchangeRateApi {
     @ResponseBody
     public List<ExchangeRate> findByLocalDate(
     		@ApiParam(value = "Date in yyyy-MM-dd iso date format. Assigns today's date when empty.", required = false, example = "2020-12-31") 
-    		@RequestParam String dateStr
+    		@RequestParam(required = false, defaultValue = "") String dateStr
     ) {
 	    if(StringUtils.isEmpty(dateStr)) {
 	        dateStr = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
