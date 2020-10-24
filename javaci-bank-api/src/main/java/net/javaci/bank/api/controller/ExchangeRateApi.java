@@ -1,13 +1,15 @@
 package net.javaci.bank.api.controller;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
@@ -25,9 +27,12 @@ public class ExchangeRateApi {
 	@GetMapping("/findByLocalDate")
     @ResponseBody
     public List<ExchangeRate> findByLocalDate(
-    		@ApiParam(value = "Date in yyyy-MM-dd iso date format. Cannot be empty.", required = true, example = "2020-12-31") 
-    		@PathVariable String dateStr
+    		@ApiParam(value = "Date in yyyy-MM-dd iso date format. Assigns today's date when empty.", required = false, example = "2020-12-31") 
+    		@RequestParam String dateStr
     ) {
+	    if(StringUtils.isEmpty(dateStr)) {
+	        dateStr = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+	    }
 		LocalDate date = null;
 		try {
 			LocalDate.parse(dateStr);
