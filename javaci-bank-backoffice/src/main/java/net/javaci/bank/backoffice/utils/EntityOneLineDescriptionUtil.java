@@ -22,7 +22,7 @@ public class EntityOneLineDescriptionUtil {
 		sb.append(cust.getFirstName());
 		sb.append(" ");
 
-		if (StringUtil.isBlankString(cust.getMiddleName())) {
+		if (StringUtil.isBlankString(cust.getMiddleName()) == false) {
 			sb.append(cust.getMiddleName());
 			sb.append(" ");
 		}

@@ -18,35 +18,35 @@
 						<div class="card-body">
 						
 							<div th:remove="tag" th:if="${customer}">
-								<p class="card-text">
-									<b>ID: </b><span th:remove="tag" th:text="${customer.id}"></span>
-								</p>
-								<p class="card-text">
-									<b><span th:remove="tag" th:text="#{customer.citizenNumber}"></span>:
-									</b><span th:remove="tag" th:text="${customer.citizenNumber}"></span><br>
-								</p>
-								
-								<p class="card-text">
-									<b><span th:remove="tag" th:text="#{customer.email}"></span>:
-									</b><span th:remove="tag" th:text="${customer.email}"></span><br>
-								</p>
-								
-								<p class="card-text">
-									<b><span th:remove="tag" th:text="#{customer.firstName}"></span>:
-									</b><span th:remove="tag" th:text="${customer.firstName}"></span><br>
-								</p>
-								
-								<p class="card-text" th:if="#{customer.middleName}">
-									<b><span th:remove="tag" th:text="#{customer.middleName}"></span>:
-									</b><span th:remove="tag" th:text="${customer.middleName}"></span><br>
-								</p>
-								
-								<p class="card-text">
-									<b><span th:remove="tag" th:text="#{customer.lastName}"></span>:
-									</b><span th:remove="tag" th:text="${customer.lastName}"></span><br>
-								</p>
+								<br>	
+								<table class="col-3">
+								  <tr>
+								    <td><b class="col-2">ID: </b></td>
+								    <td><span class="col-2" th:text="${customer.id}"></span></td>
+								  </tr>
+								  <tr>
+								    <td><b class="col-2"><span th:remove="tag" th:text="#{customer.citizenNumber}"></span>:</b></td>
+								    <td><span class="col-2" th:text="${customer.citizenNumber}"></span><br></td>
+								  </tr>
+								  <tr>
+								    <td><b class="col-2"><span th:remove="tag" th:text="#{customer.email}"></span>:</b></td>
+								    <td><span class="col-2" th:text="${customer.email}"></span><br></td>
+								  </tr>
+								  <tr>
+								    <td><b class="col-2"><span th:remove="tag" th:text="#{customer.firstName}"></span>:</b></td>
+								    <td><span class="col-2" th:text="${customer.firstName}"></span><br></td>
+								  </tr>
+								  <tr  th:if="${customer.middleName}">
+								    <td><b class="col-2"><span th:remove="tag" th:text="#{customer.middleName}"></span>:</b></td>
+								    <td><span class="col-2" th:text="${customer.middleName}"></span><br></td>
+								  </tr>
+								  <tr>
+								    <td><b class="col-2"><span th:remove="tag" th:text="#{customer.lastName}"></span>:</b></td>
+								    <td><span class="col-2" th:text="${customer.lastName}"></span><br></td>
+								  </tr>
+								</table>
 							</div>
-							
+							<br>
 							<!-- Button trigger modal -->
 							<button type="button" class="btn btn-primary" data-toggle="modal"
 								data-target="#modalPanel" th:text="#{account.selectCustomer}"></button>
@@ -78,7 +78,7 @@
 										</tr>
 									</thead>
 									<tbody>
-										<div th:each="a : ${accounts}" class="card">
+										<div th:remove="tag" th:each="a : ${accounts}" class="card">
 											<tr>
 												<td th:text="${a.id}"></td>
 												<td th:text="${a.accountNumber}"></td>

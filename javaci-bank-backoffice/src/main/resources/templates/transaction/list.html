@@ -59,7 +59,7 @@
 										</tr>
 									</thead>
 									<tbody>
-										<div th:each="t : ${transactions}" class="card">
+										<div th:remove="tag" th:each="t : ${transactions}" class="card">
 											<tr>
 												<td th:text="${t.id}"></td>
 												<td th:text="${t.toAcount.accountNumber}"></td>
