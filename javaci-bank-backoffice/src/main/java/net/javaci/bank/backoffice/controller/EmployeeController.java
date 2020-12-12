@@ -96,6 +96,10 @@ public class EmployeeController extends AbstractController {
 		if (!canModifyData() && !isLogginUser(id)) {
 			return "error/notAdminError";
 		}
+		
+		if (id == 1) {
+			return "error/adminUserUpdateError";
+		}
 
 		if (bindingResult.hasErrors()) {
 			return "error/javaScriptValidationIgnored";
