@@ -61,6 +61,10 @@ public class UserController {
 		
 		Employee employeeEntity = employeeDao.findByEmail(user.getName());
 		
+		if (employeeEntity.getId() == 1) {
+			return "error/adminUserUpdateError";
+		}
+		
 		if (passwordEncoder.matches(passwordChangeDto.getCurrentPassword(), employeeEntity.getPassword()) == false) {
 			model.addAttribute("passwordChangeDto", passwordChangeDto);
 			
