@@ -7,6 +7,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.web.server.LocalServerPort;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -23,9 +24,20 @@ public class SecurityConfigTest {
 
     @Autowired
     private TestRestTemplate restTemplate;
+    
+    @Autowired
+	private PasswordEncoder passwordEncoder;
 
     private final String local() {
         return "http://localhost:" + port;
+    }
+    
+    @Test
+    public void passwordEncoderTest() {
+    	
+    	String encodedPassword = passwordEncoder.encode("admin");
+    	
+    	assertEquals("$2a$10$fuZFiUBq4i747U1nlpI2ruuVOhf6ws21LEJrB/FupjeWYfugjrcsi", encodedPassword);
     }
 
     @Test
