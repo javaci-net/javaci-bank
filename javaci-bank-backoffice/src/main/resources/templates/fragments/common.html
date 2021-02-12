@@ -4,12 +4,14 @@
 
 <head th:remove="tag" th:fragment="head">
 
+
 <meta charset="utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 <meta name="description" content="" />
 <meta name="author" content="" />
+<link rel="shortcut icon" type="image/png" href="/img/favicon.ico"/>
 <link href="/css/styles.css" rel="stylesheet" />
 <link href="/css/jb_styles.css" rel="stylesheet" />
 <link
@@ -65,14 +67,12 @@
 
 			</ul>
 			<a th:unless="${#strings.equals(#locale, 'en')}"
-				th:with="urlBuilder=${T(org.springframework.web.servlet.support.ServletUriComponentsBuilder).fromCurrentRequest()}"
-				th:href="${urlBuilder.replaceQueryParam('lang', 'en').toUriString()}">
+				th:href="${#httpServletRequest.requestURI} + '?lang=en'">
 				<img border="0" alt="English" src="/img/united-kingdom-flag-16.png">
 			</a> 
 			
 			<a th:if="${#strings.equals(#locale, 'en')}"
-				th:with="urlBuilder=${T(org.springframework.web.servlet.support.ServletUriComponentsBuilder).fromCurrentRequest()}"
-				th:href="${urlBuilder.replaceQueryParam('lang', 'tr').toUriString()}">
+				th:href="${#httpServletRequest.requestURI} + '?lang=tr'">
 				<img border="0" alt="Türkçe" src="/img/turkey-flag-16.png">
 			</a> 
 		</nav>
