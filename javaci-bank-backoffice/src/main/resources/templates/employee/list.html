@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
 <th:block th:insert="fragments/common.html :: head"></th:block>
 <title th:text="#{employee.list.title}"></title>
@@ -10,17 +11,15 @@
 		<th:block th:insert="fragments/common.html :: left_menu"></th:block>
 		<div id="layoutSidenav_content">
 			<main>
-				<br />
-				<br />
+				<br /> <br />
 				<div class="container-fluid">
 					<div class="card mb-4">
 						<div class="card-header">
 							<i class="fas fa-table mr-1"></i> <span th:text="#{employees}"></span>
 						</div>
 						<div class="card-body">
-							<a sec:authorize="hasAuthority('ADMIN')" href="/employee/create" class="button"
-								th:text="#{employee.createNew}"></a> <br />
-							<br />
+							<a sec:authorize="hasAuthority('ADMIN')" href="/employee/create"
+								class="button" th:text="#{employee.createNew}"></a> <br /> <br />
 							<div class="table-responsive">
 								<div th:text="#{common	.emptyTable}"
 									th:if="${customers?.isEmpty()}"></div>
@@ -38,7 +37,10 @@
 											<th th:text="#{employee.phoneNumber}"></th>
 											<th th:text="#{employee.status}"></th>
 											<th th:text="#{employee.role}"></th>
-											<th th:text="#{employee.update}" sec:authorize="hasAuthority('ADMIN')"></th>
+											<th th:text="#{employee.update}"
+												sec:authorize="hasAuthority('ADMIN')"></th>
+											<th th:text="#{employee.delete}"
+												sec:authorize="hasAuthority('ADMIN')"></th>
 										</tr>
 									</thead>
 									<tbody>
@@ -49,14 +51,20 @@
 												<td th:text="${e.firstName}"></td>
 												<td th:text="${e.middleName}"></td>
 												<td th:text="${e.lastName}"></td>
-												<td th:text="${#temporals.format(e.birthDate, 'dd-MM-yyyy')}"></td>
+												<td
+													th:text="${#temporals.format(e.birthDate, 'dd-MM-yyyy')}"></td>
 												<td th:text="${e.email}"></td>
 												<td th:text="${e.phoneNumber}"></td>
 												<td th:text="${e.status}"></td>
 												<td th:text="${e.role}"></td>
-												<td sec:authorize="hasAuthority('ADMIN')" >
-													<a th:href="@{/employee/update/{id}(id=${e.id})}" th:text="#{employee.update}" ></a>
-												</td>
+												<td sec:authorize="hasAuthority('ADMIN')"><a
+													th:href="@{/employee/update/{id}(id=${e.id})}"
+													th:text="#{employee.update}"></a></td>
+												<td sec:authorize="hasAuthority('ADMIN')"><a
+													id="deleteLink"
+													th:href="@{/employee/update/{id}(id=${e.id})}"
+													data-toggle="modal" data-target="#deleteModal"
+													th:text="#{employee.delete}" th:onClick="del([[${e.id}]])"></a></td>
 											</tr>
 										</div>
 									</tbody>
@@ -66,10 +74,46 @@
 					</div>
 				</div>
 
+				<!-- Modal -->
+				<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog"
+					aria-labelledby="deleteModalLabel" aria-hidden="true">
+					<div class="modal-dialog modal-sm" role="document">
+						<div class="modal-content">
+							<form id="deleteForm" action="/employee/delete/" method="POST">
+								<div class="modal-header">
+									<h5 class="modal-title" id="deleteModalLabel"
+										th:text=#{common.delete.panel.title}></h5>
+									<button type="button" class="close" data-dismiss="modal"
+										aria-label="Close">
+										<span aria-hidden="true">&times;</span>
+									</button>
+								</div>
+								<div class="modal-body">
+									<p th:text="#{common.delete.panel.message}"></p>
+								</div>
+								<div class="modal-footer">
+									<button type="button" class="btn btn-secondary"
+										data-dismiss="modal" th:text=#{common.delete.panel.cancel}></button>
+									<button type="submit" class="btn btn-primary"
+										th:text=#{common.delete.panel.delete} ></button>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+
 			</main>
 			<th:block th:insert="fragments/common.html :: footer"></th:block>
 		</div>
 	</div>
 	<th:block th:insert="fragments/common.html :: script"></th:block>
+
+	<script th:inline="javascript">
+		function del(id) {
+			 var action = $('#deleteForm').attr("action");
+ 
+			 document.getElementById("deleteForm").action = action + id ;
+		}
+	</script>
 </body>
 </html>

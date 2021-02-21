@@ -1,6 +1,7 @@
 package net.javaci.bank.backoffice.controller;
 
 import java.security.Principal;
+import java.util.Optional;
 
 import javax.validation.Valid;
 
@@ -78,8 +79,13 @@ public class EmployeeController extends AbstractController {
 		if (!canModifyData() && !isLogginUser(id)) {
 			return "error/notAdminError";
 		}
-
-		Employee employeeEntity = employeeDao.findById(id).get();
+		
+		Optional<Employee> optional = employeeDao.findById(id);
+		if (optional.isEmpty()) {
+			return "error/404";
+		}
+		
+		Employee employeeEntity = optional.get();
 		EmployeeCreateDto employeeDto = new EmployeeCreateDto();
 
 		modelMapper.map(employeeEntity, employeeDto);
@@ -112,6 +118,19 @@ public class EmployeeController extends AbstractController {
 
 		return "redirect:/employee/list";
 	}
+	
+	@PostMapping("/delete/{id}")
+	public String handleUpdate(@PathVariable("id") Long id) {
+		
+		if (employeeDao.existsById(id) == false) {
+			return "error/404";
+		}
+		
+		employeeDao.deleteById(id);
+		
+		return "redirect:/employee/list";
+	}
+			
 
 	@GetMapping("/checkCitizenNumber/{citizenNumber}")
 	@ResponseBody
