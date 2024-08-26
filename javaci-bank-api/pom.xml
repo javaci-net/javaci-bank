@@ -15,7 +15,7 @@
 	<description>Javaci Bank - Api Layer</description>
 
 	<properties>
-		<swagger.springfox.version>2.9.2</swagger.springfox.version>
+		<swagger.springfox.version>2.10.0</swagger.springfox.version>
 	</properties>
 
 	<dependencies>
